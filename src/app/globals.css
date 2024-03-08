@@ -15,15 +15,13 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+*{
+  transition: 0.3s all linear;
+}
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(90deg, #1a2550, #8b376d);;
 }
 
 @layer utilities {
