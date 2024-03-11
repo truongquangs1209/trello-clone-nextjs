@@ -1,5 +1,5 @@
 "use client";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable, DroppableProvided,DraggableProvided,DragEndResult } from "react-beautiful-dnd";
 import { useDataFetching } from "@/firebase/service";
 import JobsGroup from "./components/jobsGroup";
 import NavBar from "./components/navbar";
@@ -43,8 +43,8 @@ export default function Home() {
     }
   };
 
-  const handleDragAndDrop: (results: any) => void = async (results: any) => {
-    const { source, destination, type, draggableId } = results;
+  const handleDragAndDrop: (results) => void = async (results: any) => {
+    const { source, destination, type } = results;
     if (!destination) return;
 
     if (
@@ -52,10 +52,6 @@ export default function Home() {
       source.index === destination.index
     )
       return;
-
-    console.log(
-      `Dragging item ${draggableId} from index ${source.index} to index ${destination.index} in droppable ${destination.droppableId}`
-    );
 
     if (type === "group") {
       const reorderedLists = [...listJobs];
