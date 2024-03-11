@@ -1,5 +1,5 @@
 "use client";
-import { DragDropContext, Draggable, Droppable, DroppableProvided,DraggableProvided,DragEndResult } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useDataFetching } from "@/firebase/service";
 import JobsGroup from "./components/jobsGroup";
 import NavBar from "./components/navbar";
@@ -16,7 +16,7 @@ export default function Home() {
   const [openInputAdd, setOpenInputAdd] = useState<boolean>(false);
   const [openAddJob, setOpenAddJob] = useState<boolean>(false);
   const [titleList, setTitleList] = useState<string>("");
-  
+
   //Fetching data listJobs in fireBase
   useDataFetching(setListJobs, "listJobs", listJobs);
 
@@ -33,16 +33,18 @@ export default function Home() {
         };
         const dataCollection = collection(db, "listJobs");
         const docRef = await addDoc(dataCollection, newList);
+       
         setOpenAddJob(false);
         setTitleList("");
+        
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleDragAndDrop: (results:DragEndResult) => void = async (results: any) => {
-    const { source, destination, type } = results;
+  const handleDragAndDrop: (results: any) => void = async (results: any) => {
+    const { source, destination, type, draggableId } = results;
     if (!destination) return;
 
     if (
@@ -50,13 +52,20 @@ export default function Home() {
       source.index === destination.index
     )
       return;
+
+    console.log(
+      `Dragging item ${draggableId} from index ${source.index} to index ${destination.index} in droppable ${destination.droppableId}`
+    );
+
     if (type === "group") {
       const reorderedLists = [...listJobs];
       const listsSourceIndex = source.index;
       const listsDestinationIndex = destination.index;
 
-      const [removedLists] = reorderedLists.splice(listsSourceIndex, 1);
-      reorderedLists.splice(listsDestinationIndex, 0, removedLists);
+      const [removedList] = reorderedLists.splice(listsSourceIndex, 1);
+      reorderedLists.splice(listsDestinationIndex, 0, removedList);
+
+      console.log("reorderedLists", reorderedLists);
 
       setListJobs([...reorderedLists]);
       return;
@@ -72,24 +81,29 @@ export default function Home() {
       (listJob) => listJob.id === destination.droppableId
     );
 
-    const newSourceItems = [listJobs[listJobsSourceIndex]];
-    const newDestinationItems = source.droppableId !== destination.droppableId
-    ? [...listJobs[listJobsDestinationIndex].item]
-    : newSourceItems;
-    
+    const newSourceItems = [...listJobs[listJobsSourceIndex].items];
+    const newDestinationItems =
+      source.droppableId !== destination.droppableId
+        ? [...listJobs[listJobsDestinationIndex].items]
+        : newSourceItems;
+
     const [deletedItem] = newSourceItems.splice(itemSourceIndex, 1);
     newDestinationItems.splice(itemDestinationIndex, 0, deletedItem);
- 
-   const newListJobs = [...listJobs]
 
-   newListJobs[listJobsSourceIndex] = {
-    ...listJobs[listJobsSourceIndex],item:newSourceItems
-   }
-   newListJobs[listJobsDestinationIndex] = {
-    ...listJobs[listJobsDestinationIndex],item:newDestinationItems
-   }
-   setListJobs([...newListJobs])
+    const newListJobs = [...listJobs];
 
+    newListJobs[listJobsSourceIndex] = {
+      ...listJobs[listJobsSourceIndex],
+      items: newSourceItems,
+    };
+    newListJobs[listJobsDestinationIndex] = {
+      ...listJobs[listJobsDestinationIndex],
+      items: newDestinationItems,
+    };
+
+    console.log("newListJobs", newListJobs);
+
+    setListJobs([...newListJobs]);
   };
 
   return (
@@ -97,7 +111,7 @@ export default function Home() {
       <DragDropContext onDragEnd={handleDragAndDrop}>
         <NavBar />
         <Droppable droppableId="ROOT" type="group">
-          {(provided: DroppableProvided) => (
+          {(provided: any) => (
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
@@ -110,14 +124,18 @@ export default function Home() {
                     index={index}
                     key={listJob.id}
                   >
-                    {(provided:DraggableProvided) => (
+                    {(provided: any) => (
                       <div
                         {...provided.dragHandleProps}
                         {...provided.draggableProps}
                         ref={provided.innerRef}
                         className="flex-[1] h-fit p-3 font-semibold text-[#B6c2cf] bg-[#101204] mx-2 rounded-xl max-w-60 text-sm"
                       >
-                        <JobsGroup title={listJob.title} setListJobs={setListJobs} listId={listJob.id} />
+                        <JobsGroup
+                          title={listJob.title}
+                          setListJobs={setListJobs}
+                          listId={listJob.id}
+                        />
                       </div>
                     )}
                   </Draggable>
@@ -133,6 +151,7 @@ export default function Home() {
                     onChange={(e) => setTitleList(e.target.value)}
                     className="text-[#B6C2CF] mb-2 w-full my-1 py-[8px] px-3 rounded bg-[#22272b]"
                     type="text"
+                    value={titleList}
                     placeholder="Nhập tiêu đề danh sách..."
                   />
                   <div className="flex items-center justify-between">

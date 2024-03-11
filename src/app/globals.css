@@ -17,6 +17,7 @@
 }
 *{
   transition: 0.3s all linear;
+  box-sizing:border-box;
 }
 
 body {
