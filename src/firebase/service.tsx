@@ -12,7 +12,7 @@ import { useEffect } from "react";
 export const useDataFetching = (
     setData: React.Dispatch<React.SetStateAction<any>>,
     collectionName: string,
-    dependencyArray: ListsJobs[] | ItemJobs[]
+    dependencyArray:any[],
   ) => {
     useEffect(() => {
       const fetchData = async () => {

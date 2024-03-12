@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* @import '~antd/dist/antd.css'; */
+/* @import 'antd/dist/antd.css'; */
+
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -16,7 +19,7 @@
   }
 }
 *{
-  transition: 0.3s all linear;
+  /* transition: 0.3s all linear; */
   box-sizing:border-box;
 }
 

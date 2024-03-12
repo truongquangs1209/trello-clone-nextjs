@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+// import '@/antd/dist/antd.css';
+
+
 import '../firebase/config'
 import AuthProvider from "@/context/AppProvider";
 
