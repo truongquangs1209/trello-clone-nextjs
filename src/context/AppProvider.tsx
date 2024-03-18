@@ -48,8 +48,8 @@ function AuthProvider({ children }: AuthProviderProps) {
         // localStorage.setItem("accessToken", user.accessToken);
       } else {
         setUser(null);
-        localStorage.clear();
-        router.push("/login");
+        // localStorage.clear();
+        // router.push("/login");
       }
     });
 

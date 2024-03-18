@@ -1,8 +1,15 @@
 "use client";
-import { JobsContext } from "@/context/AppProvider";
 import { db } from "@/firebase/config";
-import { faClose, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClose,
+  faDotCircle,
+  faEllipsis,
+  faPlus,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Tippy from "@tippyjs/react";
+import { Button } from "antd";
 import {
   addDoc,
   collection,
@@ -11,37 +18,56 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
-import { useContext, useState } from "react";
-import { Draggable } from "react-beautiful-dnd";
-import { Droppable } from "react-beautiful-dnd";
+import { useState } from "react";
+import { Draggable, Droppable } from "react-beautiful-dnd";
+import { toast } from "react-toastify";
 
-function JobsGroup({ title, setListJobs, listId }) {
+type Props = {
+  listId: string;
+  title: string;
+  items: ItemJobs[];
+  listJobs: ListsJobs[];
+  setListJobs: React.Dispatch<React.SetStateAction<ListsJobs[]>>;
+};
+
+function JobsGroup({ listId, title, items, listJobs, setListJobs }: Props) {
   const [openAddJob, setOpenAddJob] = useState<boolean>(false);
   const [titleList, setTitleList] = useState<string>("");
-
-  const { jobItem, setJobItem } = useContext(JobsContext);
-  const filterJobItems = jobItem.filter((job) => job.type === title);
+  const [, setDataJobItem] = useState(items);
 
   const handleAddJobs: () => void = async () => {
     try {
       if (titleList) {
         setTitleList("");
         setOpenAddJob(false);
-        const newJob = {
+        const newJob: ItemJobs = {
           title: titleList,
           createdAt: new Date(),
           type: title,
         };
+
         const dataCollection = collection(db, "itemJobs");
         const docRef = await addDoc(dataCollection, newJob);
-        const listJobsRef = doc(db, "listJobs", listId);
-        const listJobsDoc = await getDoc(listJobsRef);
+        newJob.id = docRef.id;
+        const updatedListJobs = listJobs.map((list) => {
+          if (list.id === listId) {
+            return {
+              ...list,
+              items: [...list.items, newJob],
+            };
+          }
+          return list;
+        });
+        // Cập nhật trạng thái của listJobs với mục mới được thêm vào
+        setListJobs(updatedListJobs);
 
-        if (listJobsDoc.exists()) {
-          // Nếu listJobs tồn tại, thêm công việc mới vào trường items
-          const updatedItems = [...listJobsDoc.data().items, docRef.id];
-          await updateDoc(listJobsRef, { items: updatedItems });
-        }
+        // Update jobItem vafo field items cu
+        // const listJobsRef = doc(db, "listJobs", listId);
+        // const listJobsDoc = await getDoc(listJobsRef);
+        // if (listJobsDoc.exists()) {
+        //   const updatedItems = [...listJobsDoc.data().items, docRef.id];
+        //   await updateDoc(listJobsRef, { items: updatedItems });
+        // }
       }
     } catch (error) {
       console.log(error);
@@ -53,6 +79,7 @@ function JobsGroup({ title, setListJobs, listId }) {
       const docRef = doc(db, "listJobs", listId);
       await deleteDoc(docRef);
       setListJobs((prevList) => prevList.filter((list) => list.id !== listId));
+      toast.success("Delete Jobs Success !");
     } catch (error) {
       console.error("Error deleting document: ", error);
     }
@@ -62,9 +89,17 @@ function JobsGroup({ title, setListJobs, listId }) {
     try {
       const docRef = doc(db, "itemJobs", itemId);
       await deleteDoc(docRef);
-      setJobItem((prevJob) => prevJob.filter((job) => job.id !== itemId));
+      const indexToRemove = items.findIndex((item) => item.id === itemId);
+      setDataJobItem(items.splice(indexToRemove, 1));
+      toast.success("Delete Jobs Success !");
     } catch (error) {
       console.error("Error deleting document: ", error);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleAddJobs();
     }
   };
   return (
@@ -73,39 +108,59 @@ function JobsGroup({ title, setListJobs, listId }) {
         <div {...provided.droppableProps} ref={provided.innerRef}>
           <div className="flex items-center justify-between">
             <h2 className="py-2 pl-1 text-[14px]">{title}</h2>
-            <FontAwesomeIcon
-              onClick={() => handleDeleteJobs(listId)}
-              icon={faClose}
-              style={
-                filterJobItems.length > 0
-                  ? { display: "none" }
-                  : { display: "block" }
-              }
-            />
-          </div>
-          {filterJobItems.map((job, index) => (
-            <Draggable draggableId={job.id} index={index} key={job.id}>
-              {(provided) => (
-                <div
-                  {...provided.dragHandleProps}
-                  {...provided.draggableProps}
-                  ref={provided.innerRef}
-                  className="group flex cursor-pointer hover:border-[#85b8ff] hover:border-[1px] transition-none pt-2 pb-2 items-center px-2 my-2 font-normal bg-[#22272b] w-full justify-between rounded-lg"
-                >
-                  <h2>{job.title}</h2>
-                  <FontAwesomeIcon
-                    className="hidden group-hover:block"
-                    onClick={() => handleDeleteItem(job.id)}
-                    icon={faTrash}
-                  />
+            <Tippy
+              interactive
+              // visible
+              placement="right"
+              theme="light"
+              content={
+                <div className="text-[#9FADBC] min-w-[200px] flex flex-col p-0">
+                  <span className="text-center font-medium py-2">Thao Tác</span>
+                  <div className="font-normal">
+                    <button
+                      className="hover:bg-[#3c464f] text-start transition p-1 w-full"
+                      onClick={() => handleDeleteJobs(listId)}
+                    >
+                      Xóa thẻ
+                    </button>
+                    <button
+                      className="hover:bg-[#3c464f] text-start transition p-1 w-full"
+                      onClick={() => setOpenAddJob(true)}
+                    >
+                      Thêm thẻ
+                    </button>
+                  </div>
                 </div>
-              )}
-            </Draggable>
-          ))}
+              }
+            >
+              <FontAwesomeIcon icon={faEllipsis} />
+            </Tippy>
+          </div>
+          {items &&
+            items.map((job, index) => (
+              <Draggable draggableId={job.id} index={index} key={job.id}>
+                {(provided) => (
+                  <div
+                    {...provided.dragHandleProps}
+                    {...provided.draggableProps}
+                    ref={provided.innerRef}
+                    className="group flex cursor-pointer hover:border-[#85b8ff] hover:border-[1px] transition-none pt-2 pb-2 items-center px-2 my-2 font-normal bg-[#22272b] w-full justify-between rounded-lg"
+                  >
+                    <h2>{job.title}</h2>
+                    <FontAwesomeIcon
+                      className="hidden group-hover:block"
+                      onClick={() => handleDeleteItem(job.id)}
+                      icon={faTrash}
+                    />
+                  </div>
+                )}
+              </Draggable>
+            ))}
           {provided.placeholder}
           <div style={openAddJob ? { display: "block" } : { display: "none" }}>
             <input
               onChange={(e) => setTitleList(e.target.value)}
+              onKeyDown={handleKeyDown}
               className="text-[#B6C2CF] mb-2 w-full my-1 py-[8px] px-3 rounded bg-[#22272b]"
               type="text"
               placeholder="Nhập tiêu đề danh sách..."

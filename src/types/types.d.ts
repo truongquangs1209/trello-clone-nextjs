@@ -1,14 +1,14 @@
 interface ListsJobs {
-  id: string | null;
-  title: string;
+  id?: string | null;
+  name: string;
   items: any[];
-  createdAt: Date;
-  createdBy: string;
+  createdAt: Date | null;
+  createdBy: string | null;
 }
 
 interface ItemJobs {
   // id: Key;
-  id: string;
+  id?: string | null;
   title: string;
   type: string;
   createdAt: Date;
@@ -28,6 +28,12 @@ interface MemberList{
     id:string;
     photoURL: string
 }
+
+type results = {
+  source: { index: number; droppableId: string };
+  destination: { droppableId: string; index: number };
+  type: string;
+};
 
 type CompleteListJobs = ListsJobs | { id: string } 
 

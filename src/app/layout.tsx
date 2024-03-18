@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-// import '@/antd/dist/antd.css';
-
-
-import '../firebase/config'
+import "react-toastify/dist/ReactToastify.css";
+import "../firebase/config";
+import 'tippy.js/dist/tippy.css';
 import AuthProvider from "@/context/AppProvider";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,9 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          {children} <ToastContainer />
+        </body>
       </html>
     </AuthProvider>
   );
