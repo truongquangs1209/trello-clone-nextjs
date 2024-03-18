@@ -1,9 +1,11 @@
-'use client'
+"use client";
 import { GoogleAuthProvider, signInWithPopup, getAuth } from "firebase/auth";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/firebase/config";
+import Image from "next/image";
+// import '../../../public/assets/bg-login.avif'
 
 function Login() {
   const router = useRouter();
@@ -24,7 +26,7 @@ function Login() {
         photoURL,
       });
       if (user?.uid) {
-        router.push('/')
+        router.push(`/boards`);
         return;
       }
       console.log(
@@ -35,14 +37,82 @@ function Login() {
     }
   };
   return (
-    <div className="w-full flex flex-col items-center justify-center ">
-      <h1 className="text-center mb-6">Login</h1>
-      <button
-        className="w-[30%] h-[40px] rounded-lg bg-blue-700 text-white"
-        onClick={handleLoginWithGoogle}
-      >
-        Login with Google
-      </button>
+    <div className="w-full h-[100vh] flex flex-col items-center justify-center">
+      <img
+        src="https://images.unsplash.com/photo-1487088678257-3a541e6e3922?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="bg-image"
+        className="fixed inset-0 z-[-1]"
+      />
+      <div className="p-[40px] rounded-md w-[400px]  bg-white h-fit flex flex-col items-center">
+        <Image
+          src="https://trello-clone-ruby.vercel.app/assets/trello-logo-blue.svg"
+          alt=""
+          width={117.5}
+          height={40}
+        />
+        <div className="w-full">
+          <h2 className="text-center font-semibold mb-4 pt-[24px] text-[16px] text-[#172b4d]">
+            Đăng nhập để tiếp tục
+          </h2>
+          <form method="POST">
+            <input
+              type="email"
+              placeholder="Nhập email của bạn"
+              className="px-[6px] mb-3 rounded-lg py-2 text-[14px] h-[40px] w-full border border-solid text-[#172b4d]"
+            />
+            <input
+              type="password"
+              placeholder="Nhập mật khẩu"
+              className="px-[6px] rounded-lg py-2 text-[14px] h-[40px] w-full border border-solid text-[#172b4d]"
+            />
+            <button
+              type="submit"
+              className="bg-[#0052cc] transition-all hover:bg-[#0065ff] text-[14px] w-full h-[40px] rounded-lg my-3 font-medium"
+            >
+              Tiếp tục
+            </button>
+          </form>
+          <div className="mt-[24px]">
+            <h2 className="font-semibold text-[14px] text-center text-[#5e6c84]">
+              Hoặc tiếp tục với:
+            </h2>
+            <div>
+              <button onClick={()=>handleLoginWithGoogle()} className="text-[#42526e] border-solid flex items-center justify-center gap-4 font-semibold border transition-all hover:bg-[#fafafb] text-[14px] w-full h-[40px] rounded-lg my-4">
+                <img
+                  src="https://id-frontend.prod-east.frontend.public.atl-paas.net/assets/google-logo.5867462c.svg"
+                  width={24}
+                  alt=""
+                />
+                <h2>Google</h2>
+              </button>
+              <button className="text-[#42526e] border-solid flex items-center justify-center gap-4 font-semibold border transition-all hover:bg-[#fafafb] text-[14px] w-full h-[40px] rounded-lg my-4">
+                <img
+                  src="https://id-frontend.prod-east.frontend.public.atl-paas.net/assets/microsoft-logo.c73d8dca.svg"
+                  width={24}
+                  alt=""
+                />
+                <h2>Microsoft</h2>
+              </button>
+              <button className="text-[#42526e] border-solid flex items-center justify-center gap-4 font-semibold border transition-all hover:bg-[#fafafb] text-[14px] w-full h-[40px] rounded-lg my-4">
+                <img
+                  src="https://id-frontend.prod-east.frontend.public.atl-paas.net/assets/google-logo.5867462c.svg"
+                  width={24}
+                  alt=""
+                />
+                <h2>Apple</h2>
+              </button>
+              <button className="text-[#42526e] border-solid flex items-center justify-center gap-4 font-semibold border transition-all hover:bg-[#fafafb] text-[14px] w-full h-[40px] rounded-lg my-4">
+                <img
+                  src="https://id-frontend.prod-east.frontend.public.atl-paas.net/assets/slack-logo.5d730c10.svg"
+                  width={24}
+                  alt=""
+                />
+                <h2>Slack</h2>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -4,7 +4,6 @@
 /* @import '~antd/dist/antd.css'; */
 /* @import 'antd/dist/antd.css'; */
 
-
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -18,16 +17,22 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-*{
+* {
   /* transition: 0.3s all linear; */
-  box-sizing:border-box;
+  box-sizing: border-box;
+  /* font-size:62.5%; */
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(90deg, #1a2550, #8b376d);;
+  /* background: linear-gradient(90deg, #1a2550, #8b376d);; */
 }
-
+html {
+  background-color: #1d2125;
+}
+*{
+  color:#9FaDBC;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;

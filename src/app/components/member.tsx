@@ -1,3 +1,4 @@
+'use client'
 import React, { useContext, useState } from "react";
 import { Form, Modal, Select, Avatar, Tooltip } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -50,7 +51,7 @@ function InviteMember() {
         className="cursor-pointer border-solid border-[2px] p-1 rounded-md text-[12px] mr-3"
       >
         <FontAwesomeIcon className="mr-[2px]" icon={faUser} />
-        <span>Chia sẻ</span>
+        <span>Tham Gia</span>
       </div>
 
       <Avatar.Group size="small" maxCount={2}>
