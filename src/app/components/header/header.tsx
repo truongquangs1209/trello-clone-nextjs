@@ -1,13 +1,8 @@
 "use client";
 import { AuthContext } from "@/context/AppProvider";
-import {
-  faArrowDown,
-  faCaretDown,
-  faSearch,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import Link from "next/link";
 import React, { useContext } from "react";
 
 function Header() {
@@ -42,7 +37,7 @@ function Header() {
             <FontAwesomeIcon icon={faCaretDown} />
           </div>
         </div>
-        <button className="text-[#1d2125] font-medium bg-[#579dff] hover:bg-[#85b8ff] transition rounded-sm px-3">
+        <button className="text-[#1d2125] bg-[#579dff] hover:bg-[#85b8ff] transition h-[32px] text-sm font-semibold rounded-sm ml-6 px-3">
           Tạo mới
         </button>
       </div>
