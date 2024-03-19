@@ -6,6 +6,7 @@ import "../firebase/config";
 import 'tippy.js/dist/tippy.css';
 import AuthProvider from "@/context/AppProvider";
 import { ToastContainer } from "react-toastify";
+import WorkspaceProvider from "@/context/WorkspaceProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,11 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <AuthProvider>
-      <html lang="en">
+     <WorkspaceProvider>
+     <html lang="en">
         <body className={inter.className}>
           {children} <ToastContainer />
         </body>
       </html>
+     </WorkspaceProvider>
     </AuthProvider>
   );
 }

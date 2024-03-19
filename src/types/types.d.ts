@@ -29,6 +29,15 @@ interface MemberList{
     photoURL: string
 }
 
+interface IWorkspaces{
+  id?: string | null
+  title:string
+  type:any
+  boards: any[]
+  createBy: string
+  description: string
+}
+
 type results = {
   source: { index: number; droppableId: string };
   destination: { droppableId: string; index: number };

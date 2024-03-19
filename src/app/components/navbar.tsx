@@ -1,9 +1,8 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
-import { Form, Modal, Select, Avatar, Tooltip } from "antd";
+import React, { useContext} from "react";
 import { AuthContext } from "@/context/AppProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { auth } from "@/firebase/config";
 import InviteMember from "./member";
 
