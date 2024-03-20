@@ -10,9 +10,10 @@ function Header() {
   const photoURL = user ? user.photoURL : "";
 
   return (
-    <div className="text-black fixed top-0 w-full flex p-2 items-center justify-between">
+    <div className="text-black bg-[#1d2125] fixed top-0 w-full flex p-2 items-center justify-between">
       <div className="flex">
         <Image
+          priority
           className="p-2"
           src="https://trello-clone-ruby.vercel.app/assets/trello-logo-blue.svg"
           alt=""

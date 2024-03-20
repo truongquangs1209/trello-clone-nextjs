@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { auth } from "@/firebase/config";
 import { useDataFetching } from "@/firebase/service";
 
+
 interface AuthProviderProps {
   children: React.ReactNode;
 }

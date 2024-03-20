@@ -17,6 +17,7 @@ function CreateWorkspace() {
   const [descriptionWorkspace, setDescriptionWorkspace] = useState<string>("");
 
   const {
+    workspace,setWorkspace,
     openModalAddWorkspace,
     setOpenModalAddWOrkspace,
   } = useContext(WorkSpaceContext);
@@ -31,6 +32,8 @@ function CreateWorkspace() {
       };
       const dataCollection = collection(db, "workspaces");
       const docRef = await addDoc(dataCollection, newWorkspace);
+      newWorkspace.id = docRef.id;
+      setWorkspace([...workspace, newWorkspace as any]);
       toast.success("Create workspace success!");
       setOpenModalAddWOrkspace(false);
       console.log(docRef);
