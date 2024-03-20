@@ -2,6 +2,7 @@ interface ListsJobs {
   id?: string | null;
   name: string;
   items: any[];
+  boards:string,
   createdAt: Date | null;
   createdBy: string | null;
 }
@@ -36,6 +37,15 @@ interface IWorkspaces{
   boards: any[]
   createBy: string
   description: string
+}
+
+interface IBoards{
+  id?: string | null,
+  background: string,
+  star: boolean,
+  listjobs:any[],
+  title: string,
+  workspaceId: string,
 }
 
 type results = {

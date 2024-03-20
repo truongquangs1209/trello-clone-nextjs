@@ -6,7 +6,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { auth } from "@/firebase/config";
 import InviteMember from "./member";
 
-function NavBar() {
+function NavBar({boardTitle}) {
   const { user } = useContext(AuthContext);
   const displayName = user ? user.displayName : "";
   const photoURL = user ? user.photoURL : "";
@@ -16,7 +16,7 @@ function NavBar() {
     <div className="bg-[#0000003d] flex justify-between items-center py-3 pl-[10px] pr-4">
       <div className="flex">
         <div className="flex items-center mr-6 justify-center">
-          <h1 className="pr-2 font-extrabold text-[20px]">My Trello</h1>
+          <h1 className="pr-2 font-extrabold text-[20px]">{boardTitle}</h1>
           <FontAwesomeIcon icon={faStar} />
         </div>
         <InviteMember/>

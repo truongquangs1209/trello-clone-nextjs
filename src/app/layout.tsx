@@ -3,10 +3,12 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import "../firebase/config";
-import 'tippy.js/dist/tippy.css';
+import "tippy.js/dist/tippy.css";
 import AuthProvider from "@/context/AppProvider";
 import { ToastContainer } from "react-toastify";
 import WorkspaceProvider from "@/context/WorkspaceProvider";
+import BoardsProvider from "@/context/BoardsProvider";
+import ListJobsProvider from "@/context/ListJobsProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,13 +24,17 @@ export default function RootLayout({
 }>) {
   return (
     <AuthProvider>
-     <WorkspaceProvider>
-     <html lang="en">
-        <body className={inter.className}>
-          {children} <ToastContainer />
-        </body>
-      </html>
-     </WorkspaceProvider>
+      <WorkspaceProvider>
+        <BoardsProvider>
+          <ListJobsProvider>
+            <html lang="en">
+              <body className={inter.className}>
+                {children} <ToastContainer />
+              </body>
+            </html>
+          </ListJobsProvider>
+        </BoardsProvider>
+      </WorkspaceProvider>
     </AuthProvider>
   );
 }
