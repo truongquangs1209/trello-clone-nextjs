@@ -2,14 +2,12 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
-  const [email, setEmail] = useState<string>()
-  const router = useRouter();
+  const [email, setEmail] = useState<string>('')
 
-  const handleLoginClick = () => {
-    router.push('/login');
-  };
+
 
   return (
     <div className="h-[100vh]">
@@ -22,7 +20,7 @@ export default function Home() {
         />
 
         <div className=" h-full flex items-center">
-          <button className="hover:bg-[#e2e8f0] transition p-[20px] text-[18px] text-black" onClick={handleLoginClick}>Log in</button>
+          <Link href={'login'} className="hover:bg-[#e2e8f0] transition p-[20px] text-[18px] text-black">Log in</Link>
           <button className="hover:bg-[#3b82f6] bg-[#2563eb] px-[20px] h-full text-[18px]">
             Get Trello for free
           </button>
@@ -37,7 +35,7 @@ export default function Home() {
                {`Keep everything in the same place—even if your team isn't.`}
             </p>
             <form
-               action='/signup'
+               action='/register'
                className='flex items-center justify-start md:flex-row flex-col'
             >
                <input

@@ -13,7 +13,7 @@ function NavBar({boardTitle}) {
   
   return (
 
-    <div className="bg-[#0000003d] flex justify-between items-center py-3 pl-[10px] pr-4">
+    <div className="bg-[#1d2125] flex justify-between items-center py-3 pl-[10px] pr-4">
       <div className="flex">
         <div className="flex items-center mr-6 justify-center">
           <h1 className="pr-2 font-extrabold text-[20px]">{boardTitle}</h1>

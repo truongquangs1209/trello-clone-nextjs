@@ -32,7 +32,7 @@ function Boards() {
       <CreateWorkspace />
       <Header />
       <div>
-        <div className="flex text-black m-auto w-[75%]">
+        <div className="flex text-black m-auto w-[75%] mb-14">
           <div className=" flex-[1] mt-[92px] px-4">
             <ul className="text-[#9FaDBC] ">
               <li className="py-[10px] mb-1 hover:bg-[#333b44] rounded-md transition px-2 text-sm font-medium">
@@ -137,7 +137,7 @@ function Boards() {
                           key={i.id}
                           href={`/boards/${item.title}/${i.id}`}
                             style={{ backgroundImage: `url(${i.background})` }}
-                            className="w-[195px] rounded text-white h-[96px]"
+                            className="w-[195px] bg-contain rounded text-white h-[96px]"
                           >
                             <p className="m-1 text-base text-white font-semibold">
                               {i.title}
