@@ -8,6 +8,7 @@ import { handleDragAndDrop } from "@/firebase/service";
 import CreateListJobs from "@/app/components/createListJobs/createListJobs";
 import { ListJobsContext } from "@/context/ListJobsProvider";
 import { BoardsContext } from "@/context/BoardsProvider";
+import Header from "@/app/components/header/header";
 
 export default function BoardItem({ params }) {
   const { user } = useContext(AuthContext);
@@ -33,6 +34,7 @@ export default function BoardItem({ params }) {
           handleDragAndDrop(results, listJobs, setListJobs)
         }
       >
+        <Header />
         <NavBar boardTitle={boardTitle} />
         <Droppable droppableId="ROOT" type="group" direction="horizontal">
           {(provided) => (

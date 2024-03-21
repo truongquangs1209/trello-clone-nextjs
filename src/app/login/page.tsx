@@ -52,8 +52,8 @@ function Login() {
     try {
       const auth = getAuth();
       await signInWithEmailAndPassword(auth, email, password);
-      toast.success('Success !')
       router.push("/boards");
+      toast.success('Success !')
     } catch (error) {
      toast.error('Email hoặc mật khẩu không đúng hoặc không tồn tại')
     }
