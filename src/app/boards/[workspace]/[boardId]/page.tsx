@@ -9,7 +9,7 @@ import CreateListJobs from "@/app/components/createListJobs/createListJobs";
 import { ListJobsContext } from "@/context/ListJobsProvider";
 import { BoardsContext } from "@/context/BoardsProvider";
 
-export default function Home({ params }) {
+export default function BoardItem({ params }) {
   const { user } = useContext(AuthContext);
   const { members } = useContext(UserListsContext);
   const email = user ? user.email : "";
@@ -19,18 +19,21 @@ export default function Home({ params }) {
   const listJobsOfBoard = listJobs.filter(
     (item) => item.boards === params.boardId
   );
-  const {boards} = useContext(BoardsContext)
+  const { boards } = useContext(BoardsContext);
   const selectedBoard = boards.find((board) => board.id === params.boardId);
-
-  const boardTitle = selectedBoard ? selectedBoard.title : ''
+  console.log(selectedBoard);
+  const boardTitle = selectedBoard ? selectedBoard.title : "";
   return (
-    <div className="h-[100vh]">
+    <div
+      style={{ backgroundImage: `url(${selectedBoard?.background})` }}
+      className="h-[100vh] bg-cover bg-no-repeat"
+    >
       <DragDropContext
         onDragEnd={(results) =>
           handleDragAndDrop(results, listJobs, setListJobs)
         }
       >
-        <NavBar boardTitle={boardTitle}/>
+        <NavBar boardTitle={boardTitle} />
         <Droppable droppableId="ROOT" type="group" direction="horizontal">
           {(provided) => (
             <div
