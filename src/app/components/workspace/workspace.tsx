@@ -1,6 +1,15 @@
 import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd, faAngleDown, faAngleUp, faClipboard, faGear, faHeart, faImage, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAdd,
+  faAngleDown,
+  faAngleUp,
+  faClipboard,
+  faGear,
+  faHeart,
+  faImage,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { WorkSpaceContext } from "@/context/WorkspaceProvider";
 
 function WorkSpace() {
@@ -16,7 +25,7 @@ function WorkSpace() {
   };
 
   return (
-    <div className="cursor-pointer"> 
+    <div className="cursor-pointer">
       <div className="p-2 text-xs font-semibold flex item-center justify-between">
         <span>Workspace</span>
         <FontAwesomeIcon
@@ -27,7 +36,7 @@ function WorkSpace() {
       <div className="flex items-center flex-col justify-between">
         {workspace &&
           workspace.map((item) => (
-            <div key={item.id} className="flex-col mb-3">
+            <div key={item.id} className="flex-col w-full mb-3">
               <div className="flex items-center mb-3 pr-4 justify-between w-full">
                 <span className="w-[26px] text-sm h-[26px] mr-3 bg-gradient-to-r from-sky-500 to-indigo-500 font-semibold text-white flex items-center justify-center rounded-lg">
                   {item.title.charAt(0)?.toUpperCase()}
@@ -42,7 +51,9 @@ function WorkSpace() {
               </div>
 
               <div
-                style={openItems[item.id] ? { height: "auto" } : { height: "1px" }} // Sử dụng trạng thái open của item để set height
+                style={
+                  openItems[item.id] ? { height: "auto" } : { height: "1px" }
+                } // Sử dụng trạng thái open của item để set height
                 className="overflow-hidden"
               >
                 <div className="py-1 mb-1 pr-2 pl-6 rounded-md overflow-hidden transition hover:bg-[#333c43]">

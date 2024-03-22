@@ -17,11 +17,13 @@ function CreateWorkspace() {
   const [descriptionWorkspace, setDescriptionWorkspace] = useState<string>("");
 
   const {
-    workspace,setWorkspace,
+    workspace,
+    setWorkspace,
     openModalAddWorkspace,
     setOpenModalAddWOrkspace,
   } = useContext(WorkSpaceContext);
-  const handleAddWorkspace: () => void = async () => {
+  const handleAddWorkspace = async (e) => {
+    e.preventDefault();
     try {
       const newWorkspace: IWorkspaces = {
         title: titleWorkspace,
@@ -126,8 +128,7 @@ function CreateWorkspace() {
             </span>
           </div>
           <button
-            onClick={() => handleAddWorkspace()}
-            
+            onClick={handleAddWorkspace}
             className="w-full h-[48px] rounded font-semibold text-[#1d2125] bg-[#579dff] hover:bg-[#85b8ff] transition mb-6 text-sm"
           >
             Tiếp tục
