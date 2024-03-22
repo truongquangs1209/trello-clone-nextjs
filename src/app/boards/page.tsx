@@ -32,7 +32,7 @@ function Boards() {
       <CreateWorkspace />
       <Header />
       <div>
-        <div className="flex text-black m-auto w-[75%] mb-14">
+        <div className="flex text-black m-auto w-[80%] mb-14">
           <div className=" flex-[1] mt-[92px] px-4">
             <ul className="text-[#9FaDBC] ">
               <li className="py-[10px] mb-1 hover:bg-[#333b44] rounded-md transition px-2 text-sm font-medium">
@@ -69,7 +69,18 @@ function Boards() {
                 <span>Đã xem gần đây</span>
               </div>
               <div className="flex gap-5">
-                <div className="w-[195px] h-[96px] bg-blue-700"></div>
+                {boards?.slice(0, 2).map((item) => (
+                  <Link
+                    key={item.id}
+                    href={`/boards/${item.title}/${item.id}`}
+                    style={{ backgroundImage: `url(${item.background})` }}
+                    className="w-[195px] bg-cover rounded text-white h-[96px]"
+                  >
+                    <p className="m-1 text-base text-white font-semibold">
+                      {item.title}
+                    </p>
+                  </Link>
+                ))}
 
                 {/* Create Boards  */}
                 <CreateBoards />
@@ -128,16 +139,16 @@ function Boards() {
                       </button>
                     </div>
                   </div>
-                  <div className="flex gap-4">
+                  <div className="flex gap-4 flex-wrap">
                     {boards &&
                       boards
                         .filter((board) => board.workspaceId === item.id)
                         .map((i) => (
                           <Link
-                          key={i.id}
-                          href={`/boards/${item.title}/${i.id}`}
+                            key={i.id}
+                            href={`/boards/${item.title}/${i.id}`}
                             style={{ backgroundImage: `url(${i.background})` }}
-                            className="w-[195px] bg-contain rounded text-white h-[96px]"
+                            className="w-[195px] bg-cover rounded text-white h-[96px]"
                           >
                             <p className="m-1 text-base text-white font-semibold">
                               {i.title}
@@ -146,6 +157,12 @@ function Boards() {
                         ))}
                     <div
                       onClick={() => setOpenModalAddBoards(!openModalAddBoards)}
+                      style={
+                        boards.filter((board) => board.workspaceId === item.id)
+                          .length >= 8
+                          ? { display: "none" }
+                          : { display: "flex" }
+                      }
                       className="select-none relative rounded text-sm text-[#b6c2cf] flex items-center justify-center w-[195px] cursor-pointer hover:bg-[#333b44] transition h-[96px] bg-[#272d33]"
                     >
                       Tạo bảng mới

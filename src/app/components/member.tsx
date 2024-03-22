@@ -1,8 +1,8 @@
-'use client'
+"use client";
 import React, { useContext, useState } from "react";
 import { Form, Modal, Select, Avatar, Tooltip } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faClipboard, faUser } from "@fortawesome/free-solid-svg-icons";
 import { UserListsContext } from "@/context/AppProvider";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/firebase/config";
@@ -46,12 +46,12 @@ function InviteMember() {
 
   return (
     <div className="flex items-center justify-between">
-      <div
-        onClick={() => handleClick()}
-        className="cursor-pointer border-solid border-[2px] p-1 rounded-md text-[12px] mr-3"
-      >
-        <FontAwesomeIcon className="mr-[2px]" icon={faUser} />
-        <span>Tham Gia</span>
+      <div onClick={()=>setIsInviteMemberVisible(true)} className="flex items-center justify-between hover:bg-slate-800 p-3 transition">
+        <div className="">
+          <FontAwesomeIcon className="w-4 h-4" icon={faUser} />
+          <span className="text-sm font-normal p-2">Thành viên</span>
+        </div>
+        <FontAwesomeIcon className="cursor-pointer" icon={faAdd} />
       </div>
 
       <Avatar.Group size="small" maxCount={2}>
