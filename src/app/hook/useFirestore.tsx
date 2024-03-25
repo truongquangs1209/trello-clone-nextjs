@@ -21,6 +21,29 @@ export const useFirestore = (collectionName) => {
   }, []);
 };
 
+export const useDataFetching = (
+  setData: React.Dispatch<React.SetStateAction<any>>,
+  collectionName: string,
+  dependencyArray: any[] = []
+) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const dataCollection = collection(db, collectionName);
+        const snapshot = await getDocs(dataCollection);
+
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setData(data as any[]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, [dependencyArray]);
+};
 
 
 // const useFirestores = (collection, condition)={

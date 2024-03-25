@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, onIdTokenChanged, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "@/firebase/config";
-import { useDataFetching } from "@/firebase/service";
+import { useDataFetching } from "@/app/hook/useFirestore";
 
 
 interface AuthProviderProps {

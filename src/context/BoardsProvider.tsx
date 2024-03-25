@@ -1,5 +1,5 @@
 "use client";
-import { useDataFetching } from "@/firebase/service";
+import { useDataFetching } from "@/app/hook/useFirestore";
 import React, { createContext, useState } from "react";
 
 interface BoardsContextValue {

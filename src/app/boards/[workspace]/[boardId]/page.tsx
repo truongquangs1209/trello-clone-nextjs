@@ -2,7 +2,7 @@
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import JobsGroup from "@/app/components/jobsGroup";
 import NavBar from "@/app/components/navbar";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext, UserListsContext } from "@/context/AppProvider";
 import { handleDragAndDrop } from "@/firebase/service";
 import CreateListJobs from "@/app/components/createListJobs/createListJobs";
@@ -16,21 +16,41 @@ import {
   faClipboard,
 } from "@fortawesome/free-solid-svg-icons";
 import InviteMember from "@/app/components/member";
+import Link from "next/link";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/firebase/config";
 
 export default function BoardItem({ params }) {
   const { user } = useContext(AuthContext);
   const [openWidget, setOpenWidget] = useState<boolean>(true);
-  const { members } = useContext(UserListsContext);
+  const { members,setMembers } = useContext(UserListsContext);
   const email = user ? user.email : "";
-
   const { listJobs, setListJobs } = useContext(ListJobsContext);
+  const [star, setStar] = useState(false);
 
   const listJobsOfBoard = listJobs.filter(
     (item) => item.boards === params.boardId
   );
-  const { boards } = useContext(BoardsContext);
+  const { boards, setBoards } = useContext(BoardsContext);
   const selectedBoard = boards.find((board) => board.id === params.boardId);
+  // console.log(selectedBoard);
   const boardTitle = selectedBoard ? selectedBoard.title : "";
+
+  const handleUpdateStar = () => {
+    setStar(!star);
+  };
+
+  useEffect(() => {
+    if (selectedBoard) {
+      const itemRef = doc(db, "listBoards", selectedBoard.id);
+      updateDoc(itemRef, { star: star });
+      selectedBoard.star = star;
+      setBoards((prevBoards) => [...prevBoards]); // Trigger re-render
+    }
+  }, [star, selectedBoard, setBoards]);
+  useEffect(() => {
+    console.log(selectedBoard);
+  }, [star]);
   return (
     <div
       style={{ backgroundImage: `url(${selectedBoard?.background})` }}
@@ -66,14 +86,14 @@ export default function BoardItem({ params }) {
                 <FontAwesomeIcon className="w-4 h-4" icon={faClipboard} />
                 <span className="text-sm font-normal p-2">Bảng</span>
               </div>
-              <InviteMember />
+              <InviteMember selectedBoard={selectedBoard}/>
             </div>
             <div>
               <h2 className="text-sm font-semibold p-3">
                 Các dạng xem của bạn
               </h2>
               <div className="hover:bg-slate-800 p-3 italic transition">
-                <FontAwesomeIcon className="w-4 h-4" icon={faClipboard} />
+                <FontAwesomeIcon className="w-4 h-4 " icon={faClipboard} />
                 <span className="text-sm font-normal p-2">Bảng</span>
               </div>
               <div className="hover:bg-slate-800 p-3 py-2 italic transition">
@@ -90,19 +110,25 @@ export default function BoardItem({ params }) {
                       (board) => board.workspaceId === selectedBoard.workspaceId
                     )
                     .map((item) => (
-                      <div className="hover:bg-[#64676a] transition cursor-pointer flex items-center p-3 text-sm font-medium">
+                      <Link
+                        key={item.id}
+                        href={`/boards/${params.workspace}/${item.id}`}
+                        className="hover:bg-[#64676a] transition cursor-pointer flex items-center p-3 text-sm font-medium"
+                      >
                         <div
                           className="w-7 h-6 mr-2 rounded bg-cover"
                           style={{ backgroundImage: `url(${item.background})` }}
                         ></div>
                         <span>{item.title}</span>
-                      </div>
+                      </Link>
                     ))}
               </div>
             </div>
           </div>
           <div className="w-full">
             <NavBar
+              handleUpdateStar={handleUpdateStar}
+              selectedBoard={selectedBoard}
               boardTitle={boardTitle}
               openWidget={openWidget}
               setOpenWidget={setOpenWidget}
@@ -114,8 +140,8 @@ export default function BoardItem({ params }) {
                   ref={provided.innerRef}
                   className=" flex flex-wrap my-7"
                 >
-                  {listJobs &&
-                    listJobs.map((listJob, index) => (
+                  {members.some((member) => member.email === email) &&
+                    listJobs?.map((listJob, index) => (
                       <Draggable
                         draggableId={listJob?.id}
                         index={index}

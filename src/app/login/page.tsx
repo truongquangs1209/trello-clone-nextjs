@@ -14,8 +14,8 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const router = useRouter();
 
   const handleLoginWithGoogle = async () => {
@@ -23,7 +23,6 @@ function Login() {
     const provider = new GoogleAuthProvider();
     try {
       const res = await signInWithPopup(auth, provider);
-      console.log({ res });
       const user = res.user;
       const { displayName, email, uid, photoURL } = user;
       const userRef = doc(db, "users", uid);
@@ -32,7 +31,6 @@ function Login() {
         email,
         uid,
         photoURL,
-
       });
       if (user?.uid) {
         router.push(`/boards`);
@@ -48,19 +46,32 @@ function Login() {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-   if(email && password){
-    try {
-      const auth = getAuth();
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push("/boards");
-      toast.success('Success !')
-    } catch (error) {
-     toast.error('Email hoặc mật khẩu không đúng hoặc không tồn tại')
+    if (email && password) {
+      try {
+        const auth = getAuth();
+        const res = await signInWithEmailAndPassword(auth, email, password);
+        console.log(res);
+        const user = res.user;
+        const { displayName = email, uid, photoURL } = user;
+        const userRef = doc(db, "users", uid);
+        await setDoc(userRef, {
+          displayName,
+          email,
+          uid,
+          photoURL,
+        });
+        if (user?.uid) {
+          router.push(`/boards`);
+          return;
+        }
+        router.push("/boards");
+        toast.success("Success !");
+      } catch (error) {
+        toast.error("Email hoặc mật khẩu không đúng hoặc không tồn tại");
+      }
+    } else {
+      toast.warning("Vui lòng nhập đầy đủ thông tin");
     }
-   }
-   else{
-    toast.warning('Vui lòng nhập đầy đủ thông tin')
-   }
   };
 
   return (
@@ -72,6 +83,7 @@ function Login() {
       />
       <div className="p-[40px] rounded-md w-[400px]  bg-white h-fit flex flex-col items-center">
         <Image
+          priority
           src="https://trello-clone-ruby.vercel.app/assets/trello-logo-blue.svg"
           alt=""
           width={117.5}
@@ -97,9 +109,8 @@ function Login() {
               className="px-[6px] rounded-lg py-2 text-[14px] h-[40px] w-full border border-solid text-[#172b4d]"
             />
             <button
-           
               type="submit"
-              className="bg-[#0052cc] transition-all hover:bg-[#0065ff] text-[14px] w-full h-[40px] rounded-lg my-3 font-medium"
+              className="bg-[#0052cc] transition-all text-white hover:bg-[#0065ff] text-[14px] w-full h-[40px] rounded-lg my-3 font-medium"
             >
               Tiếp tục
             </button>
@@ -145,7 +156,9 @@ function Login() {
                 <h2>Slack</h2>
               </button>
             </div>
-            <p className="hover:underline text-center text-[#0c66e4] text-sm">Bạn chưa có tài khoản ? <Link href={'/register'}> Đăng kí</Link></p>
+            <p className="hover:underline text-center text-[#0c66e4] text-sm">
+              Bạn chưa có tài khoản ? <Link href={"/register"}> Đăng kí</Link>
+            </p>
           </div>
         </div>
       </div>

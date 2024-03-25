@@ -18,6 +18,7 @@ function CreateListJobs({ boardsId }) {
     setOpenInputAddListJobs,
   } = useContext(ListJobsContext);
 
+  const { members, setMembers } = useContext(UserListsContext);
   const { user } = useContext(AuthContext);
   const email = user ? user.email : "";
 
@@ -86,16 +87,20 @@ function CreateListJobs({ boardsId }) {
             />
           </div>
         </div>
-        <div
-          onClick={() => setOpenInputAddListJobs(!openInputAddListJobs)}
-          className="items-center"
-          style={
-            openInputAddListJobs ? { display: "none" } : { display: "flex" }
-          }
-        >
-          <FontAwesomeIcon className="pr-2" icon={faPlus} />
-          <h2>Thêm danh sách</h2>
-        </div>
+        {members.some((member) => member.email === email) ? (
+          <div
+            onClick={() => setOpenInputAddListJobs(!openInputAddListJobs)}
+            className="items-center"
+            style={
+              openInputAddListJobs ? { display: "none" } : { display: "flex" }
+            }
+          >
+            <FontAwesomeIcon className="pr-2" icon={faPlus} />
+            <h2>Thêm danh sách</h2>
+          </div>
+        ) : (
+          <span>Bạn không phải là thành viên</span>
+        )}
       </div>
     </div>
   );

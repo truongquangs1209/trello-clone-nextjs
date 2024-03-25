@@ -2,20 +2,16 @@
 import React, { useContext, useState } from "react";
 import { Form, Modal, Select, Avatar, Tooltip } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAdd, faClipboard, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faUser } from "@fortawesome/free-solid-svg-icons";
 import { UserListsContext } from "@/context/AppProvider";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/firebase/config";
 
-function InviteMember() {
+function InviteMember({ selectedBoard }) {
   const [form] = Form.useForm();
   const [isInviteMemberVisible, setIsInviteMemberVisible] = useState(false);
   const [value, setValue] = useState([]);
   const { userLists, members, setMembers } = useContext(UserListsContext);
-
-  const handleClick = () => {
-    setIsInviteMemberVisible((prev) => !prev);
-  };
 
   const handleCancel = () => {
     form.resetFields();
@@ -32,8 +28,9 @@ function InviteMember() {
           email: selectUser.email,
           photoURL: selectUser.photoURL,
           displayName: selectUser.displayName,
+          boardId: selectedBoard?.id,
         });
-        setMembers([...members, selectUser]);
+        setMembers([...members, selectUser as any]);
       }
     });
     setValue([]);
@@ -41,12 +38,17 @@ function InviteMember() {
   };
 
   const filterMember = userLists?.filter(
-    (user) => !members?.find((member) => member.email === user.email)
+    (user) =>
+      !members?.find((member: MemberList) => member.email === user.email)
   );
+  // console.log(filterMember);
 
   return (
     <div className="flex items-center justify-between">
-      <div onClick={()=>setIsInviteMemberVisible(true)} className="flex items-center justify-between hover:bg-slate-800 p-3 transition">
+      <div
+        onClick={() => setIsInviteMemberVisible(true)}
+        className="flex items-center justify-between hover:bg-slate-800 p-3 transition"
+      >
         <div className="">
           <FontAwesomeIcon className="w-4 h-4" icon={faUser} />
           <span className="text-sm font-normal p-2">Thành viên</span>
@@ -55,8 +57,9 @@ function InviteMember() {
       </div>
 
       <Avatar.Group size="small" maxCount={2}>
-        {members &&
-          members.map((user) => (
+        {members
+          ?.filter((member) => member.boardId === selectedBoard?.id)
+          .map((user) => (
             <Tooltip key={user.email} title={user.email}>
               <Avatar src={user.photoURL} />
             </Tooltip>
@@ -86,9 +89,11 @@ function InviteMember() {
                     <Avatar size="small" src={user.photoURL}>
                       {user.photoURL
                         ? ""
-                        : user.displayName.charAt(0)?.toUpperCase()}
+                        : user.displayName
+                        ? user?.displayName?.charAt(0).toUpperCase()
+                        : user?.email?.charAt(0).toUpperCase()}
                     </Avatar>
-                    {user.displayName}
+                    {user.displayName ? user.displayName : user.email}
                   </Select.Option>
                 ))}
               </Select>

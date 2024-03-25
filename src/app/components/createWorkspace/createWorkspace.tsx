@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Select } from "antd/lib";
 import { addDoc, collection } from "firebase/firestore";
 import Image from "next/image";
+import { title } from "process";
 import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -24,24 +25,25 @@ function CreateWorkspace() {
   } = useContext(WorkSpaceContext);
   const handleAddWorkspace = async (e) => {
     e.preventDefault();
-    try {
-      const newWorkspace: IWorkspaces = {
-        title: titleWorkspace,
-        type: typeWorkspace,
-        boards: [],
-        createBy: user.uid,
-        description: descriptionWorkspace,
-      };
-      const dataCollection = collection(db, "workspaces");
-      const docRef = await addDoc(dataCollection, newWorkspace);
-      newWorkspace.id = docRef.id;
-      setWorkspace([...workspace, newWorkspace as any]);
-      toast.success("Create workspace success!");
-      setOpenModalAddWOrkspace(false);
-      console.log(docRef);
-    } catch (error) {
-      console.log(error);
-    }
+      if (typeWorkspace == "" || titleWorkspace == "") {
+        toast.error("Vui lòng nhập đầy đủ thông tin");
+      } else {
+        const newWorkspace: IWorkspaces = {
+          title: titleWorkspace,
+          type: typeWorkspace,
+          boards: [],
+          createBy: user.uid,
+          description: descriptionWorkspace,
+        };
+        const dataCollection = collection(db, "workspaces");
+        const docRef = await addDoc(dataCollection, newWorkspace);
+        newWorkspace.id = docRef.id;
+        setWorkspace([...workspace, newWorkspace as any]);
+        toast.success("Create workspace success!");
+        setOpenModalAddWOrkspace(false);
+        console.log(docRef);
+      }
+    
   };
 
   return (
@@ -53,7 +55,7 @@ function CreateWorkspace() {
               backgroundImage: `url('https://trello-clone-ruby.vercel.app/assets/other/workspace-modal-bg.png')`,
             }
       }
-      className="absolute mb-20 rounded left-[12%] top-[12%] bg-cover bg-no-repeat z-10 m-auto w-[74%] "
+      className="fixed mb-20 rounded left-[12%] top-[2%] bg-cover bg-no-repeat z-10 m-auto w-[74%] "
     >
       <div className="text-right  m-2 cursor-pointer ">
         <FontAwesomeIcon

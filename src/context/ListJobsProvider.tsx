@@ -1,6 +1,6 @@
 "use client";
 import { db } from "@/firebase/config";
-import { useDataFetching } from "@/firebase/service";
+import { useDataFetching } from "@/app/hook/useFirestore";
 import { collection, getDocs } from "firebase/firestore";
 import React, { createContext, useEffect, useState } from "react";
 

@@ -61,7 +61,23 @@ function Boards() {
                 <FontAwesomeIcon className="pr-3 w-6 h-6" icon={faStar} />
                 <span>Bảng đánh dấu sao</span>
               </div>
-              <div className="w-[195px] h-[96px] bg-orange-700"></div>
+              <div className="flex gap-5">
+                {boards &&
+                  boards
+                    .filter((board) => board.star === true)
+                    .map((item) => (
+                      <Link
+                        key={item.id}
+                        href={`/boards/${item.title}/${item.id}`}
+                        style={{ backgroundImage: `url(${item.background})` }}
+                        className="w-[195px] bg-cover rounded text-white bg-black h-[96px]"
+                      >
+                        <p className="m-1 text-base text-white font-semibold">
+                          {item.title}
+                        </p>
+                      </Link>
+                    ))}
+              </div>
             </div>
             <div className="mb-[70px]">
               <div className="py-[10px] pb-5 flex items-center text-base font-bold">
@@ -163,7 +179,7 @@ function Boards() {
                           ? { display: "none" }
                           : { display: "flex" }
                       }
-                      className="select-none relative rounded text-sm text-[#b6c2cf] flex items-center justify-center w-[195px] cursor-pointer hover:bg-[#333b44] transition h-[96px] bg-[#272d33]"
+                      className="select-none  rounded text-sm text-[#b6c2cf] flex items-center justify-center w-[195px] cursor-pointer hover:bg-[#333b44] transition h-[96px] bg-[#272d33]"
                     >
                       Tạo bảng mới
                     </div>

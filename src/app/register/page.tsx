@@ -96,7 +96,7 @@ function Register() {
             />
             <button
               type="submit"
-              className="bg-[#0052cc] transition-all hover:bg-[#0065ff] text-[14px] w-full h-[40px] rounded-lg my-3 font-medium"
+              className="bg-[#0052cc] transition-all text-white hover:bg-[#0065ff] text-[14px] w-full h-[40px] rounded-lg my-3 font-medium"
             >
               Đăng ký
             </button>

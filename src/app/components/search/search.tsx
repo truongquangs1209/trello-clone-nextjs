@@ -8,7 +8,7 @@ import { useContext, useRef, useState } from "react";
 
 function Search() {
   const inputRef = useRef();
-  const { boards, setBoards } = useContext(BoardsContext);
+  const { boards } = useContext(BoardsContext);
   const [searchValue, setSearchValue] = useState("");
 
   const filterBoard = boards.filter((item) =>
@@ -21,7 +21,7 @@ function Search() {
         visible={searchValue && boards.length > 0}
         interactive
         placement="right"
-        render={(attrs) => (
+        render={() => (
           <div
             style={
               searchValue.length > 0
@@ -35,7 +35,7 @@ function Search() {
               filterBoard.map((item) => (
                 <Link
                   className="flex items-center transition hover:bg-gray-600 px-2 py-2"
-                  href={`/boards/${item.title}/${item.id}`}
+                  href={`/boards/${item.workspaceId}/${item.id}`}
                   key={item.id}
                 >
                   <div
