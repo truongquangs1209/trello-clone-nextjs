@@ -28,6 +28,7 @@ interface MemberList {
   email: string;
   id: string;
   boardId: string
+  workspaceId:string[];
   photoURL: string;
 }
 

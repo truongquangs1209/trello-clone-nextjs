@@ -63,6 +63,8 @@ function Login() {
         if (user?.uid) {
           router.push(`/boards`);
           return;
+        }else{
+          router.push('/login')
         }
         router.push("/boards");
         toast.success("Success !");

@@ -23,27 +23,26 @@ function CreateWorkspace() {
     openModalAddWorkspace,
     setOpenModalAddWOrkspace,
   } = useContext(WorkSpaceContext);
-  const handleAddWorkspace = async (e) => {
+  const handleAddWorkspace = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-      if (typeWorkspace == "" || titleWorkspace == "") {
-        toast.error("Vui lòng nhập đầy đủ thông tin");
-      } else {
-        const newWorkspace: IWorkspaces = {
-          title: titleWorkspace,
-          type: typeWorkspace,
-          boards: [],
-          createBy: user.uid,
-          description: descriptionWorkspace,
-        };
-        const dataCollection = collection(db, "workspaces");
-        const docRef = await addDoc(dataCollection, newWorkspace);
-        newWorkspace.id = docRef.id;
-        setWorkspace([...workspace, newWorkspace as any]);
-        toast.success("Create workspace success!");
-        setOpenModalAddWOrkspace(false);
-        console.log(docRef);
-      }
-    
+    if (typeWorkspace == "" || titleWorkspace == "") {
+      toast.error("Vui lòng nhập đầy đủ thông tin");
+    } else {
+      const newWorkspace: IWorkspaces = {
+        title: titleWorkspace,
+        type: typeWorkspace,
+        boards: [],
+        createBy: user.uid,
+        description: descriptionWorkspace,
+      };
+      const dataCollection = collection(db, "workspaces");
+      const docRef = await addDoc(dataCollection, newWorkspace);
+      newWorkspace.id = docRef.id;
+      setWorkspace([...workspace, newWorkspace as any]);
+      toast.success("Create workspace success!");
+      setOpenModalAddWOrkspace(false);
+      console.log(docRef);
+    }
   };
 
   return (

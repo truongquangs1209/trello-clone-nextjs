@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleRight,
   faClipboardList,
-  faUser,
   faStar as solidStar,
 } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 
 interface NavBarProps {
@@ -14,7 +14,7 @@ interface NavBarProps {
   openWidget: boolean;
   setOpenWidget: React.Dispatch<React.SetStateAction<boolean>>;
   selectedBoard: IBoards;
-  handleUpdateStar: () => void;
+  handleUpdateStar: () => any;
 }
 
 function NavBar({

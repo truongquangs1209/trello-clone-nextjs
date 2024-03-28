@@ -59,8 +59,8 @@ function AuthProvider({ children }: AuthProviderProps) {
     };
   }, [auth, router]);
 
-  useDataFetching(setJobItem, "itemJobs", jobItem);
-  useDataFetching(setUserList, "users", userLists);
+  useDataFetching(setJobItem, "itemJobs", members);
+  useDataFetching(setUserList, "users", members);
   useDataFetching(setMembers, "member", null);
   // console.log(members);
 

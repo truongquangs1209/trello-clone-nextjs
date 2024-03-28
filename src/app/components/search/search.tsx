@@ -28,7 +28,7 @@ function Search() {
                 ? { display: "block" }
                 : { display: "none" }
             }
-            className="fixed top-[10px] right-[10px] rounded-md bg-gray-500 w-[300px] mt-3 py-3"
+            className="fixed top-[10px] right-[10px] rounded-md bg-gray-800 w-[300px] mt-3 py-3"
           >
             <h2 className="text-xs font-semibold pl-2">KẾT QUẢ TÌM KIẾM</h2>
             {filterBoard &&

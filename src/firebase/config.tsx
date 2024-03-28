@@ -5,7 +5,6 @@ import { getAnalytics } from "firebase/analytics";
 import {
   getAuth,
   connectAuthEmulator,
-  createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use

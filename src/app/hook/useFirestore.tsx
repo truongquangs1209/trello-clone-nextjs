@@ -1,25 +1,9 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { db } from '@/firebase/config';
 import { collection, getDocs } from 'firebase/firestore';
 
-export const useFirestore = (collectionName) => {
-  const [documents, setocuments] = useState([]);
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      const dataCollection = collection(db, collectionName);
-      const snapshot = await getDocs(dataCollection);
-      const newData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-    //   setData(newData);
-    };
 
-    fetchData();
-  }, []);
-};
 
 export const useDataFetching = (
   setData: React.Dispatch<React.SetStateAction<any>>,

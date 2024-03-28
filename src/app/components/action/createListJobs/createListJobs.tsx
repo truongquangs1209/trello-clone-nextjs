@@ -1,15 +1,15 @@
 import { AuthContext, UserListsContext } from "@/context/AppProvider";
 import { ListJobsContext } from "@/context/ListJobsProvider";
+import { WorkSpaceContext } from "@/context/WorkspaceProvider";
 import { db } from "@/firebase/config";
 import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { addDoc, collection } from "firebase/firestore";
 import React, { useContext, useState } from "react";
-import { toast } from "react-toastify";
 
 type handleAddList = () => void;
 
-function CreateListJobs({ boardsId }) {
+function CreateListJobs({ boardsId, selectedWorkspace }) {
   const [titleList, setTitleList] = useState<string>("");
   const {
     listJobs,
@@ -18,11 +18,14 @@ function CreateListJobs({ boardsId }) {
     setOpenInputAddListJobs,
   } = useContext(ListJobsContext);
 
-  const { members, setMembers } = useContext(UserListsContext);
+  const { members,userLists } = useContext(UserListsContext);
   const { user } = useContext(AuthContext);
+  // console.log(typeof user);
   const email = user ? user.email : "";
+  const userListNotInMembers = userLists?.filter(user => !members.some(member => member.id === user.id));
+// console.log(userListNotInMembers);
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: { key: string }) => {
     if (e.key === "Enter") {
       handleAddList();
     }
@@ -45,7 +48,6 @@ function CreateListJobs({ boardsId }) {
 
         setOpenInputAddListJobs(false);
         setTitleList("");
-        toast.success("Create succeed !...");
       }
     } catch (error) {
       console.log(error);
@@ -87,7 +89,8 @@ function CreateListJobs({ boardsId }) {
             />
           </div>
         </div>
-        {members.some((member) => member.email === email) ? (
+        {members.some((member) => member.email === email) ||
+        selectedWorkspace?.createBy === user?.uid ? (
           <div
             onClick={() => setOpenInputAddListJobs(!openInputAddListJobs)}
             className="items-center"

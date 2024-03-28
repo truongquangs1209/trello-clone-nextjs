@@ -2,10 +2,10 @@
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import JobsGroup from "@/app/components/jobsGroup";
 import NavBar from "@/app/components/navbar";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext, UserListsContext } from "@/context/AppProvider";
 import { handleDragAndDrop } from "@/firebase/service";
-import CreateListJobs from "@/app/components/createListJobs/createListJobs";
+import CreateListJobs from "@/app/components/action/createListJobs/createListJobs";
 import { ListJobsContext } from "@/context/ListJobsProvider";
 import { BoardsContext } from "@/context/BoardsProvider";
 import Header from "@/app/components/header/header";
@@ -19,46 +19,51 @@ import InviteMember from "@/app/components/member";
 import Link from "next/link";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase/config";
+import CreateWorkspace from "@/app/components/action/createWorkspace/createWorkspace";
+import CreateBoards from "@/app/components/action/createBoards/createBoards";
+import { WorkSpaceContext } from "@/context/WorkspaceProvider";
+import { Avatar } from "antd";
 
 export default function BoardItem({ params }) {
-  const { user } = useContext(AuthContext);
+  const { userLists, members } = useContext(UserListsContext);
   const [openWidget, setOpenWidget] = useState<boolean>(true);
-  const { members,setMembers } = useContext(UserListsContext);
-  const email = user ? user.email : "";
+  const { user } = useContext(AuthContext);
+  const { workspace } = useContext(WorkSpaceContext);
   const { listJobs, setListJobs } = useContext(ListJobsContext);
-  const [star, setStar] = useState(false);
-
-  const listJobsOfBoard = listJobs.filter(
-    (item) => item.boards === params.boardId
-  );
-  const { boards, setBoards } = useContext(BoardsContext);
-  const selectedBoard = boards.find((board) => board.id === params.boardId);
-  // console.log(selectedBoard);
-  const boardTitle = selectedBoard ? selectedBoard.title : "";
-
-  const handleUpdateStar = () => {
+  const { boards, setBoards, star, setStar } = useContext(BoardsContext);
+  // console.log(listJobs);
+  const handleUpdateStar = (selectedBoard: IBoards) => {
     setStar(!star);
-  };
 
-  useEffect(() => {
     if (selectedBoard) {
       const itemRef = doc(db, "listBoards", selectedBoard.id);
       updateDoc(itemRef, { star: star });
       selectedBoard.star = star;
       setBoards((prevBoards) => [...prevBoards]); // Trigger re-render
     }
-  }, [star, selectedBoard, setBoards]);
-  useEffect(() => {
-    console.log(selectedBoard);
-  }, [star]);
+  };
+  const email = user?.email;
+  const listJobsOfBoard = listJobs.filter(
+    (item) => item.boards === params.boardId
+  );
+  const selectedBoard = boards.find((board) => board.id === params.boardId);
+  const boardTitle = selectedBoard ? selectedBoard.title : "";
+  const workspaceTitle = workspace.find((item) => item.id === params.workspace);
+  const checkUser = members.filter(
+    (item) => item.workspaceId === params.workspace
+  );
+  // console.log(checkUser);
+  const userCreatedWorkspace = userLists.find(
+    (item) => item.id === workspaceTitle.createBy
+  );
   return (
     <div
       style={{ backgroundImage: `url(${selectedBoard?.background})` }}
-      className="h-[100vh]  bg-cover bg-no-repeat over overflow-y-hidden"
+      className="h-[100vh] bg-cover bg-no-repeat over overflow-y-hidden"
     >
       <DragDropContext
         onDragEnd={(results) =>
-          handleDragAndDrop(results, listJobs, setListJobs)
+          handleDragAndDrop(results, listJobsOfBoard, setListJobs)
         }
       >
         <Header />
@@ -66,7 +71,7 @@ export default function BoardItem({ params }) {
           <div
             style={{
               width: openWidget ? "300px" : "0px",
-              transform: openWidget ? "translateX(0)" : "translateX(-200px)",
+              transform: openWidget ? "translateX(0)" : "translateX(-300px)",
             }}
             className="flex relative mt-[52px] flex-col w-[300px] bg-[#221d24] h-[100vh]"
           >
@@ -77,16 +82,41 @@ export default function BoardItem({ params }) {
             />
             <div className="flex p-5 h-fit w-full items-center border-b">
               <span className="w-[32px] text-sm h-[32px] mr-3 bg-gradient-to-r from-sky-500 to-indigo-500 font-semibold text-white flex items-center justify-center rounded-lg">
-                {params.workspace.charAt(0)?.toUpperCase()}
+                {workspaceTitle?.title.charAt(0)?.toUpperCase()}
               </span>
-              <h2 className="text-sm font-normal ml-2">{params.workspace}</h2>
+              <h2 className="text-xl font-semibold ml-2">
+                {workspaceTitle?.title}
+              </h2>
             </div>
             <div>
               <div className="hover:bg-slate-800 p-3 mt-4 transition">
                 <FontAwesomeIcon className="w-4 h-4" icon={faClipboard} />
                 <span className="text-sm font-normal p-2">Bảng</span>
               </div>
-              <InviteMember selectedBoard={selectedBoard}/>
+              <InviteMember
+                selectedBoard={selectedBoard}
+                selectedWorkspace={params?.workspace}
+              />
+              <div className=" p-3">
+                <h3 className="text-sm mb-2">Được tạo bởi</h3>
+                <div className="flex">
+                  {userCreatedWorkspace?.photoURL ? (
+                    <Avatar
+                      size="small"
+                      src={userCreatedWorkspace?.photoURL}
+                    ></Avatar>
+                  ) : (
+                    <span className="w-[23px] text-sm h-[23px] mr-3 font-semibold text-white flex items-center justify-center rounded-[50%]">
+                      {userCreatedWorkspace?.email.charAt(0)?.toUpperCase()}
+                    </span>
+                  )}
+                  <h3 className="text-sm ml-2">
+                    {userCreatedWorkspace?.displayName
+                      ? userCreatedWorkspace?.displayName
+                      : userCreatedWorkspace?.email}
+                  </h3>
+                </div>
+              </div>
             </div>
             <div>
               <h2 className="text-sm font-semibold p-3">
@@ -104,30 +134,29 @@ export default function BoardItem({ params }) {
             <div>
               <h2 className="text-sm font-semibold p-3">Các bảng của bạn</h2>
               <div>
-                {boards &&
-                  boards
-                    .filter(
-                      (board) => board.workspaceId === selectedBoard.workspaceId
-                    )
-                    .map((item) => (
-                      <Link
-                        key={item.id}
-                        href={`/boards/${params.workspace}/${item.id}`}
-                        className="hover:bg-[#64676a] transition cursor-pointer flex items-center p-3 text-sm font-medium"
-                      >
-                        <div
-                          className="w-7 h-6 mr-2 rounded bg-cover"
-                          style={{ backgroundImage: `url(${item.background})` }}
-                        ></div>
-                        <span>{item.title}</span>
-                      </Link>
-                    ))}
+                {boards
+                  ?.filter(
+                    (board) => board.workspaceId === selectedBoard?.workspaceId
+                  )
+                  .map((item) => (
+                    <Link
+                      key={item.id}
+                      href={`/boards/${params.workspace}/${item.id}`}
+                      className="hover:bg-[#64676a] transition cursor-pointer flex items-center p-3 text-sm font-medium"
+                    >
+                      <div
+                        className="w-7 h-6 mr-2 rounded bg-cover"
+                        style={{ backgroundImage: `url(${item.background})` }}
+                      ></div>
+                      <span>{item.title}</span>
+                    </Link>
+                  ))}
               </div>
             </div>
           </div>
           <div className="w-full">
             <NavBar
-              handleUpdateStar={handleUpdateStar}
+              handleUpdateStar={() => handleUpdateStar(selectedBoard)}
               selectedBoard={selectedBoard}
               boardTitle={boardTitle}
               openWidget={openWidget}
@@ -141,7 +170,7 @@ export default function BoardItem({ params }) {
                   className=" flex flex-wrap my-7"
                 >
                   {members.some((member) => member.email === email) &&
-                    listJobs?.map((listJob, index) => (
+                    listJobsOfBoard?.map((listJob, index) => (
                       <Draggable
                         draggableId={listJob?.id}
                         index={index}
@@ -166,13 +195,18 @@ export default function BoardItem({ params }) {
                       </Draggable>
                     ))}
                   {provided.placeholder}
-                  <CreateListJobs boardsId={params.boardId} />
+                  <CreateListJobs
+                    boardsId={params.boardId}
+                    selectedWorkspace={workspaceTitle}
+                  />
                 </div>
               )}
             </Droppable>
           </div>
         </div>
       </DragDropContext>
+      <CreateBoards />
+      <CreateWorkspace />
     </div>
   );
 }

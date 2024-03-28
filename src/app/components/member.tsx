@@ -6,12 +6,16 @@ import { faAdd, faUser } from "@fortawesome/free-solid-svg-icons";
 import { UserListsContext } from "@/context/AppProvider";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/firebase/config";
+import { WorkSpaceContext } from "@/context/WorkspaceProvider";
 
-function InviteMember({ selectedBoard }) {
+function InviteMember({ selectedBoard, selectedWorkspace }) {
   const [form] = Form.useForm();
-  const [isInviteMemberVisible, setIsInviteMemberVisible] = useState(false);
+  const [isInviteMemberVisible, setIsInviteMemberVisible] =
+    useState<boolean>(false);
   const [value, setValue] = useState([]);
   const { userLists, members, setMembers } = useContext(UserListsContext);
+  //  console.log(members)
+  const { workspace } = useContext(WorkSpaceContext);
 
   const handleCancel = () => {
     form.resetFields();
@@ -29,6 +33,7 @@ function InviteMember({ selectedBoard }) {
           photoURL: selectUser.photoURL,
           displayName: selectUser.displayName,
           boardId: selectedBoard?.id,
+          workspaceId: selectedWorkspace,
         });
         setMembers([...members, selectUser as any]);
       }
@@ -37,12 +42,11 @@ function InviteMember({ selectedBoard }) {
     setIsInviteMemberVisible(false);
   };
 
-  const filterMember = userLists?.filter(
-    (user) =>
-      !members?.find((member: MemberList) => member.email === user.email)
-  );
-  // console.log(filterMember);
 
+  const fillWorkspace = workspace?.find(
+    (item) => item.id === selectedWorkspace
+  );
+  const userListNotInMembers = userLists?.filter(user => !members.some(member => member.id === user.id));
   return (
     <div className="flex items-center justify-between">
       <div
@@ -58,10 +62,16 @@ function InviteMember({ selectedBoard }) {
 
       <Avatar.Group size="small" maxCount={2}>
         {members
-          ?.filter((member) => member.boardId === selectedBoard?.id)
+          ?.filter((member) => member.workspaceId === selectedWorkspace)
           .map((user) => (
             <Tooltip key={user.email} title={user.email}>
-              <Avatar src={user.photoURL} />
+              <Avatar
+                src={
+                  user.photoURL
+                    ? user.photoURL
+                    : "https://tse4.explicit.bing.net/th?id=OIP.xo-BCC1ZKFpLL65D93eHcgHaGe&pid=Api&P=0&h=180"
+                }
+              />
             </Tooltip>
           ))}
       </Avatar.Group>
@@ -74,7 +84,7 @@ function InviteMember({ selectedBoard }) {
           onCancel={handleCancel}
         >
           <Form layout="vertical">
-            {filterMember && userLists && members ? (
+            {userLists && members ? (
               <Select
                 mode="multiple"
                 showSearch
@@ -84,18 +94,20 @@ function InviteMember({ selectedBoard }) {
                 onChange={(newValue) => setValue(newValue)}
                 style={{ width: "100%" }}
               >
-                {filterMember.map((user) => (
-                  <Select.Option key={user.id} value={user.id}>
-                    <Avatar size="small" src={user.photoURL}>
-                      {user.photoURL
-                        ? ""
-                        : user.displayName
-                        ? user?.displayName?.charAt(0).toUpperCase()
-                        : user?.email?.charAt(0).toUpperCase()}
-                    </Avatar>
-                    {user.displayName ? user.displayName : user.email}
-                  </Select.Option>
-                ))}
+                {userListNotInMembers
+                  ?.filter((item) => item?.id !== fillWorkspace.createBy)
+                  .map((user) => (
+                    <Select.Option key={user.id} value={user.id}>
+                      <Avatar size="small" src={user.photoURL}>
+                        {user.photoURL
+                          ? ""
+                          : user.displayName
+                          ? user?.displayName?.charAt(0).toUpperCase()
+                          : user?.email?.charAt(0).toUpperCase()}
+                      </Avatar>
+                      {user.displayName ? user.displayName : user.email}
+                    </Select.Option>
+                  ))}
               </Select>
             ) : (
               <p>Loading...</p>

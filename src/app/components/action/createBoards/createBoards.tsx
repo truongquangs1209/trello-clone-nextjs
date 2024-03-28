@@ -73,13 +73,9 @@ function CreateBoards() {
   );
   const [titleBoard, setTitleBoard] = useState<string>("");
   const [workspaceInfo, setWorkspaceInfo] = useState();
-  //  console.log(workspaceInfo);
-
   const { boards, setBoards, openModalAddBoards, setOpenModalAddBoards } =
     useContext(BoardsContext);
   const { workspace } = useContext(WorkSpaceContext);
-  // console.log(workspace);
-
   const handleAddBoard: () => void = async () => {
     try {
       const newBoard: IBoards = {
@@ -95,7 +91,6 @@ function CreateBoards() {
       setBoards([...boards, newBoard as any]);
       setTitleBoard("");
       setOpenModalAddBoards(false);
-      // router.push(`/boards/${props.workspace}/${props.board?.id}`)
       toast.success("Create succeed !...");
     } catch (error) {
       console.log(error);
@@ -104,7 +99,7 @@ function CreateBoards() {
 
   return (
     <section
-      className="absolute px-3 z-10 rounded-xl right-[55%] w-[304px] top-[13%] bg-[#282e33]"
+      className="fixed px-3 z-10 rounded-xl right-[55%] w-[304px] top-[10%] bg-[#282e33]"
       style={openModalAddBoards ? { display: "block" } : { display: "none" }}
     >
       <div className="flex py-4 items-center justify-center">
@@ -116,7 +111,7 @@ function CreateBoards() {
         />
       </div>
       <div
-        className="w-[200px] back flex items-center justify-center h-[120px] m-auto rounded bg-white"
+        className="w-[200px] bg-contain flex items-center justify-center h-[120px] m-auto rounded bg-white"
         style={{ backgroundImage: `url(${backgroundImg})` }}
       >
         <Image

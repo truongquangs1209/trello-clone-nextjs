@@ -27,13 +27,12 @@ function Header() {
   const { boards, setOpenModalAddBoards } = useContext(BoardsContext);
   const photoURL = user ? user.photoURL : "";
   const displayName = user ? user.displayName : "";
+  const email = user ? user.email : "";
   const router = useRouter();
 
   const handleUpdateStar = (itemStar: IBoards) => {
     const itemRef = doc(db, "listBoards", itemStar.id);
     updateDoc(itemRef, { star: !itemStar.star });
-
-    // setBoards((prevBoards) => [...prevBoards]); // Trigger re-render
   };
 
   return (
@@ -211,14 +210,19 @@ function Header() {
         <Search />
         <div className="flex items-center ">
           <div className="flex items-center">
-            <img
-              src={photoURL}
-              width={30}
-              height={30}
-              alt="Picture of the author"
-              className="rounded-[50%] mr-2"
-            />
-            <h2 className="text-[12px]">{displayName}</h2>
+            {photoURL ? (
+              <img
+                src={photoURL}
+                width={30}
+                height={30}
+                className="rounded-[50%] mr-2"
+              />
+            ) : (
+              <span className="w-[28px] text-sm h-[28px] mr-3 rounded-[50%] font-semibold bg-[#172b4d] text-white flex items-center justify-center">
+                {email?.charAt(0)?.toUpperCase()}
+              </span>
+            )}
+            <h2 className="text-[12px]">{displayName ? displayName : email}</h2>
           </div>
           <button
             className="text-[12px] p-1 h-fit ml-[6px] border border-solid border-[#ccc]"

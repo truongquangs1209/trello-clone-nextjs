@@ -13,11 +13,12 @@ import {
 import { faStar } from "@fortawesome/free-solid-svg-icons/faStar";
 import { useContext } from "react";
 import WorkSpace from "../components/workspace/workspace";
-import CreateWorkspace from "../components/createWorkspace/createWorkspace";
+import CreateWorkspace from "../components/action/createWorkspace/createWorkspace";
 import { WorkSpaceContext } from "@/context/WorkspaceProvider";
-import CreateBoards from "../components/createBoards/createBoards";
+import CreateBoards from "../components/action/createBoards/createBoards";
 import { BoardsContext } from "@/context/BoardsProvider";
 import Link from "next/link";
+import BoardShortcut from "../components/boardItem/boardItem";
 
 function Boards() {
   // const [modalCreateBoard, setModalCreateBoard] = useState<boolean>(false);
@@ -33,42 +34,22 @@ function Boards() {
       <Header />
       <div>
         <div className="flex text-black m-auto w-[80%] mb-14">
-          <div className=" flex-[1] mt-[92px] px-4">
-            <ul className="text-[#9FaDBC] ">
-              <li className="py-[10px] mb-1 hover:bg-[#333b44] rounded-md transition px-2 text-sm font-medium">
-                <FontAwesomeIcon className="mr-2 w-4 h-4" icon={faClipboard} />
-                <span>Bảng</span>
-              </li>
-              <li className="py-[10px]  mb-1 hover:bg-[#333b44] rounded-md transition px-2 text-sm font-medium">
-                <FontAwesomeIcon
-                  className="mr-2 w-4 h-4"
-                  icon={faClipboardCheck}
-                />
-                <span>Mẫu</span>
-              </li>
-              <li className="py-[10px]  mb-1 hover:bg-[#333b44] rounded-md transition px-2 text-sm font-medium">
-                <FontAwesomeIcon className="mr-2 w-4 h-4" icon={faHome} />
-                <span>Trang chủ</span>
-              </li>
-              <hr className="my-3"></hr>
-            </ul>
-            <WorkSpace />
-          </div>
+          <WorkSpace />
 
-          <div className="flex-[3] mt-[92px] px-4">
+          <div className="flex-[3] overflow-y-auto scrollbar-hide h-[100vh] mt-[92px] px-4">
             <div className="pb-[40px]">
               <div className="py-[10px] pb-5 flex items-center text-base font-bold">
                 <FontAwesomeIcon className="pr-3 w-6 h-6" icon={faStar} />
                 <span>Bảng đánh dấu sao</span>
               </div>
               <div className="flex gap-5">
-                {boards &&
+                {workspace &&
                   boards
-                    .filter((board) => board.star === true)
+                    ?.filter((board) => board.star === true)
                     .map((item) => (
                       <Link
                         key={item.id}
-                        href={`/boards/${item.title}/${item.id}`}
+                        href={`/boards/${item.workspaceId}/${item.id}`}
                         style={{ backgroundImage: `url(${item.background})` }}
                         className="w-[195px] bg-cover rounded text-white bg-black h-[96px]"
                       >
@@ -85,18 +66,17 @@ function Boards() {
                 <span>Đã xem gần đây</span>
               </div>
               <div className="flex gap-5">
-                {boards?.slice(0, 2).map((item) => (
-                  <Link
-                    key={item.id}
-                    href={`/boards/${item.title}/${item.id}`}
-                    style={{ backgroundImage: `url(${item.background})` }}
-                    className="w-[195px] bg-cover rounded text-white h-[96px]"
-                  >
-                    <p className="m-1 text-base text-white font-semibold">
-                      {item.title}
-                    </p>
-                  </Link>
-                ))}
+                {workspace &&
+                  boards
+                    ?.slice(0, 2)
+                    .map((item) => (
+                      <BoardShortcut
+                        key={item.id}
+                        href={`/boards/${item.workspaceId}/${item.id}`}
+                        background={item.background}
+                        title={item.title}
+                      />
+                    ))}
 
                 {/* Create Boards  */}
                 <CreateBoards />
@@ -116,13 +96,16 @@ function Boards() {
                       <span className=" font-bold text-base">{item.title}</span>
                     </div>
                     <div className="flex gap-2">
-                      <button className="py-1 px-2 bg-[#282d33] rounded">
+                      <Link
+                        href={`/boards/${item.id}`}
+                        className="block py-1 px-2 bg-[#282d33] rounded"
+                      >
                         <FontAwesomeIcon
                           className="mr-2 w-4 h-4"
                           icon={faClipboard}
                         />
                         <span className="text-sm font-semibold">Bảng</span>
-                      </button>
+                      </Link>
                       <button className="py-1 px-2 bg-[#282d33] rounded">
                         <FontAwesomeIcon
                           className="mr-2 w-4 h-4"
@@ -139,13 +122,13 @@ function Boards() {
                           Thành viên
                         </span>
                       </button>
-                      <button className="py-1 px-2 bg-[#282d33] rounded">
+                      <Link href={`/boards/${item.id}/setting`} className="py-1 px-2 bg-[#282d33] rounded">
                         <FontAwesomeIcon
                           className="mr-2 w-4 h-4"
                           icon={faGear}
                         />
                         <span className="text-sm font-semibold">Cài đặt</span>
-                      </button>
+                      </Link>
                       <button className="py-1 px-2 bg-[#2b273f] hover:bg-[#352c63] transition rounded">
                         <FontAwesomeIcon
                           className="mr-2 w-4  h-4"
@@ -160,16 +143,12 @@ function Boards() {
                       boards
                         .filter((board) => board.workspaceId === item.id)
                         .map((i) => (
-                          <Link
+                          <BoardShortcut
                             key={i.id}
-                            href={`/boards/${item.title}/${i.id}`}
-                            style={{ backgroundImage: `url(${i.background})` }}
-                            className="w-[195px] bg-cover rounded text-white h-[96px]"
-                          >
-                            <p className="m-1 text-base text-white font-semibold">
-                              {i.title}
-                            </p>
-                          </Link>
+                            href={`/boards/${item.id}/${i.id}`}
+                            background={i.background}
+                            title={i.title}
+                          />
                         ))}
                     <div
                       onClick={() => setOpenModalAddBoards(!openModalAddBoards)}

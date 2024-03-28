@@ -4,7 +4,6 @@ import {
 } from "firebase/firestore";
 import { db } from "./config";
 
-
 const updateTypeItemInFirestore = async (itemId, newType) => {
   try {
     const itemDocRef = doc(db, "itemJobs", itemId);
