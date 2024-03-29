@@ -169,7 +169,7 @@ export default function BoardItem({ params }) {
                   ref={provided.innerRef}
                   className=" flex flex-wrap my-7"
                 >
-                  {members.some((member) => member.email === email) &&
+                  {(members.find((item)=> item.id === user?.uid) || members.find(item=> item.workspaceId === params.workspace)) ?
                     listJobsOfBoard?.map((listJob, index) => (
                       <Draggable
                         draggableId={listJob?.id}
@@ -193,7 +193,7 @@ export default function BoardItem({ params }) {
                           </div>
                         )}
                       </Draggable>
-                    ))}
+                    )): <h2>Bạn không phải là thành viên !!!</h2>}
                   {provided.placeholder}
                   <CreateListJobs
                     boardsId={params.boardId}

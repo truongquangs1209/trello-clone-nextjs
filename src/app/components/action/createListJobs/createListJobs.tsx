@@ -18,12 +18,14 @@ function CreateListJobs({ boardsId, selectedWorkspace }) {
     setOpenInputAddListJobs,
   } = useContext(ListJobsContext);
 
-  const { members,userLists } = useContext(UserListsContext);
+  const { members, userLists } = useContext(UserListsContext);
   const { user } = useContext(AuthContext);
   // console.log(typeof user);
   const email = user ? user.email : "";
-  const userListNotInMembers = userLists?.filter(user => !members.some(member => member.id === user.id));
-// console.log(userListNotInMembers);
+  const userListNotInMembers = userLists?.filter(
+    (user) => !members.some((member) => member.id === user.id)
+  );
+  // console.log(userListNotInMembers);
 
   const handleKeyDown = (e: { key: string }) => {
     if (e.key === "Enter") {
@@ -89,8 +91,12 @@ function CreateListJobs({ boardsId, selectedWorkspace }) {
             />
           </div>
         </div>
-        {members.some((member) => member.email === email) ||
-        selectedWorkspace?.createBy === user?.uid ? (
+        {members.find((item) => item.id === user?.uid) ||
+        members.filter(
+          (item) =>
+            item.workspaceId === selectedWorkspace ||
+            selectedWorkspace?.createBy === user?.uid
+        ) ? (
           <div
             onClick={() => setOpenInputAddListJobs(!openInputAddListJobs)}
             className="items-center"

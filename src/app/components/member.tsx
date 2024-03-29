@@ -42,7 +42,7 @@ function InviteMember({ selectedBoard, selectedWorkspace }) {
     setIsInviteMemberVisible(false);
   };
 
-
+// console.log(selectedWorkspace);
   const fillWorkspace = workspace?.find(
     (item) => item.id === selectedWorkspace
   );

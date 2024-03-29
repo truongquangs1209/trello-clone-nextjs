@@ -4,6 +4,7 @@ import { getAuth, onIdTokenChanged, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "@/firebase/config";
 import { useDataFetching } from "@/app/hook/useFirestore";
+import { BoardsContext } from "./BoardsProvider";
 
 
 interface AuthProviderProps {
@@ -40,6 +41,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [jobItem, setJobItem] = useState<ItemJobs[]>([]);
   const [members, setMembers] = useState([]);
   const [userLists, setUserList] = useState<UserLists[]>([]);
+ 
   const router = useRouter();
 
   useEffect(() => {
@@ -61,7 +63,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   useDataFetching(setJobItem, "itemJobs", members);
   useDataFetching(setUserList, "users", members);
-  useDataFetching(setMembers, "member", null);
+  useDataFetching(setMembers, "member", jobItem);
   // console.log(members);
 
   return (
