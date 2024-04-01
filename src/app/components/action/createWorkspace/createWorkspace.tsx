@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Select } from "antd/lib";
 import { addDoc, collection } from "firebase/firestore";
 import Image from "next/image";
-import { title } from "process";
 import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -23,7 +22,7 @@ function CreateWorkspace() {
     openModalAddWorkspace,
     setOpenModalAddWOrkspace,
   } = useContext(WorkSpaceContext);
-  const handleAddWorkspace = async (e: { preventDefault: () => void; }) => {
+  const handleAddWorkspace = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (typeWorkspace == "" || titleWorkspace == "") {
       toast.error("Vui lòng nhập đầy đủ thông tin");
@@ -32,7 +31,7 @@ function CreateWorkspace() {
         title: titleWorkspace,
         type: typeWorkspace,
         boards: [],
-        createBy: user.uid,
+        createBy: user?.uid,
         description: descriptionWorkspace,
       };
       const dataCollection = collection(db, "workspaces");
@@ -64,7 +63,7 @@ function CreateWorkspace() {
         />
       </div>
       <form className="flex ">
-        <div className="flex-[1] px-[120px]">
+        <div className="flex-[1] px-10 md:px-[120px] ">
           <h1 className="text-[#b6c2cf] mt-[30px] mb-4 font-medium text-[26px]">
             Hãy xây dựng một không gian làm việc
           </h1>
@@ -135,7 +134,7 @@ function CreateWorkspace() {
             Tiếp tục
           </button>
         </div>
-        <div className="flex-[1] pt-[112px]">
+        <div className="flex-[1] hidden md:block pt-[112px]">
           <Image
             src="https://trello.com/assets/d1f066971350650d3346.svg"
             alt=""

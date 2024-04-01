@@ -33,7 +33,7 @@ export default function Home() {
           </button>
         </div>
       </header>
-      <div className="h-[100vh] bg-gradient-to-r from-purple-600 to-pink-500 mt-[65px] md:mt-0 w-full container mx-auto px-10 md:px-20 grid grid-cols-2 row-auto">
+      <div className="h-[100vh] bg-gradient-to-r from-purple-600 to-pink-500 md:mt-0 w-full container mx-auto px-10 md:px-20 grid grid-cols-2 row-auto">
         <div className="max-w-[600px] md:col-span-1 col-span-2 md:text-left text-center flex items-center justify-center flex-col">
           <h1 className="md:text-5xl text-2xl text-white font-semibold">
             Trello brings all your tasks, teammates, and tools together

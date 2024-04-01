@@ -3,8 +3,9 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, onIdTokenChanged, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "@/firebase/config";
-import { useDataFetching } from "@/app/hook/useFirestore";
+import { useDataFetching } from "@/app/hook/useDataFetching";
 import { BoardsContext } from "./BoardsProvider";
+import Boards from "@/app/boards/page";
 
 
 interface AuthProviderProps {
@@ -37,6 +38,7 @@ export const UserListsContext = createContext<ListsUser | undefined>(undefined);
 
 
 function AuthProvider({ children }: AuthProviderProps) {
+  const {boards,setBoards} = useContext(BoardsContext)
   const [user, setUser] = useState<User | null>(null);
   const [jobItem, setJobItem] = useState<ItemJobs[]>([]);
   const [members, setMembers] = useState([]);
@@ -63,7 +65,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   useDataFetching(setJobItem, "itemJobs", members);
   useDataFetching(setUserList, "users", members);
-  useDataFetching(setMembers, "member", jobItem);
+  useDataFetching(setMembers, "member", boards);
   // console.log(members);
 
   return (

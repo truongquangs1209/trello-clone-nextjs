@@ -28,7 +28,7 @@ function WorkSpace() {
   };
 
   return (
-    <div className=" flex-[1] mt-[92px] h-[80vh] overflow-y-auto px-4">
+    <div className=" flex-[1] max-[768px]:mx-3 overflow-x-hidden mt-[92px] h-[80vh] overflow-y-auto px-4">
       <ul className="text-[#9FaDBC] ">
         <li className="py-[10px] mb-1 hover:bg-[#333b44] rounded-md transition px-2 text-sm font-medium">
           <FontAwesomeIcon className="mr-2 w-4 h-4" icon={faClipboard} />
@@ -60,11 +60,11 @@ function WorkSpace() {
           {workspace &&
             workspace.map((item) => (
               <div key={item.id} className="flex-col w-full mb-3">
-                <div className="flex items-center mb-3 pr-4 justify-between w-full">
+                <div className="flex items-center mb-3 pr-4 justify-between md:w-full w-fit">
                   <span className="w-[26px] text-sm h-[26px] mr-3 bg-gradient-to-r from-sky-500 to-indigo-500 font-semibold text-white flex items-center justify-center rounded-lg">
                     {item.title.charAt(0)?.toUpperCase()}
                   </span>
-                  <span className="pr-[100px] text-sm font-medium">
+                  <span className="md:pr-[100px] pr-[25px] text-sm font-medium">
                     {item.title}
                   </span>
                   <FontAwesomeIcon
@@ -98,7 +98,10 @@ function WorkSpace() {
                     <FontAwesomeIcon className="w-4" icon={faUser} />
                     <span className="pl-2 text-sm">Thành viên</span>
                   </div>
-                  <Link href={`/boards/${item.id}/setting`} className="py-1 block mb-1 pr-2 pl-6 rounded-md overflow-hidden transition hover:bg-[#333c43]">
+                  <Link
+                    href={`/boards/${item.id}/setting`}
+                    className="py-1 block mb-1 pr-2 pl-6 rounded-md overflow-hidden transition hover:bg-[#333c43]"
+                  >
                     <FontAwesomeIcon className="w-4" icon={faGear} />
                     <span className="pl-2 text-sm">Cài đặt</span>
                   </Link>

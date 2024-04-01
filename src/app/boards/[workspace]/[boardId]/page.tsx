@@ -73,7 +73,7 @@ export default function BoardItem({ params }) {
               width: openWidget ? "300px" : "0px",
               transform: openWidget ? "translateX(0)" : "translateX(-300px)",
             }}
-            className="flex relative mt-[52px] flex-col w-[300px] bg-[#221d24] h-[100vh]"
+            className="flex relative md:mt-[68px] mt-[52px] flex-col w-[300px] bg-[#1a1b23] h-[100vh]"
           >
             <FontAwesomeIcon
               onClick={() => setOpenWidget(false)}
@@ -167,9 +167,13 @@ export default function BoardItem({ params }) {
                 <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  className=" flex flex-wrap my-7"
+                  className=" p-2 w-full max-h-[calc(100vh-110px)] min-h-[calc(100vh-110px)] overflow-x-scroll flex items-start justify-start max-[768px]:max-w-[72vw] md:max-w-[100vw]"
                 >
-                  {(members.find((item)=> item.id === user?.uid) || members.find(item=> item.workspaceId === params.workspace)) ?
+                  {members.find((item) => item.id === user?.uid) ||
+                  members.find(
+                    (item) => item.workspaceId === params.workspace
+                  ) ||
+                  workspaceTitle?.createBy === user?.uid ? (
                     listJobsOfBoard?.map((listJob, index) => (
                       <Draggable
                         draggableId={listJob?.id}
@@ -181,7 +185,7 @@ export default function BoardItem({ params }) {
                             {...provided.dragHandleProps}
                             {...provided.draggableProps}
                             ref={provided.innerRef}
-                            className="flex-[1] h-fit  p-3 min-w-[18%] mb-4 font-semibold text-[#B6c2cf] bg-[#101204] mx-2 rounded-xl max-w-60 text-sm"
+                            className="flex-[1] min-w-60 max-w-60 h-fit p-3 mb-4 font-semibold text-[#B6c2cf] bg-[#101204] mx-1 rounded-md w-60 text-sm "
                           >
                             <JobsGroup
                               listJobs={listJobs}
@@ -193,7 +197,10 @@ export default function BoardItem({ params }) {
                           </div>
                         )}
                       </Draggable>
-                    )): <h2>Bạn không phải là thành viên !!!</h2>}
+                    ))
+                  ) : (
+                    <h2>Bạn không phải là thành viên !!!</h2>
+                  )}
                   {provided.placeholder}
                   <CreateListJobs
                     boardsId={params.boardId}

@@ -1,6 +1,5 @@
 "use client";
 import { db } from "@/firebase/config";
-import { useDataFetching } from "@/app/hook/useFirestore";
 import { collection, getDocs } from "firebase/firestore";
 import React, { createContext, useEffect, useState } from "react";
 
@@ -35,7 +34,7 @@ function ListJobsProvider({ children }) {
       }
     };
     fetchJobsFromFireStore();
-  }, []);
+  }, []); 
 
   useEffect(() => {
     const fetchData = async () => {

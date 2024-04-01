@@ -48,12 +48,12 @@ function Search() {
           </div>
         )}
       >
-        <div className="bg-transparent border border-solid border-[#738496] text-[#9FaDBC] w-[300px] h-8 flex items-center p-1 mr-2 rounded">
+        <div className="bg-transparent border border-solid border-[#738496] text-[#9FaDBC] w-fit md:w-[300px] h-8 flex items-center p-1 mr-2 rounded">
           <FontAwesomeIcon className="mx-2 text-[12px] " icon={faSearch} />
           <input
             ref={inputRef}
             onChange={(e) => setSearchValue(e.target.value)}
-            className="bg-transparent w-full outline-none border-none text-[14px]"
+            className="bg-transparent w-fit outline-none border-none text-[14px]"
             placeholder="Tìm kiếm..."
           />
         </div>

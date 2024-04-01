@@ -99,7 +99,7 @@ function CreateBoards() {
 
   return (
     <section
-      className="fixed px-3 z-10 rounded-xl right-[55%] w-[304px] top-[10%] bg-[#282e33]"
+      className="fixed px-3 z-10 rounded-xl md:right-[55%] right-[20%] w-[304px] top-[10%] bg-[#282e33]"
       style={openModalAddBoards ? { display: "block" } : { display: "none" }}
     >
       <div className="flex py-4 items-center justify-center">

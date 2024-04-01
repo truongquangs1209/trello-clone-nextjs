@@ -1,6 +1,6 @@
 import { AuthContext, UserListsContext } from "@/context/AppProvider";
+import { BoardsContext } from "@/context/BoardsProvider";
 import { ListJobsContext } from "@/context/ListJobsProvider";
-import { WorkSpaceContext } from "@/context/WorkspaceProvider";
 import { db } from "@/firebase/config";
 import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,7 +17,6 @@ function CreateListJobs({ boardsId, selectedWorkspace }) {
     openInputAddListJobs,
     setOpenInputAddListJobs,
   } = useContext(ListJobsContext);
-
   const { members, userLists } = useContext(UserListsContext);
   const { user } = useContext(AuthContext);
   // console.log(typeof user);
@@ -58,7 +57,10 @@ function CreateListJobs({ boardsId, selectedWorkspace }) {
 
   return (
     <div>
-      <div className="p-3 h-fit rounded-xl flex-[1] bg-[#ffffff3d] hover:bg-[#5c7495a6] ml-2 text-white transition-all max-w-60 text-sm">
+      <div
+        style={{ display: listJobs?.length >= 5 ? "none" : "flex" }}
+        className="p-3 h-fit rounded-xl min-w-64 flex-[1] bg-[#ffffff3d] hover:bg-[#5c7495a6] ml-2 text-white transition-all max-w-60 text-sm"
+      >
         <div
           style={
             openInputAddListJobs ? { display: "block" } : { display: "none" }
@@ -108,7 +110,7 @@ function CreateListJobs({ boardsId, selectedWorkspace }) {
             <h2>Thêm danh sách</h2>
           </div>
         ) : (
-          <span>Bạn không phải là thành viên</span>
+          <></>
         )}
       </div>
     </div>

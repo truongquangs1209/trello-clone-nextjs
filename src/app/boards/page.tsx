@@ -21,19 +21,16 @@ import Link from "next/link";
 import BoardShortcut from "../components/boardItem/boardItem";
 
 function Boards() {
-  // const [modalCreateBoard, setModalCreateBoard] = useState<boolean>(false);
   const { workspace } = useContext(WorkSpaceContext);
   const { boards } = useContext(BoardsContext);
-  // console.log(boards);
   const { openModalAddBoards, setOpenModalAddBoards } =
     useContext(BoardsContext);
-
   return (
     <div className="w-full">
       <CreateWorkspace />
       <Header />
       <div>
-        <div className="flex text-black m-auto w-[80%] mb-14">
+        <div className="flex text-black md:m-auto m-0 w-[100%] md:w-[80%] mb-14">
           <WorkSpace />
 
           <div className="flex-[3] overflow-y-auto scrollbar-hide h-[100vh] mt-[92px] px-4">
@@ -88,32 +85,32 @@ function Boards() {
               </h1>
               {workspace?.map((item) => (
                 <div key={item.id} className="mb-9">
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between  mb-5 max-[768px]:flex-wrap">
+                    <div className="flex items-center justify-between max-[768px]:mb-3">
                       <span className="w-[32px] text-sm h-[32px] mr-3 bg-gradient-to-r from-sky-500 to-indigo-500 font-semibold text-white flex items-center justify-center rounded">
                         {item.title.charAt(0)?.toUpperCase()}
                       </span>
                       <span className=" font-bold text-base">{item.title}</span>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 max-[768px]:flex-wrap">
                       <Link
                         href={`/boards/${item.id}`}
-                        className="block py-1 px-2 bg-[#282d33] rounded"
+                        className="block py-1 px-2 text-center bg-[#282d33] max-[768px]:w-[45%] rounded"
                       >
                         <FontAwesomeIcon
                           className="mr-2 w-4 h-4"
                           icon={faClipboard}
                         />
-                        <span className="text-sm font-semibold">Bảng</span>
+                        <span className="text-sm  font-semibold">Bảng</span>
                       </Link>
-                      <button className="py-1 px-2 bg-[#282d33] rounded">
+                      <button className="py-1 px-2 bg-[#282d33] max-[768px]:w-[45%] rounded">
                         <FontAwesomeIcon
                           className="mr-2 w-4 h-4"
                           icon={faTableCellsLarge}
                         />
                         <span className="text-sm font-semibold">Dạng xem</span>
                       </button>
-                      <button className="py-1 px-2 bg-[#282d33] rounded">
+                      <button className="py-1 px-2 bg-[#282d33] max-[768px]:w-[45%] rounded">
                         <FontAwesomeIcon
                           className="mr-2 w-4 h-4"
                           icon={faUser}
@@ -122,14 +119,17 @@ function Boards() {
                           Thành viên
                         </span>
                       </button>
-                      <Link href={`/boards/${item.id}/setting`} className="py-1 px-2 bg-[#282d33] rounded">
+                      <Link
+                        href={`/boards/${item.id}/setting`}
+                        className="py-1 px-2 text-center bg-[#282d33] max-[768px]:w-[45%] rounded"
+                      >
                         <FontAwesomeIcon
                           className="mr-2 w-4 h-4"
                           icon={faGear}
                         />
-                        <span className="text-sm font-semibold">Cài đặt</span>
+                        <span className="text-sm  font-semibold">Cài đặt</span>
                       </Link>
-                      <button className="py-1 px-2 bg-[#2b273f] hover:bg-[#352c63] transition rounded">
+                      <button className="py-1 px-2 bg-[#2b273f] max-[768px]:w-[45%] hover:bg-[#352c63] transition rounded">
                         <FontAwesomeIcon
                           className="mr-2 w-4  h-4"
                           icon={faClipboard}
