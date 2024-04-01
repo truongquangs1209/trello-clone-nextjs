@@ -22,7 +22,7 @@ function Setting({ params }) {
       <CreateWorkspace />
       <Header />
       <div>
-        <div className="flex text-black m-auto w-[80%] mb-14">
+        <div className="flex text-black md:m-0 w-[100%] md:w-[80%] mb-14">
           <WorkSpace />
           <div className="flex-[3] mt-[92px]  px-4">
             <div className="flex gap-3 p-8 items-center">

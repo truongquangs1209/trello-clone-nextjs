@@ -36,7 +36,7 @@ function Home() {
       <CreateWorkspace />
       <Header />
       <div>
-        <div className="flex text-black m-auto w-[80%] mb-14">
+        <div className="flex text-black md:m-auto m-0  w-[80%] mb-14">
           <WorkSpace />
           <div className="flex flex-[3] mt-[92px] px-4">
             <div className="flex-[1]">

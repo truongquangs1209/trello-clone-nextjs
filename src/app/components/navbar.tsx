@@ -25,7 +25,7 @@ function NavBar({
   selectedBoard,
 }: NavBarProps) {
   return (
-    <div className="bg-[#00000087] w-full mt-[52px] flex justify-between items-center py-3 pl-[10px] pr-4">
+    <div className="bg-[#00000087] w-full md:mt-[68px] mt-[50px] flex justify-between items-center py-3 pl-[10px] pr-4">
       <div className="flex">
         <div className="flex items-center gap-4 mr-6 justify-center">
           <FontAwesomeIcon

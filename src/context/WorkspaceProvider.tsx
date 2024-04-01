@@ -1,5 +1,5 @@
 "use client";
-import { useDataFetching } from "@/app/hook/useFirestore";
+import { useDataFetching } from "@/app/hook/useDataFetching";
 import React, { createContext,useState } from "react";
 
 interface WorkspacesContextValue {
@@ -21,7 +21,7 @@ function WorkspaceProvider({ children }) {
   const [openModalDeleteWorkspace, setOpenModalDeleteWorkspace] =
     useState<boolean>(false);
   const [workspace, setWorkspace] = useState<IWorkspaces[]>([]);
-  useDataFetching(setWorkspace, "workspaces");
+  useDataFetching(setWorkspace, "workspaces",null);
 
   return (
     <WorkSpaceContext.Provider

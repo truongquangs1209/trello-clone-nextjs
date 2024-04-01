@@ -1,5 +1,5 @@
 "use client";
-import { useDataFetching } from "@/app/hook/useFirestore";
+import { useDataFetching } from "@/app/hook/useDataFetching";
 import React, { createContext, useState } from "react";
 
 interface BoardsContextValue {
@@ -19,7 +19,7 @@ function BoardsProvider({ children }) {
   const [openModalAddBoards, setOpenModalAddBoards] = useState<boolean>(false);
   const [boards, setBoards] = useState<IBoards[]>([]);
   const [star, setStar] = useState<boolean>(false);
-  useDataFetching(setBoards, "listBoards");
+  useDataFetching(setBoards, "listBoards",null);
 
   return (
     <BoardsContext.Provider

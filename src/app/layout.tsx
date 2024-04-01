@@ -23,9 +23,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthProvider>
-      <WorkspaceProvider>
-        <BoardsProvider>
+    <BoardsProvider>
+      <AuthProvider>
+        <WorkspaceProvider>
           <ListJobsProvider>
             <html lang="en">
               <body className={inter.className}>
@@ -33,8 +33,8 @@ export default function RootLayout({
               </body>
             </html>
           </ListJobsProvider>
-        </BoardsProvider>
-      </WorkspaceProvider>
-    </AuthProvider>
+        </WorkspaceProvider>
+      </AuthProvider>
+    </BoardsProvider>
   );
 }
