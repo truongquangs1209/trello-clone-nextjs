@@ -53,7 +53,7 @@ export default function BoardItem({ params }) {
   );
   // console.log(checkUser);
   const userCreatedWorkspace = userLists.find(
-    (item) => item.id === workspaceTitle.createBy
+    (item) => item.id === workspaceTitle?.createBy
   );
   return (
     <div
