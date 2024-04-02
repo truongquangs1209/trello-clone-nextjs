@@ -70,6 +70,7 @@ function Home() {
               <div>
                 {boards?.slice(0, 7).map((item) => (
                   <Link
+                  key={item.id}
                     href={`/boards/${item.workspaceId}/${item.id}`}
                     className="group cursor-pointer hover:bg-[#333b44] transition mb-1 rounded flex items-center justify-start py-1 mx-12 px-2"
                   >
