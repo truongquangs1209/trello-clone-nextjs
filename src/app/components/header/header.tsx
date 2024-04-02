@@ -43,7 +43,7 @@ function Header() {
         <Link href={"/boards"}>
           <Image
             priority
-            className="p-2"
+            
             src="https://trello-clone-ruby.vercel.app/assets/trello-logo-blue.svg"
             alt=""
             width={100}
