@@ -1,7 +1,8 @@
 "use client";
 import { db } from "@/firebase/config";
 import { collection, getDocs } from "firebase/firestore";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { UserListsContext } from "./AppProvider";
 
 interface ListJobsContextValue {
   listJobs: ListsJobs[];
@@ -18,6 +19,7 @@ function ListJobsProvider({ children }) {
   const [openInputAddListJobs, setOpenInputAddListJobs] =
     useState<boolean>(false);
   const [listJobs, setListJobs] = useState<ListsJobs[]>([]);
+  const { members } = useContext(UserListsContext);
 
   useEffect(() => {
     const fetchJobsFromFireStore = async () => {
@@ -34,7 +36,7 @@ function ListJobsProvider({ children }) {
       }
     };
     fetchJobsFromFireStore();
-  }, []); 
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {

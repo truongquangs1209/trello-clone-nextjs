@@ -186,7 +186,7 @@ function Header() {
           className="relative bg-[#579dff] hover:bg-[#85b8ff] transition h-[32px] text-sm font-semibold rounded-sm ml-6 px-3"
           onClick={() => setOpenWidgetCreateNew(!openWidgetCreateNew)}
         >
-          <FontAwesomeIcon className="" icon={faPlus} />
+          <FontAwesomeIcon className="md:hidden block" icon={faPlus} />
           <span className="text-[#1d2125] hidden md:block">Tạo mới</span>
           <div
             style={

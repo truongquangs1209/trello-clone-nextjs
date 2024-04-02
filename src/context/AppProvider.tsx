@@ -1,12 +1,10 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getAuth, onIdTokenChanged, User } from "firebase/auth";
+import { onIdTokenChanged, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "@/firebase/config";
 import { useDataFetching } from "@/app/hook/useDataFetching";
 import { BoardsContext } from "./BoardsProvider";
-import Boards from "@/app/boards/page";
-
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -25,10 +23,8 @@ interface ListsUser {
   userLists: UserLists[];
   setUserList: React.Dispatch<React.SetStateAction<UserLists[]>>;
   members: MemberList[];
-  setMembers:React.Dispatch<React.SetStateAction<MemberList[]>>;
+  setMembers: React.Dispatch<React.SetStateAction<MemberList[]>>;
 }
-
-
 
 export const AuthContext = createContext<AuthContextValue | undefined>(
   undefined
@@ -36,25 +32,21 @@ export const AuthContext = createContext<AuthContextValue | undefined>(
 export const JobsContext = createContext<JobsItems | undefined>(undefined);
 export const UserListsContext = createContext<ListsUser | undefined>(undefined);
 
-
 function AuthProvider({ children }: AuthProviderProps) {
-  const {boards,setBoards} = useContext(BoardsContext)
+  const { boards } = useContext(BoardsContext);
   const [user, setUser] = useState<User | null>(null);
   const [jobItem, setJobItem] = useState<ItemJobs[]>([]);
   const [members, setMembers] = useState([]);
   const [userLists, setUserList] = useState<UserLists[]>([]);
- 
+
   const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onIdTokenChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        // localStorage.setItem("accessToken", user.accessToken);
       } else {
         setUser(null);
-        // localStorage.clear();
-        // router.push("/login");
       }
     });
 
@@ -64,13 +56,14 @@ function AuthProvider({ children }: AuthProviderProps) {
   }, [auth, router]);
 
   useDataFetching(setJobItem, "itemJobs", members);
-  useDataFetching(setUserList, "users", members);
+  useDataFetching(setUserList, "users", boards);
   useDataFetching(setMembers, "member", boards);
-  // console.log(members);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
-      <UserListsContext.Provider value={{ userLists, setUserList,members,setMembers }}>
+      <UserListsContext.Provider
+        value={{ userLists, setUserList, members, setMembers }}
+      >
         <JobsContext.Provider value={{ jobItem, setJobItem }}>
           {children}
         </JobsContext.Provider>

@@ -1,5 +1,4 @@
 import { AuthContext, UserListsContext } from "@/context/AppProvider";
-import { BoardsContext } from "@/context/BoardsProvider";
 import { ListJobsContext } from "@/context/ListJobsProvider";
 import { db } from "@/firebase/config";
 import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -7,9 +6,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { addDoc, collection } from "firebase/firestore";
 import React, { useContext, useState } from "react";
 
+interface IProps {
+  boardsId: string;
+  selectedWorkspace: any;
+  selectedBoards: IBoards;
+}
 type handleAddList = () => void;
 
-function CreateListJobs({ boardsId, selectedWorkspace }) {
+function CreateListJobs({
+  boardsId,
+  selectedWorkspace,
+  selectedBoards,
+}: IProps) {
   const [titleList, setTitleList] = useState<string>("");
   const {
     listJobs,
@@ -24,8 +32,6 @@ function CreateListJobs({ boardsId, selectedWorkspace }) {
   const userListNotInMembers = userLists?.filter(
     (user) => !members.some((member) => member.id === user.id)
   );
-  // console.log(userListNotInMembers);
-
   const handleKeyDown = (e: { key: string }) => {
     if (e.key === "Enter") {
       handleAddList();
@@ -58,7 +64,13 @@ function CreateListJobs({ boardsId, selectedWorkspace }) {
   return (
     <div>
       <div
-        style={{ display: listJobs?.length >= 5 ? "none" : "flex" }}
+        style={{
+          display:
+            listJobs.filter((list) => list.boards === selectedBoards.id)
+              .length >= 5
+              ? "none"
+              : "flex",
+        }}
         className="p-3 h-fit rounded-xl min-w-64 flex-[1] bg-[#ffffff3d] hover:bg-[#5c7495a6] ml-2 text-white transition-all max-w-60 text-sm"
       >
         <div
@@ -93,12 +105,7 @@ function CreateListJobs({ boardsId, selectedWorkspace }) {
             />
           </div>
         </div>
-        {members.find((item) => item.id === user?.uid) ||
-        members.filter(
-          (item) =>
-            item.workspaceId === selectedWorkspace ||
-            selectedWorkspace?.createBy === user?.uid
-        ) ? (
+        {
           <div
             onClick={() => setOpenInputAddListJobs(!openInputAddListJobs)}
             className="items-center"
@@ -109,9 +116,7 @@ function CreateListJobs({ boardsId, selectedWorkspace }) {
             <FontAwesomeIcon className="pr-2" icon={faPlus} />
             <h2>Thêm danh sách</h2>
           </div>
-        ) : (
-          <></>
-        )}
+        }
       </div>
     </div>
   );

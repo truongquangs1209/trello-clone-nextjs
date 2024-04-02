@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import { Form, Modal, Select, Avatar, Tooltip } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd, faUser } from "@fortawesome/free-solid-svg-icons";
-import { UserListsContext } from "@/context/AppProvider";
+import { AuthContext, UserListsContext } from "@/context/AppProvider";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/firebase/config";
 import { WorkSpaceContext } from "@/context/WorkspaceProvider";
@@ -14,7 +14,7 @@ function InviteMember({ selectedBoard, selectedWorkspace }) {
     useState<boolean>(false);
   const [value, setValue] = useState([]);
   const { userLists, members, setMembers } = useContext(UserListsContext);
-  //  console.log(members)
+  const { user } = useContext(AuthContext);
   const { workspace } = useContext(WorkSpaceContext);
 
   const handleCancel = () => {
@@ -42,11 +42,11 @@ function InviteMember({ selectedBoard, selectedWorkspace }) {
     setIsInviteMemberVisible(false);
   };
 
-// console.log(selectedWorkspace);
-  const fillWorkspace = workspace?.find(
-    (item) => item.id === selectedWorkspace
-  );
-  const userListNotInMembers = userLists?.filter(user => !members.some(member => member.id === user.id));
+  const usersNotInMembers = userLists.filter((user) => {
+    // Kiểm tra xem user có trong danh sách members không
+    return !members.some((member) => member.id === user.id);
+  });
+  console.log(usersNotInMembers);
   return (
     <div className="flex items-center justify-between">
       <div
@@ -61,19 +61,17 @@ function InviteMember({ selectedBoard, selectedWorkspace }) {
       </div>
 
       <Avatar.Group size="small" maxCount={2}>
-        {members
-          ?.filter((member) => member.workspaceId === selectedWorkspace)
-          .map((user) => (
-            <Tooltip key={user.email} title={user.email}>
-              <Avatar
-                src={
-                  user.photoURL
-                    ? user.photoURL
-                    : "https://tse4.explicit.bing.net/th?id=OIP.xo-BCC1ZKFpLL65D93eHcgHaGe&pid=Api&P=0&h=180"
-                }
-              />
-            </Tooltip>
-          ))}
+        {members.map((user) => (
+          <Tooltip key={user.email} title={user.email}>
+            <Avatar
+              src={
+                user.photoURL
+                  ? user.photoURL
+                  : "https://tse4.explicit.bing.net/th?id=OIP.xo-BCC1ZKFpLL65D93eHcgHaGe&pid=Api&P=0&h=180"
+              }
+            />
+          </Tooltip>
+        ))}
       </Avatar.Group>
       <div>
         <Modal
@@ -94,8 +92,8 @@ function InviteMember({ selectedBoard, selectedWorkspace }) {
                 onChange={(newValue) => setValue(newValue)}
                 style={{ width: "100%" }}
               >
-                {userListNotInMembers
-                  ?.filter((item) => item?.id !== fillWorkspace.createBy)
+                { userLists
+                  .filter((userList) => userList.id !== user?.uid) && userLists
                   .map((user) => (
                     <Select.Option key={user.id} value={user.id}>
                       <Avatar size="small" src={user.photoURL}>

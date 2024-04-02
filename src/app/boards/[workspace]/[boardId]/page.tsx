@@ -31,7 +31,6 @@ export default function BoardItem({ params }) {
   const { workspace } = useContext(WorkSpaceContext);
   const { listJobs, setListJobs } = useContext(ListJobsContext);
   const { boards, setBoards, star, setStar } = useContext(BoardsContext);
-  // console.log(listJobs);
   const handleUpdateStar = (selectedBoard: IBoards) => {
     setStar(!star);
 
@@ -169,43 +168,37 @@ export default function BoardItem({ params }) {
                   ref={provided.innerRef}
                   className=" p-2 w-full max-h-[calc(100vh-110px)] min-h-[calc(100vh-110px)] overflow-x-scroll flex items-start justify-start max-[768px]:max-w-[72vw] md:max-w-[100vw]"
                 >
-                  {members.find((item) => item.id === user?.uid) ||
-                  members.find(
-                    (item) => item.workspaceId === params.workspace
-                  ) ||
-                  workspaceTitle?.createBy === user?.uid ? (
-                    listJobsOfBoard?.map((listJob, index) => (
-                      <Draggable
-                        draggableId={listJob?.id}
-                        index={index}
-                        key={listJob.id}
-                      >
-                        {(provided) => (
-                          <div
-                            {...provided.dragHandleProps}
-                            {...provided.draggableProps}
-                            ref={provided.innerRef}
-                            className="flex-[1] min-w-60 max-w-60 h-fit p-3 mb-4 font-semibold text-[#B6c2cf] bg-[#101204] mx-1 rounded-md w-60 text-sm "
-                          >
-                            <JobsGroup
-                              listJobs={listJobs}
-                              items={listJob.items}
-                              title={listJob.name}
-                              setListJobs={setListJobs}
-                              listId={listJob?.id}
-                            />
-                          </div>
-                        )}
-                      </Draggable>
-                    ))
-                  ) : (
-                    <h2>Bạn không phải là thành viên !!!</h2>
-                  )}
-                  {provided.placeholder}
+                  {listJobsOfBoard?.map((listJob, index) => (
+                    <Draggable
+                      draggableId={listJob?.id}
+                      index={index}
+                      key={listJob.id}
+                    >
+                      {(provided) => (
+                        <div
+                          {...provided.dragHandleProps}
+                          {...provided.draggableProps}
+                          ref={provided.innerRef}
+                          className="flex-[1] min-w-60 max-w-60 h-fit p-3 mb-4 font-semibold text-[#B6c2cf] bg-[#101204] mx-1 rounded-md w-60 text-sm "
+                        >
+                          <JobsGroup
+                            listJobs={listJobs}
+                            items={listJob.items}
+                            title={listJob.name}
+                            setListJobs={setListJobs}
+                            listId={listJob?.id}
+                          />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
                   <CreateListJobs
                     boardsId={params.boardId}
                     selectedWorkspace={workspaceTitle}
+                    selectedBoards={selectedBoard}
                   />
+
+                  {provided.placeholder}
                 </div>
               )}
             </Droppable>
