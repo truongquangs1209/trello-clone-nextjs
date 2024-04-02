@@ -7,7 +7,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import {db } from "@/firebase/config";
+import { db } from "@/firebase/config";
 import Image from "next/image";
 import { doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -47,28 +47,26 @@ function Register() {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-  if(email && password){
-    try {
-      const auth = getAuth();
-      await createUserWithEmailAndPassword(auth, email, password);
-      toast.success('Đăng kí tài khoản thành công')
-      router.push("/login"); 
-    } catch (error) {
-     toast.error(error)
+    if (email && password) {
+      try {
+        const auth = getAuth();
+        await createUserWithEmailAndPassword(auth, email, password);
+        toast.success("Đăng kí tài khoản thành công");
+        router.push("/login");
+      } catch (error) {
+        toast.error(error);
+      }
+    } else {
+      toast.warning("Vui lòng nhập đầy đủ thông tin");
     }
-  }else{
-    toast.warning('Vui lòng nhập đầy đủ thông tin')
-  }
   };
 
   return (
     <div className="w-full h-[100vh] flex flex-col items-center justify-center">
-      <Image
+      <img
         src="https://images.unsplash.com/photo-1487088678257-3a541e6e3922?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="bg-image"
         className="fixed inset-0 z-[-1]"
-        width={100}
-        height={100}
       />
       <div className="p-[40px] rounded-md w-[400px]  bg-white h-fit flex flex-col items-center">
         <Image
@@ -145,7 +143,9 @@ function Register() {
                 <h2>Slack</h2>
               </button>
             </div>
-            <p className="hover:underline text-center text-[#0c66e4] text-sm">Bạn đã có tài khoản ? <Link href={'/login'}> Đăng nhập</Link></p>
+            <p className="hover:underline text-center text-[#0c66e4] text-sm">
+              Bạn đã có tài khoản ? <Link href={"/login"}> Đăng nhập</Link>
+            </p>
           </div>
         </div>
       </div>
