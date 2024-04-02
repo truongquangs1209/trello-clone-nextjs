@@ -63,10 +63,12 @@ function Register() {
 
   return (
     <div className="w-full h-[100vh] flex flex-col items-center justify-center">
-      <img
+      <Image
         src="https://images.unsplash.com/photo-1487088678257-3a541e6e3922?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt="bg-image"
         className="fixed inset-0 z-[-1]"
+        width={100}
+        height={100}
       />
       <div className="p-[40px] rounded-md w-[400px]  bg-white h-fit flex flex-col items-center">
         <Image

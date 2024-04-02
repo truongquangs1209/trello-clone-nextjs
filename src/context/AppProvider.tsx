@@ -53,7 +53,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     return () => {
       unsubscribe();
     };
-  }, [auth, router]);
+  }, [router]);
 
   useDataFetching(setJobItem, "itemJobs", members);
   useDataFetching(setUserList, "users", boards);
