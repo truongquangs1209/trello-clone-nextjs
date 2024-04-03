@@ -6,7 +6,6 @@ import { faAdd, faUser } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext, UserListsContext } from "@/context/AppProvider";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/firebase/config";
-import { WorkSpaceContext } from "@/context/WorkspaceProvider";
 
 function InviteMember({ selectedBoard, selectedWorkspace }) {
   const [form] = Form.useForm();
@@ -15,7 +14,6 @@ function InviteMember({ selectedBoard, selectedWorkspace }) {
   const [value, setValue] = useState([]);
   const { userLists, members, setMembers } = useContext(UserListsContext);
   const { user } = useContext(AuthContext);
-  const { workspace } = useContext(WorkSpaceContext);
 
   const handleCancel = () => {
     form.resetFields();
@@ -42,11 +40,6 @@ function InviteMember({ selectedBoard, selectedWorkspace }) {
     setIsInviteMemberVisible(false);
   };
 
-  const usersNotInMembers = userLists.filter((user) => {
-    // Kiểm tra xem user có trong danh sách members không
-    return !members.some((member) => member.id === user.id);
-  });
-  console.log(usersNotInMembers);
   return (
     <div className="flex items-center justify-between">
       <div
@@ -92,9 +85,8 @@ function InviteMember({ selectedBoard, selectedWorkspace }) {
                 onChange={(newValue) => setValue(newValue)}
                 style={{ width: "100%" }}
               >
-                { userLists
-                  .filter((userList) => userList.id !== user?.uid) && userLists
-                  .map((user) => (
+                {userLists.filter((userList) => userList.id !== user?.uid) &&
+                  userLists.map((user) => (
                     <Select.Option key={user.id} value={user.id}>
                       <Avatar size="small" src={user.photoURL}>
                         {user.photoURL

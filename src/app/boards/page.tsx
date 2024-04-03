@@ -3,10 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Header from "../components/header/header";
 import { faClipboard } from "@fortawesome/free-solid-svg-icons/faClipboard";
 import {
-  faClipboardCheck,
   faClock,
   faGear,
-  faHome,
   faTableCellsLarge,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -19,6 +17,9 @@ import CreateBoards from "../components/action/createBoards/createBoards";
 import { BoardsContext } from "@/context/BoardsProvider";
 import Link from "next/link";
 import BoardShortcut from "../components/boardItem/boardItem";
+
+
+
 
 function Boards() {
   const { workspace } = useContext(WorkSpaceContext);

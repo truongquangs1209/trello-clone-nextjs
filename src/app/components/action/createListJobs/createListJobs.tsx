@@ -13,11 +13,7 @@ interface IProps {
 }
 type handleAddList = () => void;
 
-function CreateListJobs({
-  boardsId,
-  selectedWorkspace,
-  selectedBoards,
-}: IProps) {
+function CreateListJobs({ boardsId, selectedBoards }: IProps) {
   const [titleList, setTitleList] = useState<string>("");
   const {
     listJobs,
@@ -25,13 +21,9 @@ function CreateListJobs({
     openInputAddListJobs,
     setOpenInputAddListJobs,
   } = useContext(ListJobsContext);
-  const { members, userLists } = useContext(UserListsContext);
   const { user } = useContext(AuthContext);
-  // console.log(typeof user);
   const email = user ? user.email : "";
-  const userListNotInMembers = userLists?.filter(
-    (user) => !members.some((member) => member.id === user.id)
-  );
+
   const handleKeyDown = (e: { key: string }) => {
     if (e.key === "Enter") {
       handleAddList();

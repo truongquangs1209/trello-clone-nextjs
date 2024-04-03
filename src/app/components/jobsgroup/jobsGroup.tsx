@@ -51,14 +51,6 @@ function JobsGroup({ listId, title, items, listJobs, setListJobs }: Props) {
         });
         // Cập nhật trạng thái của listJobs với mục mới được thêm vào
         setListJobs(updatedListJobs);
-
-        // Update jobItem vafo field items cu
-        // const listJobsRef = doc(db, "listJobs", listId);
-        // const listJobsDoc = await getDoc(listJobsRef);
-        // if (listJobsDoc.exists()) {
-        //   const updatedItems = [...listJobsDoc.data().items, docRef.id];
-        //   await updateDoc(listJobsRef, { items: updatedItems });
-        // }
       }
     } catch (error) {
       console.log(error);
@@ -101,8 +93,7 @@ function JobsGroup({ listId, title, items, listJobs, setListJobs }: Props) {
             <h2 className="py-2 pl-1 text-[14px]">{title}</h2>
             <Tippy
               interactive
-              // visible
-              placement="right"
+             
               theme="light"
               content={
                 <div className="text-[#9FADBC] min-w-[200px] flex flex-col p-0">
@@ -135,7 +126,7 @@ function JobsGroup({ listId, title, items, listJobs, setListJobs }: Props) {
                     {...provided.dragHandleProps}
                     {...provided.draggableProps}
                     ref={provided.innerRef}
-                    className="group flex cursor-pointer hover:border-[#85b8ff] hover:border-[1px] transition-none pt-2 pb-2 items-center px-2 my-2 font-normal bg-[#22272b] w-full justify-between rounded-lg"
+                    className="group flex cursor-pointer hover:border-[#85b8ff] hover:border-[1px] transition-none pt-2 pb-2 items-center px-2 my-2 font-normal bg-[#22272b] w-full justify-between rounded"
                   >
                     <h2>{job.title}</h2>
                     <FontAwesomeIcon

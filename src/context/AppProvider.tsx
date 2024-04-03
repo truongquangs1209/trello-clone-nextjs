@@ -45,8 +45,10 @@ function AuthProvider({ children }: AuthProviderProps) {
     const unsubscribe = onIdTokenChanged(auth, (user) => {
       if (user) {
         setUser(user);
+       
       } else {
         setUser(null);
+        router.push("/");
       }
     });
 

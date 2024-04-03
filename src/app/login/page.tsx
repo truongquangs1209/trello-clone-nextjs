@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   getAuth,
 } from "firebase/auth";
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { doc, setDoc } from "firebase/firestore";
@@ -17,7 +18,6 @@ function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
-
   const handleLoginWithGoogle = async () => {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
@@ -32,13 +32,12 @@ function Login() {
         uid,
         photoURL,
       });
-      if (user?.uid) {
-        router.push(`/boards`);
-        return;
-      }
-      console.log(
-        "Đăng nhập thành công và lưu thông tin người dùng vào Firestore"
-      );
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          router.push(`/boards`);
+          return;
+        }
+      });
     } catch (error) {
       console.error("Đăng nhập không thành công:", error);
     }

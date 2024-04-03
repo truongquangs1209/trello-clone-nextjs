@@ -40,7 +40,9 @@ function CreateWorkspace() {
       setWorkspace([...workspace, newWorkspace as any]);
       toast.success("Create workspace success!");
       setOpenModalAddWOrkspace(false);
-      console.log(docRef);
+      setTitleWorkspace("");
+      setDescriptionWorkspace("");
+      setTypeWorkspace(null)
     }
   };
 

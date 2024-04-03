@@ -38,12 +38,11 @@ function Header() {
   };
 
   return (
-    <div className="text-black bg-[#1d2125] fixed top-0 w-full flex p-2 items-center justify-between">
+    <div className="text-black bg-[#1a1b23] fixed top-0 w-full flex p-2 items-center justify-between">
       <div className="flex items-center">
         <Link href={"/boards"}>
           <Image
             priority
-            
             src="https://trello-clone-ruby.vercel.app/assets/trello-logo-blue.svg"
             alt=""
             width={100}

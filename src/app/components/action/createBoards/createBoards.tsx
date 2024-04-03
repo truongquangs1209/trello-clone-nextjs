@@ -34,9 +34,6 @@ const backgroundUrl = [
     type: "img",
     url: "https://images.unsplash.com/photo-1507608158173-1dcec673a2e5?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJhY2tncm91bmR8ZW58MHwwfDB8fHww",
   },
-];
-
-const backgroundColor = [
   {
     type: "color",
     url: "https://trello.com/assets/707f35bc691220846678.svg",
@@ -91,6 +88,7 @@ function CreateBoards() {
       setBoards([...boards, newBoard as any]);
       setTitleBoard("");
       setOpenModalAddBoards(false);
+      setWorkspaceInfo(null);
       toast.success("Create succeed !...");
     } catch (error) {
       console.log(error);
@@ -124,39 +122,33 @@ function CreateBoards() {
       <p className="text-xs py-2 font-semibold">Phông nền</p>
       <div className="flex pb-2 gap-2">
         {backgroundUrl
+          .filter((item) => item.type === "img")
           .slice(0, 4)
-          .map((img, index) =>
-            img.type === "img" ? (
-              <img
-                key={index}
-                onClick={() => setBackgroundImg(img.url)}
-                className="rounded cursor-pointer"
-                src={img.url}
-                width={64}
-                height={40}
-              />
-            ) : (
-              <></>
-            )
-          )}
+          .map((img, index) => (
+            <img
+              key={index}
+              onClick={() => setBackgroundImg(img.url)}
+              className="rounded cursor-pointer"
+              src={img.url}
+              width={64}
+              height={40}
+            />
+          ))}
       </div>
       <div className="flex pb-2 gap-2">
-        {backgroundColor
+        {backgroundUrl
+          .filter((item) => item.type === "color")
           .slice(0, 5)
-          ?.map((img, index) =>
-            img.type === "color" ? (
-              <img
-                key={index}
-                onClick={() => setBackgroundImg(img.url)}
-                className="rounded cursor-pointer"
-                src={img.url}
-                width={40}
-                height={32}
-              />
-            ) : (
-              <></>
-            )
-          )}
+          .map((img, index) => (
+            <img
+              key={index}
+              onClick={() => setBackgroundImg(img.url)}
+              className="rounded cursor-pointer"
+              src={img.url}
+              width={40}
+              height={32}
+            />
+          ))}
         <button className="w-10 h-8 flex rounded items-center justify-center bg-[#313940]">
           <FontAwesomeIcon icon={faEllipsis} />
         </button>
@@ -165,6 +157,7 @@ function CreateBoards() {
         Tiêu đề bảng<span className="text-red-600">*</span>
       </p>
       <input
+        value={titleBoard}
         onChange={(e) => setTitleBoard(e.target.value)}
         className="bg-[#22272b] py-2 px-3 text-sm w-full rounded outline-[red]"
         type="text"

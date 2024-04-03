@@ -1,13 +1,13 @@
 "use client";
 import { BoardsContext } from "@/context/BoardsProvider";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faClock, faClose, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react";
 import Link from "next/link";
 import { useContext, useRef, useState } from "react";
 
 function Search() {
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
   const { boards } = useContext(BoardsContext);
   const [searchValue, setSearchValue] = useState("");
 
@@ -15,6 +15,12 @@ function Search() {
     item.title.toLowerCase().includes(searchValue)
   );
 
+  const handleClearInput = () => {
+    setSearchValue("");
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
   return (
     <div>
       <Tippy
@@ -30,7 +36,9 @@ function Search() {
             }
             className="fixed top-[10px] right-[10px] rounded-md bg-gray-800 w-[300px] mt-3 py-3"
           >
-            <h2 className="text-xs font-semibold pl-2">KẾT QUẢ TÌM KIẾM</h2>
+            <h2 className="text-xs font-semibold pl-2 mb-2">
+              Kết quả tìm kiếm
+            </h2>
             {filterBoard &&
               filterBoard.map((item) => (
                 <Link
@@ -48,14 +56,27 @@ function Search() {
           </div>
         )}
       >
-        <div className="bg-transparent border border-solid border-[#738496] text-[#9FaDBC] w-fit md:w-[300px] h-8 flex items-center p-1 mr-2 rounded">
-          <FontAwesomeIcon className="mx-2 text-[12px] " icon={faSearch} />
-          <input
-            ref={inputRef}
-            onChange={(e) => setSearchValue(e.target.value)}
-            className="bg-transparent w-fit outline-none border-none text-[14px]"
-            placeholder="Tìm kiếm..."
-          />
+        <div className="bg-transparent border border-solid border-[#738496] text-[#9FaDBC] w-fit md:w-[300px] h-8 flex items-center justify-between p-1 mr-2 rounded">
+          <div>
+            <FontAwesomeIcon className="mx-2 text-[12px] " icon={faSearch} />
+            <input
+              value={searchValue}
+              ref={inputRef}
+              onChange={(e) => setSearchValue(e.target.value)}
+              className="bg-transparent text-xs w-fit outline-none border-none text-[14px]"
+              placeholder="Tìm kiếm..."
+            />
+          </div>
+          <div
+            style={{ visibility: searchValue ? "visible" : "hidden" }}
+            className="flex items-center justify-center rounded-[50%]"
+          >
+            <FontAwesomeIcon
+              onClick={() => handleClearInput()}
+              className="mr-2 w-3 h-3 p-1"
+              icon={faClose}
+            />
+          </div>
         </div>
       </Tippy>
     </div>
