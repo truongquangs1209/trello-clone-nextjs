@@ -17,15 +17,16 @@ import CreateBoards from "../components/action/createBoards/createBoards";
 import { BoardsContext } from "@/context/BoardsProvider";
 import Link from "next/link";
 import BoardShortcut from "../components/boardItem/boardItem";
-
-
-
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/firebase/config";
 
 function Boards() {
   const { workspace } = useContext(WorkSpaceContext);
-  const { boards } = useContext(BoardsContext);
+  const { boards,setBoards, star, setStar } = useContext(BoardsContext);
   const { openModalAddBoards, setOpenModalAddBoards } =
     useContext(BoardsContext);
+
+ 
   return (
     <div className="w-full">
       <CreateWorkspace />
@@ -40,7 +41,7 @@ function Boards() {
                 <FontAwesomeIcon className="pr-3 w-6 h-6" icon={faStar} />
                 <span>Bảng đánh dấu sao</span>
               </div>
-              <div className="flex gap-5">
+              <div className="flex max-[600px]:gap-2 gap-5">
                 {workspace &&
                   boards
                     ?.filter((board) => board.star === true)
@@ -63,12 +64,13 @@ function Boards() {
                 <FontAwesomeIcon className="pr-3 w-6 h-6" icon={faClock} />
                 <span>Đã xem gần đây</span>
               </div>
-              <div className="flex gap-5">
+              <div className="flex max-[600px]:gap-2 gap-5 flex-wrap">
                 {workspace &&
                   boards
-                    ?.slice(0, 2)
+                    ?.slice(0, 4)
                     .map((item) => (
                       <BoardShortcut
+                      boardItem={item.title}
                         key={item.id}
                         href={`/boards/${item.workspaceId}/${item.id}`}
                         background={item.background}
@@ -96,7 +98,7 @@ function Boards() {
                     <div className="flex gap-2 max-[768px]:flex-wrap">
                       <Link
                         href={`/boards/${item.id}`}
-                        className="block py-1 px-2 text-center bg-[#282d33] max-[768px]:w-[45%] rounded"
+                        className="block py-1 px-2 text-start bg-[#282d33] max-[768px]:w-[45%] rounded"
                       >
                         <FontAwesomeIcon
                           className="mr-2 w-4 h-4"
@@ -104,14 +106,14 @@ function Boards() {
                         />
                         <span className="text-sm  font-semibold">Bảng</span>
                       </Link>
-                      <button className="py-1 px-2 bg-[#282d33] max-[768px]:w-[45%] rounded">
+                      <button className="py-1 text-start px-2 bg-[#282d33] max-[768px]:w-[45%] rounded">
                         <FontAwesomeIcon
                           className="mr-2 w-4 h-4"
                           icon={faTableCellsLarge}
                         />
                         <span className="text-sm font-semibold">Dạng xem</span>
                       </button>
-                      <button className="py-1 px-2 bg-[#282d33] max-[768px]:w-[45%] rounded">
+                      <button className="py-1 text-start px-2 bg-[#282d33] max-[768px]:w-[45%] rounded">
                         <FontAwesomeIcon
                           className="mr-2 w-4 h-4"
                           icon={faUser}
@@ -122,7 +124,7 @@ function Boards() {
                       </button>
                       <Link
                         href={`/boards/${item.id}/setting`}
-                        className="py-1 px-2 text-center bg-[#282d33] max-[768px]:w-[45%] rounded"
+                        className="py-1 px-2 text-start bg-[#282d33] max-[768px]:w-[45%] rounded"
                       >
                         <FontAwesomeIcon
                           className="mr-2 w-4 h-4"
@@ -130,7 +132,7 @@ function Boards() {
                         />
                         <span className="text-sm  font-semibold">Cài đặt</span>
                       </Link>
-                      <button className="py-1 px-2 bg-[#2b273f] max-[768px]:w-[45%] hover:bg-[#352c63] transition rounded">
+                      <button className="py-1 text-start px-2 bg-[#2b273f] max-[768px]:w-[45%] hover:bg-[#352c63] transition rounded">
                         <FontAwesomeIcon
                           className="mr-2 w-4  h-4"
                           icon={faClipboard}
@@ -139,12 +141,13 @@ function Boards() {
                       </button>
                     </div>
                   </div>
-                  <div className="flex gap-4 flex-wrap">
+                  <div className="flex max-[600px]:gap-2 gap-4 flex-wrap">
                     {boards &&
                       boards
                         .filter((board) => board.workspaceId === item.id)
                         .map((i) => (
                           <BoardShortcut
+                          boardItem={item}
                             key={i.id}
                             href={`/boards/${item.id}/${i.id}`}
                             background={i.background}
@@ -159,9 +162,10 @@ function Boards() {
                           ? { display: "none" }
                           : { display: "flex" }
                       }
-                      className="select-none  rounded text-sm text-[#b6c2cf] flex items-center justify-center w-[195px] cursor-pointer hover:bg-[#333b44] transition h-[96px] bg-[#272d33]"
+                      className="select-none max-w-[45%] rounded text-sm text-[#b6c2cf] flex-col items-center justify-center w-[195px] cursor-pointer hover:bg-[#333b44] transition h-[96px] bg-[#272d33]"
                     >
-                      Tạo bảng mới
+                      <span>Tạo bảng mới</span>
+                      <span className="font-extralight text-xs">Còn {8 - boards.filter((board) => board.workspaceId === item.id).length} bảng</span>
                     </div>
                   </div>
                 </div>

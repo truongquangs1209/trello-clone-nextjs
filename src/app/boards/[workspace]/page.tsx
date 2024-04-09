@@ -51,6 +51,7 @@ function Board({ params }) {
                     .filter((board) => board.star === true)
                     .map((item) => (
                       <BoardShortcut
+                      boardItem={item}
                         key={item.id}
                         href={`/boards/${item.title}/${item.id}`}
                         background={item.background}
@@ -70,6 +71,7 @@ function Board({ params }) {
                   ?.filter((board) => board.workspaceId === params.workspace)
                   .map((item) => (
                     <BoardShortcut
+                    boardItem={item}
                       key={item.id}
                       href={`/boards/${item.title}/${item.id}`}
                       background={item.background}

@@ -25,11 +25,11 @@ function Sidebar({
 
   return (
     <div
-      style={{
-        width: openWidget ? "300px" : "0px",
-        transform: openWidget ? "translateX(0)" : "translateX(-300px)",
-      }}
-      className="flex relative md:mt-[68px] mt-[45px] flex-col w-[300px] bg-[#1a1b23] h-[100vh]"
+      className={` ${
+        openWidget
+          ? "w-[300px] max-[480px]:w-[60%] flex relative md:mt-[68px] mt-[45px] flex-col  bg-[#1a1b23] h-[100vh] transition-all duration-300 ease-in-out"
+          : "w-0 overflow-hidden"
+      }`}
     >
       <FontAwesomeIcon
         onClick={() => setOpenWidget(false)}

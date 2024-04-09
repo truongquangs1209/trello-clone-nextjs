@@ -16,7 +16,7 @@ import { WorkSpaceContext } from "@/context/WorkspaceProvider";
 import Sidebar from "@/app/components/sidebar/sidebar";
 
 export default function BoardItem({ params } ) {
-  const [openWidget, setOpenWidget] = useState<boolean>(true);
+  const [openWidget, setOpenWidget] = useState<boolean>(false);
   const { workspace } = useContext(WorkSpaceContext);
   const { listJobs, setListJobs } = useContext(ListJobsContext);
   const { boards, setBoards, star, setStar } = useContext(BoardsContext);
@@ -40,7 +40,7 @@ console.log(params);
   return (
     <div
       style={{ backgroundImage: `url(${selectedBoard?.background})` }}
-      className="h-[100vh] bg-cover bg-no-repeat over overflow-y-hidden"
+      className="h-[100vh] bg-[#00000047] bg-cover bg-no-repeat over overflow-y-hidden"
     >
       <DragDropContext
         onDragEnd={(results) =>
@@ -48,7 +48,7 @@ console.log(params);
         }
       >
         <Header />
-        <div className="flex bg-[#00000047]">
+        <div className="flex">
           <Sidebar
             openWidget={openWidget}
             setOpenWidget={setOpenWidget}
@@ -69,7 +69,7 @@ console.log(params);
                 <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  className=" p-2 w-full max-h-[calc(100vh-110px)] min-h-[calc(100vh-110px)] overflow-x-scroll flex items-start justify-start max-[768px]:max-w-[72vw] md:max-w-[100vw]"
+                  className=" p-2 w-full bg-[#00000030] max-h-[calc(100vh-110px)] min-h-[calc(100vh-110px)] overflow-x-scroll flex items-start justify-start  md:max-w-[100vw]"
                 >
                   {listJobsOfBoard?.map((listJob, index) => (
                     <Draggable
