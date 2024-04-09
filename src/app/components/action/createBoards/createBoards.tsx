@@ -12,6 +12,22 @@ import { toast } from "react-toastify";
 const backgroundUrl = [
   {
     type: "img",
+    url: "https://plus.unsplash.com/premium_photo-1676009619407-18a5121f9687?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmFja2dyb3VuZHxlbnwwfDB8MHx8fDA%3D",
+  },
+  {
+    type: "img",
+    url: "https://plus.unsplash.com/premium_photo-1667761637908-53b908419785?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGJhY2tncm91bmR8ZW58MHwwfDB8fHww",
+  },
+  {
+    type: "img",
+    url: "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fG5hdHVyZXxlbnwwfDB8MHx8fDA%3D",
+  },
+  {
+    type: "img",
+    url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fG5hdHVyZXxlbnwwfDB8MHx8fDA%3D",
+  },
+  {
+    type: "img",
     url: "https://images.unsplash.com/photo-1679678691006-3afa56204979?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxzZWFyY2h8MXx8YmFja2dyb3VuZHxlbnwwfDB8MHx8fDA%3D",
   },
   {
@@ -30,9 +46,18 @@ const backgroundUrl = [
     type: "img",
     url: "https://images.unsplash.com/photo-1604537529428-15bcbeecfe4d?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxzZWFyY2h8OHx8YmFja2dyb3VuZHxlbnwwfDB8MHx8fDA%3D",
   },
+
   {
     type: "img",
     url: "https://images.unsplash.com/photo-1507608158173-1dcec673a2e5?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJhY2tncm91bmR8ZW58MHwwfDB8fHww",
+  },
+  {
+    type: "color",
+    url: "	https://trello.com/assets/b75536d1afb40980ca57.svg",
+  },
+  {
+    type: "color",
+    url: "	https://trello.com/assets/92e67a71aaaa98dea5ad.svg",
   },
   {
     type: "color",
@@ -62,6 +87,14 @@ const backgroundUrl = [
     type: "color",
     url: "	https://trello.com/assets/941e9fef7b1b1129b904.svg",
   },
+  {
+    type: "color",
+    url: "https://trello.com/assets/92e67a71aaaa98dea5ad.svg",
+  },
+  {
+    type: "color",
+    url: "https://trello.com/assets/d106776cb297f000b1f4.svg",
+  },
 ];
 
 function CreateBoards() {
@@ -69,7 +102,8 @@ function CreateBoards() {
     "https://images.unsplash.com/32/Mc8kW4x9Q3aRR3RkP5Im_IMG_4417.jpg?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YmFja2dyb3VuZHxlbnwwfDB8MHx8fDA%3D"
   );
   const [titleBoard, setTitleBoard] = useState<string>("");
-  const [workspaceInfo, setWorkspaceInfo] = useState();
+  const [openMoreBg, setOpenMoreBg] = useState<boolean>(false);
+  const [workspaceInfo, setWorkspaceInfo] = useState<string>();
   const { boards, setBoards, openModalAddBoards, setOpenModalAddBoards } =
     useContext(BoardsContext);
   const { workspace } = useContext(WorkSpaceContext);
@@ -149,7 +183,10 @@ function CreateBoards() {
               height={32}
             />
           ))}
-        <button className="w-10 h-8 flex rounded items-center justify-center bg-[#313940]">
+        <button
+          onClick={() => setOpenMoreBg(true)}
+          className="w-10 h-8 flex rounded items-center justify-center bg-[#313940]"
+        >
           <FontAwesomeIcon icon={faEllipsis} />
         </button>
       </div>
@@ -202,6 +239,55 @@ function CreateBoards() {
         >
           Điều khoản dịch vụ
         </a>
+      </div>
+
+      <div
+        style={{ visibility: openMoreBg ? "visible" : "hidden" }}
+        className="absolute w-[100%]  top-0 p-3 right-[-125%] max-[480px]:right-[-20%] max-[480px]:top-[10%] bg-[#282e33] rounded-xl"
+      >
+        <div className="flex mt-2 items-center mb-4 justify-between">
+          <h2 className="text-base font-medium">Phông nền bảng</h2>
+          <FontAwesomeIcon
+            onClick={() => setOpenMoreBg(false)}
+            icon={faClose}
+          />
+        </div>
+        <div>
+          <span className="text-sm font-medium block mb-3 ">Ảnh</span>
+          <div className="flex pb-2 flex-wrap gap-2 justify-center">
+            {backgroundUrl
+              .filter((item) => item.type === "img")
+              .slice(4)
+              .map((img, index) => (
+                <img
+                  key={index}
+                  onClick={() => setBackgroundImg(img.url)}
+                  className="rounded max-w-[31%] cursor-pointer"
+                  src={img.url}
+                  width={85}
+                  height={56}
+                />
+              ))}
+          </div>
+        </div>
+        <div>
+          <span className="text-sm font-medium block mb-3 ">Màu sắc</span>
+          <div className="flex pb-2 flex-wrap gap-2 justify-center">
+            {backgroundUrl
+              .filter((item) => item.type === "color")
+              .slice(5)
+              .map((img, index) => (
+                <img
+                  key={index}
+                  onClick={() => setBackgroundImg(img.url)}
+                  className="rounded max-w-[31%] cursor-pointer"
+                  src={img.url}
+                  width={85}
+                  height={56}
+                />
+              ))}
+          </div>
+        </div>
       </div>
     </section>
   );

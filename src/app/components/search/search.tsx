@@ -1,15 +1,17 @@
 "use client";
 import { BoardsContext } from "@/context/BoardsProvider";
-import { faClock, faClose, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useContext, useRef, useState } from "react";
 
 function Search() {
   const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
   const { boards } = useContext(BoardsContext);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState<string>("");
 
   const filterBoard = boards.filter((item) =>
     item.title.toLowerCase().includes(searchValue)
@@ -56,20 +58,24 @@ function Search() {
           </div>
         )}
       >
-        <div className="bg-transparent border border-solid border-[#738496] text-[#9FaDBC] w-fit md:w-[300px] h-8 flex items-center justify-between p-1 mr-2 rounded">
+        <div className="bg-transparent border border-solid border-[#738496] text-[#9FaDBC] w-fit md:w-[300px] h-8 flex items-center justify-between max-[600px]:border-none p-1 mr-2 rounded">
           <div>
-            <FontAwesomeIcon className="mx-2 text-[12px] " icon={faSearch} />
+            <FontAwesomeIcon
+              onClick={() => router.push("/search")}
+              className="mx-2 text-[12px] "
+              icon={faSearch}
+            />
             <input
               value={searchValue}
               ref={inputRef}
               onChange={(e) => setSearchValue(e.target.value)}
-              className="bg-transparent text-xs w-fit outline-none border-none text-[14px]"
+              className="bg-transparent max-[600px]:hidden text-xs w-fit outline-none border-none text-[14px]"
               placeholder="Tìm kiếm..."
             />
           </div>
           <div
             style={{ visibility: searchValue ? "visible" : "hidden" }}
-            className="flex items-center justify-center rounded-[50%]"
+            className="flex max-[600px]:hidden items-center justify-center rounded-[50%]"
           >
             <FontAwesomeIcon
               onClick={() => handleClearInput()}

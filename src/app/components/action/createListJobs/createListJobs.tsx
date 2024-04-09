@@ -1,4 +1,4 @@
-import { AuthContext, UserListsContext } from "@/context/AppProvider";
+import { AuthContext } from "@/context/AppProvider";
 import { ListJobsContext } from "@/context/ListJobsProvider";
 import { db } from "@/firebase/config";
 import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons";

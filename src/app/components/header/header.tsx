@@ -51,8 +51,9 @@ function Header() {
         </Link>
         <div className="relative ">
           <div
+            style={{ backgroundColor: openWidget ? "#333c44" : "transparent" }}
             onClick={() => setOpenWidget(!openWidget)}
-            className="flex ml-3 items-center cursor-pointer md:hidden"
+            className="flex py-[6px] pr-[10px] pl-3 rounded ml-3 items-center cursor-pointer md:hidden"
           >
             <h2 className="mr-1 text-sm font-semibold">Thêm</h2>
             <FontAwesomeIcon className="w-3" icon={faAngleDown} />

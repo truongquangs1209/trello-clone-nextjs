@@ -28,7 +28,7 @@ function WorkSpace() {
   };
 
   return (
-    <div className=" flex-[1] max-[768px]:mx-3 overflow-x-hidden mt-[92px] h-[80vh] overflow-y-auto px-4">
+    <div className=" flex-[1] max-[768px]:mx-3 max-[600px]:hidden overflow-x-hidden mt-[92px] h-[80vh] overflow-y-auto px-4">
       <ul className="text-[#9FaDBC] ">
         <li className="py-[10px] mb-1 hover:bg-[#333b44] rounded-md transition px-2 text-sm font-medium">
           <FontAwesomeIcon className="mr-2 w-4 h-4" icon={faClipboard} />
