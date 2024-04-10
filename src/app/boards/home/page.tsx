@@ -12,25 +12,11 @@ import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { BoardsContext } from "@/context/BoardsProvider";
 import Link from "next/link";
-import { WorkSpaceContext } from "@/context/WorkspaceProvider";
 import Image from "next/image";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "@/firebase/config";
 
 function Home() {
   const { boards } = useContext(BoardsContext);
-  const { workspace } = useContext(WorkSpaceContext);
-  const { setBoards, star, setStar } = useContext(BoardsContext);
-  const handleUpdateStar = (selectedBoard: IBoards) => {
-    setStar(!star);
 
-    if (selectedBoard) {
-      const itemRef = doc(db, "listBoards", selectedBoard.id);
-      updateDoc(itemRef, { star: star });
-      selectedBoard.star = star;
-      setBoards((prevBoards) => [...prevBoards]); // Trigger re-render
-    }
-  };
   return (
     <div className="w-full">
       <CreateWorkspace />
@@ -38,7 +24,7 @@ function Home() {
       <div>
         <div className="flex text-black md:m-auto m-0  w-[80%] mb-14">
           <WorkSpace />
-          <div className="flex flex-[3] mt-[92px] px-4">
+          <div className="flex flex-[3] mt-[92px] px-4 max-[480px]:flex-col">
             <div className="flex-[1]">
               <div>
                 <div className="mb-4">
@@ -70,7 +56,7 @@ function Home() {
               <div>
                 {boards?.slice(0, 7).map((item) => (
                   <Link
-                  key={item.id}
+                    key={item.id}
                     href={`/boards/${item.workspaceId}/${item.id}`}
                     className="group cursor-pointer hover:bg-[#333b44] transition mb-1 rounded flex items-center justify-start py-1 mx-12 px-2"
                   >
@@ -83,9 +69,6 @@ function Home() {
                       <h2 className="font-light text-xs">{item.workspaceId}</h2>
                     </div>
                     <FontAwesomeIcon
-                      onClick={(e) => {
-                        handleUpdateStar(item);
-                      }}
                       className="hidden group-hover:block"
                       icon={item.star ? solidStar : regularStar}
                     />

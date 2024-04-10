@@ -143,7 +143,7 @@ function CreateBoards() {
         />
       </div>
       <div
-        className="w-[200px] bg-contain flex items-center justify-center h-[120px] m-auto rounded bg-white"
+        className="w-[200px] bg-cover flex items-center bg-no-repeat justify-center h-[120px] m-auto rounded bg-white"
         style={{ backgroundImage: `url(${backgroundImg})` }}
       >
         <Image
@@ -280,7 +280,7 @@ function CreateBoards() {
                 <img
                   key={index}
                   onClick={() => setBackgroundImg(img.url)}
-                  className="rounded max-w-[31%] cursor-pointer"
+                  className="rounded bg-cover bg-no-repeat max-w-[31%] cursor-pointer"
                   src={img.url}
                   width={85}
                   height={56}
