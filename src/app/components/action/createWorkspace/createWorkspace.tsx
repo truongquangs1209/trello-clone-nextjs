@@ -55,7 +55,7 @@ function CreateWorkspace() {
               backgroundImage: `url('https://trello-clone-ruby.vercel.app/assets/other/workspace-modal-bg.png')`,
             }
       }
-      className="fixed mb-20 rounded left-[12%] top-[2%] bg-cover bg-no-repeat z-10 m-auto w-[74%] "
+      className="fixed mb-20 rounded left-[12%] z-20 top-[2%] bg-cover bg-no-repeat  m-auto w-[74%] "
     >
       <div className="text-right  m-2 cursor-pointer ">
         <FontAwesomeIcon
