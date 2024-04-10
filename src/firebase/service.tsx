@@ -1,10 +1,7 @@
-import {
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "./config";
 
-const updateTypeItemInFirestore = async (itemId, newType) => {
+const updateTypeItemInFirestore = async (itemId: string, newType: string) => {
   try {
     const itemDocRef = doc(db, "itemJobs", itemId);
     await updateDoc(itemDocRef, { type: newType });
@@ -14,10 +11,9 @@ const updateTypeItemInFirestore = async (itemId, newType) => {
 };
 
 export const handleDragAndDrop = (
-  results: results ,
+  results: results,
   data: any[],
-  setData: React.Dispatch<React.SetStateAction<any[]>>,
-  
+  setData: React.Dispatch<React.SetStateAction<any[]>>
 ) => {
   const { source, destination, type } = results;
   if (!destination) return;

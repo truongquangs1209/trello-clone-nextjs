@@ -22,11 +22,19 @@ import { db } from "@/firebase/config";
 
 function Boards() {
   const { workspace } = useContext(WorkSpaceContext);
-  const { boards,setBoards, star, setStar } = useContext(BoardsContext);
+  const { boards, setBoards, star, setStar } = useContext(BoardsContext);
   const { openModalAddBoards, setOpenModalAddBoards } =
     useContext(BoardsContext);
 
- 
+  const handleUpdateStar = (boardStar: any) => {
+    setStar(!star);
+    if (boardStar) {
+      const itemRef = doc(db, "listBoards", boardStar.id);
+      updateDoc(itemRef, { star: star });
+      boardStar.star = star;
+      setBoards((prevBoards) => [...prevBoards]); // Trigger re-render
+    }
+  };
   return (
     <div className="w-full">
       <CreateWorkspace />
@@ -41,21 +49,19 @@ function Boards() {
                 <FontAwesomeIcon className="pr-3 w-6 h-6" icon={faStar} />
                 <span>Bảng đánh dấu sao</span>
               </div>
-              <div className="flex max-[600px]:gap-2 gap-5">
+              <div className="flex flex-wrap max-[600px]:gap-2 gap-5">
                 {workspace &&
                   boards
                     ?.filter((board) => board.star === true)
                     .map((item) => (
-                      <Link
+                      <BoardShortcut
+                        handleUpdateStar={() => handleUpdateStar(item)}
                         key={item.id}
+                        star={item.star}
                         href={`/boards/${item.workspaceId}/${item.id}`}
-                        style={{ backgroundImage: `url(${item.background})` }}
-                        className="w-[195px] bg-cover rounded text-white bg-black h-[96px]"
-                      >
-                        <p className="m-1 text-base text-white font-semibold">
-                          {item.title}
-                        </p>
-                      </Link>
+                        background={item.background}
+                        title={item.title}
+                      />
                     ))}
               </div>
             </div>
@@ -70,8 +76,9 @@ function Boards() {
                     ?.slice(0, 4)
                     .map((item) => (
                       <BoardShortcut
-                      boardItem={item.title}
+                        handleUpdateStar={() => handleUpdateStar(item)}
                         key={item.id}
+                        star={item.star}
                         href={`/boards/${item.workspaceId}/${item.id}`}
                         background={item.background}
                         title={item.title}
@@ -147,7 +154,8 @@ function Boards() {
                         .filter((board) => board.workspaceId === item.id)
                         .map((i) => (
                           <BoardShortcut
-                          boardItem={item}
+                            handleUpdateStar={() => handleUpdateStar(i)}
+                            star={i.star}
                             key={i.id}
                             href={`/boards/${item.id}/${i.id}`}
                             background={i.background}
@@ -165,7 +173,14 @@ function Boards() {
                       className="select-none max-w-[45%] rounded text-sm text-[#b6c2cf] flex-col items-center justify-center w-[195px] cursor-pointer hover:bg-[#333b44] transition h-[96px] bg-[#272d33]"
                     >
                       <span>Tạo bảng mới</span>
-                      <span className="font-extralight text-xs">Còn {8 - boards.filter((board) => board.workspaceId === item.id).length} bảng</span>
+                      <span className="font-extralight text-xs">
+                        Còn{" "}
+                        {8 -
+                          boards.filter(
+                            (board) => board.workspaceId === item.id
+                          ).length}{" "}
+                        bảng
+                      </span>
                     </div>
                   </div>
                 </div>

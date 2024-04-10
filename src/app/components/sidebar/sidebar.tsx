@@ -27,22 +27,25 @@ function Sidebar({
     <div
       className={` ${
         openWidget
-          ? "w-[300px] max-[480px]:w-[60%] flex relative md:mt-[68px] mt-[45px] flex-col  bg-[#1a1b23] h-[100vh] transition-all duration-300 ease-in-out"
+          ? "w-[300px] flex relative md:mt-[68px] mt-[45px] flex-col  bg-[#1a1b23] h-[100vh] transition duration-300 ease-in-out"
           : "w-0 overflow-hidden"
       }`}
     >
       <FontAwesomeIcon
         onClick={() => setOpenWidget(false)}
         icon={faAngleLeft}
+        style={{ display: openWidget ? "block" : "none" }}
         className=" overflow-visible hover:bg[#201b21] p-2 right-0 top-[3%] cursor-pointer absolute w-6 h-6 rounded"
       />
-      <div className="flex p-5 h-fit w-full items-center border-b">
-        <span className="w-[32px] text-sm h-[32px] mr-3 bg-gradient-to-r from-sky-500 to-indigo-500 font-semibold text-white flex items-center justify-center rounded-lg">
+      <div className="flex max-[480px]:flex-col p-5 h-fit w-full items-center border-b">
+        <span className="w-[32px] max-[480px]:m-0 text-sm h-[32px] mr-3 bg-gradient-to-r from-sky-500 to-indigo-500 font-semibold text-white flex items-center justify-center rounded-lg">
           {workspaceTitle?.title.charAt(0)?.toUpperCase()}
         </span>
-        <h2 className="text-xl font-semibold ml-2">{workspaceTitle?.title}</h2>
+        <h2 className="text-xl max-[480px]:m-0 font-semibold ml-2">
+          {workspaceTitle?.title}
+        </h2>
       </div>
-      <div>
+      <div className="overflow-hidden">
         <div className="hover:bg-slate-800 p-3 mt-4 transition">
           <FontAwesomeIcon className="w-4 h-4" icon={faClipboard} />
           <span className="text-sm font-normal p-2">Bảng</span>

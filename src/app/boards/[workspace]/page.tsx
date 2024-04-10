@@ -33,7 +33,9 @@ function Board({ params }) {
                 {params.workspace.charAt(0)?.toUpperCase()}
               </span>
               <div>
-                <h2 className="text-xl font-medium">{selectWorkspace?.title}</h2>
+                <h2 className="text-xl font-medium">
+                  {selectWorkspace?.title}
+                </h2>
                 <p className="text-xs font-light">
                   {selectWorkspace?.description}
                 </p>
@@ -45,13 +47,12 @@ function Board({ params }) {
                 <FontAwesomeIcon className="pr-3 w-6 h-6" icon={faStar} />
                 <span>Bảng đánh dấu sao</span>
               </div>
-              <div className="flex gap-5">
+              <div className="flex gap-4 flex-wrap">
                 {boards &&
                   boards
                     .filter((board) => board.star === true)
                     .map((item) => (
                       <BoardShortcut
-                      boardItem={item}
                         key={item.id}
                         href={`/boards/${item.title}/${item.id}`}
                         background={item.background}
@@ -71,7 +72,6 @@ function Board({ params }) {
                   ?.filter((board) => board.workspaceId === params.workspace)
                   .map((item) => (
                     <BoardShortcut
-                    boardItem={item}
                       key={item.id}
                       href={`/boards/${item.title}/${item.id}`}
                       background={item.background}

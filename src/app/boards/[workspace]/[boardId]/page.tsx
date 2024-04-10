@@ -21,8 +21,8 @@ export default function BoardItem({ params } ) {
   const { listJobs, setListJobs } = useContext(ListJobsContext);
   const { boards, setBoards, star, setStar } = useContext(BoardsContext);
   const handleUpdateStar = (selectedBoard: IBoards) => {
+ 
     setStar(!star);
-console.log(params);
     if (selectedBoard) {
       const itemRef = doc(db, "listBoards", selectedBoard.id);
       updateDoc(itemRef, { star: star });

@@ -1,30 +1,27 @@
-import React, { useContext } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-regular-svg-icons";
-import { BoardsContext } from "@/context/BoardsProvider";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "@/firebase/config";
+import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 
 interface IProps {
   href: string;
   background: string;
   title: string;
-  boardItem: any;
+  star?: boolean;
+  handleUpdateStar?: () => any ;
 }
 
-function BoardShortcut({ href, background, title,boardItem }: IProps) {
-  const { setBoards, star, setStar } = useContext(BoardsContext);
-  const handleUpdateStar = (boardItem: IBoards) => {
-    setStar(!star);
-    if (boardItem) {
-      const itemRef = doc(db, "listBoards", boardItem.id);
-      updateDoc(itemRef, { star: star });
-      boardItem.star = star;
-      setBoards((prevBoards) => [...prevBoards]); // Trigger re-render
-    }
+function BoardShortcut({
+  href,
+  background,
+  star,
+  title,
+  handleUpdateStar,
+}: IProps) {
+  const handleClick = (event: React.MouseEvent) => {
+    event.preventDefault(); // Ngăn chặn sự kiện click từ lan ra phần tử cha
+    handleUpdateStar();
   };
-  console.log(boardItem);
   return (
     <Link
       href={href}
@@ -33,9 +30,9 @@ function BoardShortcut({ href, background, title,boardItem }: IProps) {
     >
       <p className="m-1 text-base text-white font-semibold">{title}</p>
       <FontAwesomeIcon
-      onClick={()=> handleUpdateStar}
-        className="absolute transition-all group-hover:right-[5%] right-[-10%] bottom-[10%]"
-        icon={faStar}
+        onClick={handleClick}
+        className="absolute p-[3px] transition-all group-hover:right-[5%] right-[-10%] bottom-[10%]"
+        icon={star ? solidStar : regularStar}
       />
     </Link>
   );
