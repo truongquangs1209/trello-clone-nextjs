@@ -1,0 +1,57 @@
+{
+  "IndexPage": {
+    "login": "Login",
+    "GetTrello": "Get Trello for free",
+    "description1": "Trello brings all your tasks, teammates, and tools together",
+    "description2": "Keep everything in the same place—even if your team isn't.",
+    "signupButton": "Sign up - it's free!"
+  },
+  "LoginPage": {
+    "title": "Login in to Trello",
+    "emailplaceholder": "Enter your email",
+    "passwordplaceholder": "Enter your password",
+    "button": "Continue",
+    "or": "Or",
+    "can'tlogin": "Can't log in?",
+    "register": "Sign up"
+  },
+  "header": {
+    "workspace": "Workspace",
+    "more":"More",
+    "workspaceTippy": "Your Workspaces",
+    "recentboards": "Recent boards",
+    "recentboardsTippy": "Recent boards",
+    "starredboards": "Starred boards",
+    "starredboardsTippy": "Starred boards",
+    "templates": "Templates",
+    "templatesTippy": "No Template",
+    "createbtn":"Create new",
+    "createBoards":"Create Boards",
+    "createBoardsDesc":"A boards is mede up of cards ordered on list. Use it to manage project, track information, or organize anything",
+    "createWorkspace":"Create Workspace",
+    "createWorkspaceDesc":"A workspace is a group of boards and people. Use it to organize your company, side hustle, family, or friends.",
+    "logout":"Log out"
+  },
+  
+    "searchPage":{
+      "searchPlaceholder":"Search...",
+      "searchTitle":"Search",
+      "recentboards":"Recent boards",
+      "searchResult":"Search Results"
+    },
+    "boardPage":{
+      "board":"Board",
+      "view":"View",
+      "image":"Image",
+      "highlights":"Highlights",
+      "home":"Home",
+      "member":"Member",
+      "templates": "Templates",
+      "setting":"Setting",
+      "update":"Update",
+      "starredboards": "Starred boards",
+      "recentboards":"Recent boards",
+      "workspace": "Your Workspaces",
+      "creatBoard":"Create new board"
+    }
+}

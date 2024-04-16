@@ -14,13 +14,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { WorkSpaceContext } from "@/context/WorkspaceProvider";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 function WorkSpace() {
-  const [openItems, setOpenItems] = useState({}); // State lưu trạng thái open của từng item
+  const [openItems, setOpenItems] = useState({});
   const { workspace, setOpenModalAddWOrkspace } = useContext(WorkSpaceContext);
+  const t = useTranslations("boardPage");
 
   // Hàm toggle chỉ mở rộng/collapse item được click
-  const toggle = (itemId) => {
+  const toggle = (itemId: string) => {
     setOpenItems((prevOpenItems) => ({
       ...prevOpenItems,
       [itemId]: !prevOpenItems[itemId], // Đảo ngược trạng thái open của item được click
@@ -32,25 +34,25 @@ function WorkSpace() {
       <ul className="text-[#9FaDBC] ">
         <li className="py-[10px] mb-1 hover:bg-[#333b44] rounded-md transition px-2 text-sm font-medium">
           <FontAwesomeIcon className="mr-2 w-4 h-4" icon={faClipboard} />
-          <span>Bảng</span>
+          <span>{t("board")}</span>
         </li>
         <li className="py-[10px]  mb-1 hover:bg-[#333b44] rounded-md transition px-2 text-sm font-medium">
           <FontAwesomeIcon className="mr-2 w-4 h-4" icon={faClipboardCheck} />
-          <span>Mẫu</span>
+          <span>{t("templates")}</span>
         </li>
         <Link
           href={"/boards/home"}
           className="py-[10px] block mb-1 hover:bg-[#333b44] rounded-md transition px-2 text-sm font-medium"
         >
           <FontAwesomeIcon className="mr-2 w-4 h-4" icon={faHome} />
-          <span>Trang chủ</span>
+          <span>{t("home")}</span>
         </Link>
         <hr className="my-3"></hr>
       </ul>
 
       <div className="cursor-pointer">
         <div className="p-2 text-xs font-semibold flex item-center justify-between">
-          <span>Workspace</span>
+          <span>{t("workspace")}</span>
           <FontAwesomeIcon
             onClick={() => setOpenModalAddWOrkspace(true)}
             icon={faAdd}
@@ -76,7 +78,7 @@ function WorkSpace() {
                 <div
                   style={
                     openItems[item.id] ? { height: "auto" } : { height: "1px" }
-                  } // Sử dụng trạng thái open của item để set height
+                  }
                   className="overflow-hidden"
                 >
                   <Link
@@ -84,26 +86,26 @@ function WorkSpace() {
                     className="block py-1 mb-1 pr-2 pl-6 rounded-md overflow-hidden transition hover:bg-[#333c43]"
                   >
                     <FontAwesomeIcon className="w-4" icon={faClipboard} />
-                    <span className="pl-2 text-sm">Bảng</span>
+                    <span className="pl-2 text-sm">{t("board")}</span>
                   </Link>
                   <div className="py-1 mb-1 pr-2 pl-6 rounded-md overflow-hidden transition hover:bg-[#333c43]">
                     <FontAwesomeIcon className="w-4" icon={faHeart} />
-                    <span className="pl-2 text-sm">Điểm nổi bật</span>
+                    <span className="pl-2 text-sm">{t("highlights")}</span>
                   </div>
                   <div className="py-1 mb-1 pr-2 pl-6 rounded-md overflow-hidden transition hover:bg-[#333c43]">
                     <FontAwesomeIcon className="w-4" icon={faImage} />
-                    <span className="pl-2 text-sm">Hình</span>
+                    <span className="pl-2 text-sm">{t("image")}</span>
                   </div>
                   <div className="py-1 mb-1 pr-2 pl-6 rounded-md overflow-hidden transition hover:bg-[#333c43]">
                     <FontAwesomeIcon className="w-4" icon={faUser} />
-                    <span className="pl-2 text-sm">Thành viên</span>
+                    <span className="pl-2 text-sm">{t("member")}</span>
                   </div>
                   <Link
                     href={`/boards/${item.id}/setting`}
                     className="py-1 block mb-1 pr-2 pl-6 rounded-md overflow-hidden transition hover:bg-[#333c43]"
                   >
                     <FontAwesomeIcon className="w-4" icon={faGear} />
-                    <span className="pl-2 text-sm">Cài đặt</span>
+                    <span className="pl-2 text-sm">{t("setting")}</span>
                   </Link>
                 </div>
               </div>
