@@ -1,28 +1,32 @@
 "use client";
-import {
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  getAuth,
-} from "firebase/auth";
-
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { doc, setDoc } from "firebase/firestore";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { db } from "@/firebase/config";
 import Image from "next/image";
+import { doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 
-function Login() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
+  const local = useLocale()
+  const t = useTranslations('RegisterPage')
+
   const handleLoginWithGoogle = async () => {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
     try {
       const res = await signInWithPopup(auth, provider);
+      console.log({ res });
       const user = res.user;
       const { displayName, email, uid, photoURL } = user;
       const userRef = doc(db, "users", uid);
@@ -32,43 +36,28 @@ function Login() {
         uid,
         photoURL,
       });
-      auth.onAuthStateChanged((user) => {
-        if (user) {
-          router.push(`/boards`);
-          return;
-        }
-      });
+      if (user?.uid) {
+        router.push(`/${local}/boards`);
+        return;
+      }
+      console.log(
+        "Đăng nhập thành công và lưu thông tin người dùng vào Firestore"
+      );
     } catch (error) {
       console.error("Đăng nhập không thành công:", error);
     }
   };
 
-  const handleSignIn = async (e) => {
+  const handleSignUp = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if (email && password) {
       try {
         const auth = getAuth();
-        const res = await signInWithEmailAndPassword(auth, email, password);
-        console.log(res);
-        const user = res.user;
-        const { displayName = email, uid, photoURL } = user;
-        const userRef = doc(db, "users", uid);
-        await setDoc(userRef, {
-          displayName,
-          email,
-          uid,
-          photoURL,
-        });
-        if (user?.uid) {
-          router.push(`/boards`);
-          return;
-        } else {
-          router.push("/login");
-        }
-        router.push("/boards");
-        toast.success("Success !");
+        await createUserWithEmailAndPassword(auth, email, password);
+        toast.success("Đăng kí tài khoản thành công");
+        router.push(`/${local}/login`);
       } catch (error) {
-        toast.error("Email hoặc mật khẩu không đúng hoặc không tồn tại");
+        toast.error(error);
       }
     } else {
       toast.warning("Vui lòng nhập đầy đủ thông tin");
@@ -84,7 +73,6 @@ function Login() {
       />
       <div className="p-[40px] rounded-md w-[400px]  bg-white h-fit flex flex-col items-center">
         <Image
-          priority
           src="https://trello-clone-ruby.vercel.app/assets/trello-logo-blue.svg"
           alt=""
           width={117.5}
@@ -92,33 +80,34 @@ function Login() {
         />
         <div className="w-full">
           <h2 className="text-center font-semibold mb-4 pt-[24px] text-[16px] text-[#172b4d]">
-            Đăng nhập để tiếp tục
+            {t('title')}
           </h2>
-          <form onSubmit={handleSignIn}>
+          <form onSubmit={handleSignUp} action="/login">
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Nhập email của bạn"
+              placeholder={t('emailplaceholder')}
               className="px-[6px] mb-3 rounded-lg py-2 text-[14px] h-[40px] w-full border border-solid text-[#172b4d]"
             />
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Nhập mật khẩu"
+              placeholder={t('passwordplaceholder')}
               className="px-[6px] rounded-lg py-2 text-[14px] h-[40px] w-full border border-solid text-[#172b4d]"
             />
             <button
               type="submit"
               className="bg-[#0052cc] transition-all text-white hover:bg-[#0065ff] text-[14px] w-full h-[40px] rounded-lg my-3 font-medium"
             >
-              Tiếp tục
+             {t('button')}
             </button>
           </form>
+
           <div className="mt-[24px]">
             <h2 className="font-semibold text-[14px] text-center text-[#5e6c84]">
-              Hoặc tiếp tục với:
+            {t('or')}
             </h2>
             <div>
               <button
@@ -158,7 +147,7 @@ function Login() {
               </button>
             </div>
             <p className="hover:underline text-center text-[#0c66e4] text-sm">
-              Bạn chưa có tài khoản ? <Link href={"/register"}> Đăng kí</Link>
+            {t("can'tlogin")} <Link href={`/${local}/login`}> {t('login')}</Link>
             </p>
           </div>
         </div>
@@ -167,4 +156,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

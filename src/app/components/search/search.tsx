@@ -3,6 +3,7 @@ import { BoardsContext } from "@/context/BoardsProvider";
 import { faClose, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext, useRef, useState } from "react";
@@ -12,7 +13,8 @@ function Search() {
   const router = useRouter();
   const { boards } = useContext(BoardsContext);
   const [searchValue, setSearchValue] = useState<string>("");
-
+  const t = useTranslations('searchPage')
+  const locale = useLocale()
   const filterBoard = boards.filter((item) =>
     item.title.toLowerCase().includes(searchValue)
   );
@@ -39,13 +41,13 @@ function Search() {
             className="fixed top-[10px] right-[10px] rounded-md bg-gray-800 w-[300px] mt-3 py-3"
           >
             <h2 className="text-xs font-semibold pl-2 mb-2">
-              Kết quả tìm kiếm
+              {t('searchResult')}
             </h2>
             {filterBoard &&
               filterBoard.map((item) => (
                 <Link
                   className="flex items-center transition hover:bg-gray-600 px-2 py-2"
-                  href={`/boards/${item.workspaceId}/${item.id}`}
+                  href={`/${locale}/boards/${item.workspaceId}/${item.id}`}
                   key={item.id}
                 >
                   <div
@@ -61,7 +63,7 @@ function Search() {
         <div className="bg-transparent border border-solid border-[#738496] text-[#9FaDBC] w-fit md:w-[300px] h-8 flex items-center justify-between max-[600px]:border-none p-1 mr-2 rounded">
           <div>
             <FontAwesomeIcon
-              onClick={() => router.push("/search")}
+              onClick={() => router.push(`/${locale}/search`)}
               className="mx-2 text-[12px] "
               icon={faSearch}
             />
@@ -70,7 +72,7 @@ function Search() {
               ref={inputRef}
               onChange={(e) => setSearchValue(e.target.value)}
               className="bg-transparent max-[600px]:hidden text-xs w-fit outline-none border-none text-[14px]"
-              placeholder="Tìm kiếm..."
+              placeholder={t('searchPlaceholder')}
             />
           </div>
           <div

@@ -1,0 +1,67 @@
+{
+    "IndexPage": {
+      "login": "Đăng nhập",
+      "GetTrello": "Nhận Trello miễn phí",
+      "description1": "Trello tập hợp tất cả nhiệm vụ, đồng đội và công cụ của bạn lại với nhau",
+      "description2": "Giữ mọi thứ ở cùng một nơi—ngay cả khi nhóm của bạn không như vậy.",
+      "signupButton": "Đăng kí - Nó miễn phí!"
+    },
+    "LoginPage": {
+      "title": "Đăng nhập để tiếp tục",
+      "emailplaceholder": "Nhập email của bạn",
+      "passwordplaceholder": "Nhập mật khẩu của bạn",
+      "button": "Tiếp Tục",
+      "or": "Hoặc tiếp tục với",
+      "can'tlogin": "Bạn chưa có tài khoản?",
+      "register": "Đăng kí"
+    },
+    "RegisterPage": {
+      "title": "Đăng kí tài khoản của bạn",
+      "emailplaceholder": "Nhập email của bạn",
+      "passwordplaceholder": "Nhập mật khẩu của bạn",
+      "button": "Đăng kí",
+      "or": "Hoặc tiếp tục với",
+      "can'tlogin": "Bạn đã có tài khoản?",
+      "login": "Đăng nhập"
+    },
+    "header": {
+      "workspace": "Không gian làm việc",
+      "more":"Thêm",
+      "workspaceTippy": "Các không gian làm việc của bạn",
+      "recentboards": "Gần đây",
+      "recentboardsTippy": "Các bảng gần đây",
+      "starredboards": "Đánh dấu sao",
+      "starredboardsTippy": "Bảng đã đánh dấu sao",
+      "templates": "Mẫu",
+      "templatesTippy": "Không có mẫu nào",
+      "createbtn":"Tạo mới",
+      "createBoards":"Tạo bảng",
+      "createBoardsDesc":"Một bảng được tạo thành từ các thẻ được sắp xếp trong danh sách. Sử dụng bảng để quản lý các dự án, theo dõi thông tin, hoặc tổ chức bất cứ việc gì.",
+      "createWorkspace":"Tạo không gian làm việc",
+      "createWorkspaceDesc":"Một Không gian làm việc là tập hợp các bảng và mọi người. Sử dụng Không gian làm việc để tổ chức công ty của bạn, hỗ trợ người bận rộn, gia đình hoặc bạn bè.",
+      "logout":"Đăng xuất"
+    },
+    "searchPage":{
+      "searchPlaceholder":"Tìm kiếm",
+      "searchTitle":"Tìm kiếm",
+      "recentboards":"Các bảng gần đây",
+      "searchResult":"Kết quả tìm kiếm"
+    },
+    "boardPage":{
+      "board":"Bảng",
+      "view":"Dạng xem",
+      "image":"Hình ảnh",
+      "highlights":"Điểm nổi bật",
+      "home":"Trang chủ",
+      "templates": "Mẫu",
+      "member":"Thành viên",
+      "setting":"Cài đặt",
+      "update":"Nâng cấp",
+      "starredboards": "Bảng đã đánh dấu sao",
+      "recentboards":"Các bảng gần đây",
+      "workspace": "CÁC KHÔNG GIAN LÀM VIỆC CỦA BẠN",
+      "creatBoard":"Tạo bảng mới"
+    }
+
+  }
+  

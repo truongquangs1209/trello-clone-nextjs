@@ -73,7 +73,7 @@ export default function BoardItem({ params } ) {
                 >
                   {listJobsOfBoard?.map((listJob, index) => (
                     <Draggable
-                      draggableId={listJob?.id}
+                      draggableId={listJob.id}
                       index={index}
                       key={listJob.id}
                     >

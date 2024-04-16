@@ -9,16 +9,18 @@ import {
   faUser,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import { usePathname } from "next/navigation";
 import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+import React, { ChangeEvent, useContext, useState, useTransition } from "react";
 import Search from "../search/search";
 import Link from "next/link";
 import Tippy from "@tippyjs/react";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@/firebase/config";
 import { doc, updateDoc } from "firebase/firestore";
+import { useLocale, useTranslations } from "next-intl";
 
 function Header() {
   const [openWidgetCreateNew, setOpenWidgetCreateNew] =
@@ -31,6 +33,17 @@ function Header() {
   const displayName = user ? user.displayName : "";
   const email = user ? user.email : "";
   const router = useRouter();
+  const [isPending, starTransition] = useTransition();
+  const localActive = useLocale();
+  const pathname = usePathname();
+  const t = useTranslations("header");
+  const handleSelectLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const nextLocale = e.target.value;
+    starTransition(() => {
+      const updatePathname = pathname.replace(pathname.slice(1, 3), nextLocale);
+      router.replace(`${updatePathname}`);
+    });
+  };
 
   const handleUpdateStar = (itemStar: IBoards) => {
     const itemRef = doc(db, "listBoards", itemStar.id);
@@ -40,7 +53,7 @@ function Header() {
   return (
     <div className="text-black bg-[#1a1b23] fixed z-10 top-0 w-full flex p-2 items-center justify-between">
       <div className="flex items-center">
-        <Link href={"/boards"}>
+        <Link href={`${localActive}/boards`}>
           <Image
             priority
             src="https://trello-clone-ruby.vercel.app/assets/trello-logo-blue.svg"
@@ -55,7 +68,7 @@ function Header() {
             onClick={() => setOpenWidget(!openWidget)}
             className="flex py-[6px] pr-[10px] pl-3 rounded ml-3 items-center cursor-pointer md:hidden"
           >
-            <h2 className="mr-1 text-sm font-semibold">Thêm</h2>
+            <h2 className="mr-1 text-sm font-semibold">{t("more")}</h2>
             <FontAwesomeIcon className="w-3" icon={faAngleDown} />
           </div>
 
@@ -71,7 +84,7 @@ function Header() {
               content={
                 <div>
                   <h1 className="my-4 mt-5 mb-2 text-xs font-semibold">
-                    Các không gian làm việc của bạn
+                    {t("workspaceTippy")}
                   </h1>
                   {workspace &&
                     workspace.map((item) => (
@@ -90,7 +103,7 @@ function Header() {
               }
             >
               <div className="p-2 flex items-center justify-between hover:bg-[#323940] transition rounded-md font-medium text-[#9FaDBC] text-sm">
-                <span className="mr-1">Không gian làm việc</span>
+                <span className="mr-1">{t("workspace")}</span>
                 <FontAwesomeIcon icon={faAngleDown} />
               </div>
             </Tippy>
@@ -102,13 +115,13 @@ function Header() {
               content={
                 <div>
                   <h1 className="mb-2 text-xs font-semibold">
-                    Các bảng gần đây
+                    {t("recentboardsTippy")}
                   </h1>
                   {boards &&
                     boards.slice(0, 5).map((item) => (
                       <Link
                         key={item.id}
-                        href={`/boards/${item.workspaceId}/${item.id}`}
+                        href={`/${localActive}/boards/${item.workspaceId}/${item.id}`}
                         className="hover:bg-[#64676a] transition cursor-pointer flex items-center p-2 text-sm font-medium"
                       >
                         <div
@@ -122,7 +135,7 @@ function Header() {
               }
             >
               <div className="p-2 flex items-center rounded-md justify-between hover:bg-[#323940] transition overflow-hidden font-medium text-[#9FaDBC] text-sm">
-                <span className="mr-1">Gần đây</span>
+                <span className="mr-1">{t("recentboards")}</span>
                 <FontAwesomeIcon icon={faAngleDown} />
               </div>
             </Tippy>
@@ -134,14 +147,14 @@ function Header() {
               content={
                 <div className="w-[290px] py-3">
                   <h1 className="mb-2 text-xs font-semibold">
-                    Các bảng đã đánh dấu sao
+                    {t("starredboardsTippy")}
                   </h1>
                   {boards
                     ?.filter((boards) => boards.star === true)
                     .map((item) => (
                       <Link
                         key={item.id}
-                        href={`/boards/${item.workspaceId}/${item.id}`}
+                        href={`/${localActive}/boards/${item.workspaceId}/${item.id}`}
                         className="hover:bg-[#64676a] transition cursor-pointer px-2 flex items-center py-2 justify-between text-sm font-medium"
                       >
                         <div className="flex items-center justify-between">
@@ -163,7 +176,7 @@ function Header() {
               }
             >
               <div className="p-2 flex items-center rounded-md justify-between hover:bg-[#323940] transition font-medium text-[#9FaDBC] text-sm">
-                <span className="mr-1">Đánh dấu sao</span>
+                <span className="mr-1">{t("starredboards")}</span>
                 <FontAwesomeIcon icon={faAngleDown} />
               </div>
             </Tippy>
@@ -172,10 +185,10 @@ function Header() {
               placement="bottom"
               zIndex={10}
               theme="light"
-              content={<span>Không có mẫu nào</span>}
+              content={<span>{t("templatesTippy")}</span>}
             >
               <div className="p-2 flex rounded-md items-center justify-between hover:bg-[#323940] transition font-medium text-[#9FaDBC] text-sm">
-                <span className="mr-1">Mẫu</span>
+                <span className="mr-1">{t("templates")}</span>
                 <FontAwesomeIcon icon={faAngleDown} />
               </div>
             </Tippy>
@@ -187,7 +200,9 @@ function Header() {
           onClick={() => setOpenWidgetCreateNew(!openWidgetCreateNew)}
         >
           <FontAwesomeIcon className="md:hidden block" icon={faPlus} />
-          <span className="text-[#1d2125] hidden md:block">Tạo mới</span>
+          <span className="text-[#1d2125] hidden md:block">
+            {t("createbtn")}
+          </span>
           <div
             style={
               openWidgetCreateNew ? { display: "block" } : { display: "none" }
@@ -200,12 +215,10 @@ function Header() {
             >
               <div className="text-start flex items-center">
                 <FontAwesomeIcon className="w-3 h-3 pr-1" icon={faClipboard} />
-                <span className="text-sm font-normal">Tạo bảng</span>
+                <span className="text-sm font-normal">{t("createBoards")}</span>
               </div>
               <p className="text-[#9FADBC] font-extralight text-xs mt-1">
-                Một bảng được tạo thành từ các thẻ được sắp xếp trong danh sách.
-                Sử dụng bảng để quản lý các dự án, theo dõi thông tin, hoặc tổ
-                chức bất cứ việc gì.
+                {t("createBoardsDesc")}
               </p>
             </div>
             <div
@@ -215,13 +228,11 @@ function Header() {
               <div className="text-start">
                 <FontAwesomeIcon className="w-3 h-3 pr-1" icon={faUser} />
                 <span className="text-sm font-normal">
-                  Tạo không gian làm việc
+                  {t("createWorkspace")}
                 </span>
               </div>
               <p className="text-[#9FADBC] font-extralight text-xs mt-1">
-                Một Không gian làm việc là tập hợp các bảng và mọi người. Sử
-                dụng Không gian làm việc để tổ chức công ty của bạn, hỗ trợ
-                người bận rộn, gia đình hoặc bạn bè.
+                {t("createWorkspaceDesc")}
               </p>
             </div>
           </div>
@@ -252,11 +263,21 @@ function Header() {
             className="text-[12px] p-1 h-fit ml-[6px] border border-solid border-[#ccc]"
             onClick={() => {
               auth.signOut();
-              router.push("/login");
+              router.push(`/${localActive}/login`);
             }}
           >
-            Log out
+            {t("logout")}
           </button>
+          <select
+            className="h-full text-xs outline-none mx-1 my-[5px] border-solid border bg-transparent"
+            id="languageSelect"
+            defaultValue={localActive}
+            onChange={handleSelectLanguageChange}
+            disabled={isPending}
+          >
+            <option value="vi">VN</option>
+            <option value="en">EN</option>
+          </select>
         </div>
       </div>
     </div>
