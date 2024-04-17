@@ -16,7 +16,7 @@ import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { BoardsContext } from "@/context/BoardsProvider";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 function DeleteWorkspace({ selectWorkspace }) {
   const [inputValue, setInputValue] = useState<string>("");
@@ -26,6 +26,7 @@ function DeleteWorkspace({ selectWorkspace }) {
     openModalDeleteWorkspace,
     setOpenModalDeleteWorkspace,
   } = useContext(WorkSpaceContext);
+  const locale = useLocale()
   const router = useRouter();
 const t = useTranslations('deleteWorkspace')
   const handleDeleteWorkspace = async (itemId: string) => {
@@ -62,7 +63,7 @@ const t = useTranslations('deleteWorkspace')
         await Promise.all(deleteBoardItemPromises);
 
         // Chuyển hướng đến trang /boards
-        router.push("/boards");
+        router.push(`/${locale}/boards`);
 
         // Hiển thị thông báo thành công
         toast.success("Delete Workspace Success !");
