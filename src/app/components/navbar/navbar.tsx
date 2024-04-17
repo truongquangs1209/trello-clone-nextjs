@@ -13,6 +13,7 @@ import {
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import Tippy from "@tippyjs/react";
+import { useLocale, useTranslations } from "next-intl";
 
 interface NavBarProps {
   boardTitle: string;
@@ -29,6 +30,9 @@ function NavBar({
   setOpenWidget,
   selectedBoard,
 }: NavBarProps) {
+  const locale = useLocale();
+  const t = useTranslations("navbar");
+
   return (
     <div className="bg-[#00000087] w-full md:mt-[68px] mt-[45px] flex justify-between items-center py-3 pl-[10px] pr-4">
       <div className="flex items-center justify-between w-full">
@@ -47,31 +51,31 @@ function NavBar({
           <FontAwesomeIcon className="" icon={faUser} />
           <div className="w-20 h-8 text-white text-xs bg-[#122038] transition flex items-center fill justify-center rounded">
             <FontAwesomeIcon className="text-sm mr-1" icon={faClipboardList} />
-            <span className="text-sm">Bảng</span>
+            <span className="text-sm">{t("board")}</span>
           </div>
         </div>
         <div className="flex items-center max-[680px]:gap-[0.5rem] gap-5 mr-2">
           <Tippy
             placement="bottom"
-            content={
-              <span className="text-xs font-light">Tiện ích bổ sung</span>
-            }
+            content={<span className="text-xs font-light">{t("addOns")}</span>}
           >
             <FontAwesomeIcon icon={faRocket} />
           </Tippy>
           <Tippy
             placement="bottom"
-            content={<span className="text-xs font-light">Tự động hóa</span>}
+            content={
+              <span className="text-xs font-light">{t("automation")}</span>
+            }
           >
             <FontAwesomeIcon icon={faBolt} />
           </Tippy>
           <div className="w-20 h-8 text-white bg-[#122038] text-xs transition flex items-center fill justify-center rounded">
             <FontAwesomeIcon className="text-sm mr-1" icon={faUserAlt} />
-            <span className="text-sm">Chia sẻ</span>
+            <span className="text-sm">{t("share")}</span>
           </div>
           <Tippy
             placement="bottom"
-            content={<span className="text-xs font-light">Thêm</span>}
+            content={<span className="text-xs font-light">{t("add")}</span>}
           >
             <FontAwesomeIcon icon={faEllipsis} />
           </Tippy>

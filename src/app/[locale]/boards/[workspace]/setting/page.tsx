@@ -8,14 +8,15 @@ import CreateBoards from "@/app/components/action/createBoards/createBoards";
 import DeleteWorkspace from "@/app/components/action/deleteWorkspace/deleteWorkspace";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { useTranslations } from "next-intl";
 
 function Setting({ params }) {
-
-  const {workspace, setOpenModalDeleteWorkspace } =
+  const { workspace, setOpenModalDeleteWorkspace } =
     useContext(WorkSpaceContext);
   const selectWorkspace = workspace.find(
     (item) => item.id === params.workspace
   );
+  const t = useTranslations("setting");
 
   return (
     <div className="w-full">
@@ -40,18 +41,20 @@ function Setting({ params }) {
             </div>
             <hr className="h-[1px] w-full my-4 bg-[#333c44]" />
             <div className="pb-[40px]">
-              <div className="p-4 bg-[#1c2b41] rounded mb-3">
-                <span className="text-[#B6c2df] font-semibold block my-3">Các cài đặt Không gian làm việc</span>
+              <div className="p-4 bg-[#1c2b41] leading-10 rounded mb-3">
+                <span className="text-[#B6c2df] font-semibold block my-3">
+                  {t("settingWorkspace")}
+                </span>
                 <div className="flex gap-5 ">
-                  <FontAwesomeIcon className="w-6 h-6" icon={faCircleInfo}/>
+                  <FontAwesomeIcon className="w-6 h-6" icon={faCircleInfo} />
                   <div>
-                    <p className="text-sm">Không gian làm việc Trello miễn phí sẽ giới hạn trong 10 người cộng tác kể từ 8 tháng 4 năm 2024.</p>
-                    <span className="py-2">Không gian làm việc miễn phí sẽ sớm giới hạn trong 10 thành viên, khách và thư mời đang chờ xử lý.</span>
+                    <p className="text-sm">{t("p1")}</p>
+                    <span className="py-2">{t("p2")}</span>
                     <ul className="text-sm mb-2 list-disc">
-                      <li>Vào ngày 8 tháng 4 năm 2024, bạn sẽ không thể mời người cộng tác mới vào Không gian làm việc miễn phí đạt đến hoặc vượt quá giới hạn.</li>
-                      <li>Vào ngày 20 tháng 5 năm 2024, các bảng thông tin trong Không gian làm việc miễn phí vượt quá giới hạn sẽ chuyển sang chế độ chỉ xem.</li>
+                      <li>{t("p3")}</li>
+                      <li>{t("p4")}</li>
                     </ul>
-                    <span className="text-sm">Để quản lý người cộng tác, hãy kiểm tra trang thành viên Không gian làm việc.</span>
+                    <span className="text-sm">{t("p5")}</span>
                   </div>
                 </div>
               </div>
@@ -59,11 +62,11 @@ function Setting({ params }) {
                 onClick={() => setOpenModalDeleteWorkspace(true)}
                 className="text-[#FD9891] text-sm font-semibold cursor-pointer hover:underline"
               >
-                Xóa không gian làm việc này?
+                {t("deleteWorkspace")}
               </h3>
             </div>
             <CreateBoards />
-            <DeleteWorkspace selectWorkspace={selectWorkspace}/>
+            <DeleteWorkspace selectWorkspace={selectWorkspace} />
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { faAdd, faUser } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext, UserListsContext } from "@/context/AppProvider";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/firebase/config";
+import { useTranslations } from "next-intl";
 
 function InviteMember({ selectedBoard, selectedWorkspace }) {
   const [form] = Form.useForm();
@@ -14,7 +15,7 @@ function InviteMember({ selectedBoard, selectedWorkspace }) {
   const [value, setValue] = useState([]);
   const { userLists, members, setMembers } = useContext(UserListsContext);
   const { user } = useContext(AuthContext);
-
+  const t = useTranslations("sidebar");
   const handleCancel = () => {
     form.resetFields();
     setValue([]);
@@ -48,7 +49,7 @@ function InviteMember({ selectedBoard, selectedWorkspace }) {
       >
         <div className="">
           <FontAwesomeIcon className="w-4 h-4" icon={faUser} />
-          <span className="text-sm font-normal p-2">Thành viên</span>
+          <span className="text-sm font-normal p-2">{t("member")}</span>
         </div>
         <FontAwesomeIcon className="cursor-pointer" icon={faAdd} />
       </div>
@@ -68,7 +69,7 @@ function InviteMember({ selectedBoard, selectedWorkspace }) {
       </Avatar.Group>
       <div>
         <Modal
-          title="Mời thêm thành viên"
+          title={t("addMember")}
           open={isInviteMemberVisible}
           destroyOnClose
           onOk={handleOK}
@@ -81,7 +82,7 @@ function InviteMember({ selectedBoard, selectedWorkspace }) {
                 showSearch
                 value={value}
                 filterOption
-                placeholder="Nhập tên thành viên"
+                placeholder={t("inputMember")}
                 onChange={(newValue) => setValue(newValue)}
                 style={{ width: "100%" }}
               >

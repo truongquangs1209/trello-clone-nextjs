@@ -17,7 +17,7 @@
   },
   "header": {
     "workspace": "Workspace",
-    "more":"More",
+    "more": "More",
     "workspaceTippy": "Your Workspaces",
     "recentboards": "Recent boards",
     "recentboardsTippy": "Recent boards",
@@ -25,33 +25,77 @@
     "starredboardsTippy": "Starred boards",
     "templates": "Templates",
     "templatesTippy": "No Template",
-    "createbtn":"Create new",
-    "createBoards":"Create Boards",
-    "createBoardsDesc":"A boards is mede up of cards ordered on list. Use it to manage project, track information, or organize anything",
-    "createWorkspace":"Create Workspace",
-    "createWorkspaceDesc":"A workspace is a group of boards and people. Use it to organize your company, side hustle, family, or friends.",
-    "logout":"Log out"
+    "createbtn": "Create new",
+    "createBoards": "Create Boards",
+    "createBoardsDesc": "A boards is mede up of cards ordered on list. Use it to manage project, track information, or organize anything",
+    "createWorkspace": "Create Workspace",
+    "createWorkspaceDesc": "A workspace is a group of boards and people. Use it to organize your company, side hustle, family, or friends.",
+    "logout": "Log out"
   },
-  
-    "searchPage":{
-      "searchPlaceholder":"Search...",
-      "searchTitle":"Search",
-      "recentboards":"Recent boards",
-      "searchResult":"Search Results"
-    },
-    "boardPage":{
-      "board":"Board",
-      "view":"View",
-      "image":"Image",
-      "highlights":"Highlights",
-      "home":"Home",
-      "member":"Member",
-      "templates": "Templates",
-      "setting":"Setting",
-      "update":"Update",
-      "starredboards": "Starred boards",
-      "recentboards":"Recent boards",
-      "workspace": "Your Workspaces",
-      "creatBoard":"Create new board"
-    }
+
+  "searchPage": {
+    "searchPlaceholder": "Search...",
+    "searchTitle": "Search",
+    "recentboards": "Recent boards",
+    "searchResult": "Search Results"
+  },
+  "boardPage": {
+    "board": "Board",
+    "view": "View",
+    "image": "Image",
+    "highlights": "Highlights",
+    "home": "Home",
+    "member": "Member",
+    "templates": "Templates",
+    "setting": "Setting",
+    "update": "Update",
+    "starredboards": "Starred boards",
+    "recentboards": "Recent boards",
+    "workspace": "Your Workspaces",
+    "creatBoard": "Create new board"
+  },
+  "boardItem": {
+    "addTag": "Add tag",
+    "deleteTag": "Delete tag",
+    "addList": "Add list",
+    "operation": "Operation",
+    "inputPlaceholder": "Enter title list..."
+  },
+  "sidebar": {
+    "board": "Board",
+    "member": "Member",
+    "createdBy": "Created by:",
+    "view": "Your views",
+    "calendar": "Calendar",
+    "yourBoard": "Your Board",
+    "addMember": "Add new member",
+    "inputMember": "Enter name member..."
+  },
+  "navbar": {
+    "board": "Board",
+    "share": "Share",
+    "addOns": "Add-ons",
+    "automation": "Automation",
+    "add": "Add"
+  },
+  "setting": {
+    "settingWorkspace": "Workspace settings",
+    "deleteWorkspace": "Delete this workspace?",
+    "p1": "Free Trello workspaces will be limited to 10 collaborators starting April 8, 2024.",
+    "p2": "Free workspaces will soon be limited to 10 members, guests, and invitations pending.",
+    "p3": "On April 8, 2024, you won't be able to invite new collaborators to a Free Workspace that reaches or exceeds the limit.",
+    "p4": "On May 20, 2024, dashboards in Free Workspaces that exceed limits will become view-only.",
+    "p5": "To manage collaborators, check out the Workspace membership page."
+  },
+  "deleteWorkspace": {
+    "span1": "Enter name",
+    "span2": "To delete",
+    "noteTitle": "Things to know:",
+    "note1": "This is permanent and cannot be undone",
+    "note2": " All tables in the workspace will be deleted",
+    "note3": "Board admins can reopen boards",
+    "note4": " Board members will not be able to interact with closed boards",
+    "note5": " Enter the workspace name to delete",
+    "note6": " Delete workspace?"
+  }
 }

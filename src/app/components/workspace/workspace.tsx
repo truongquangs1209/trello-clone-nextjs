@@ -14,11 +14,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { WorkSpaceContext } from "@/context/WorkspaceProvider";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 function WorkSpace() {
   const [openItems, setOpenItems] = useState({});
   const { workspace, setOpenModalAddWOrkspace } = useContext(WorkSpaceContext);
+  const locale= useLocale()
   const t = useTranslations("boardPage");
 
   // Hàm toggle chỉ mở rộng/collapse item được click
@@ -41,7 +42,7 @@ function WorkSpace() {
           <span>{t("templates")}</span>
         </li>
         <Link
-          href={"/boards/home"}
+          href={`/${locale}/boards/home`}
           className="py-[10px] block mb-1 hover:bg-[#333b44] rounded-md transition px-2 text-sm font-medium"
         >
           <FontAwesomeIcon className="mr-2 w-4 h-4" icon={faHome} />
@@ -82,7 +83,7 @@ function WorkSpace() {
                   className="overflow-hidden"
                 >
                   <Link
-                    href={`/boards/${item.id}`}
+                    href={`/${locale}/boards/${item.id}`}
                     className="block py-1 mb-1 pr-2 pl-6 rounded-md overflow-hidden transition hover:bg-[#333c43]"
                   >
                     <FontAwesomeIcon className="w-4" icon={faClipboard} />
@@ -101,7 +102,7 @@ function WorkSpace() {
                     <span className="pl-2 text-sm">{t("member")}</span>
                   </div>
                   <Link
-                    href={`/boards/${item.id}/setting`}
+                    href={`/${locale}/boards/${item.id}/setting`}
                     className="py-1 block mb-1 pr-2 pl-6 rounded-md overflow-hidden transition hover:bg-[#333c43]"
                   >
                     <FontAwesomeIcon className="w-4" icon={faGear} />

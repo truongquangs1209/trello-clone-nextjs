@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
 import InviteMember from "../member/member";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 
 function Sidebar({
   openWidget,
@@ -22,10 +23,12 @@ function Sidebar({
   const userCreatedWorkspace = userLists.find(
     (item) => item.id === workspaceTitle?.createBy
   );
+  const locale=useLocale()
+  const t = useTranslations("sidebar")
 
   return (
     <div
-      className={` ${
+      className={`${
         openWidget
           ? "w-[300px] flex relative md:mt-[68px] mt-[45px] flex-col  bg-[#1a1b23] h-[100vh] transition duration-300 ease-in-out"
           : "w-0 overflow-hidden"
@@ -48,14 +51,14 @@ function Sidebar({
       <div className="overflow-hidden">
         <div className="hover:bg-slate-800 p-3 mt-4 transition">
           <FontAwesomeIcon className="w-4 h-4" icon={faClipboard} />
-          <span className="text-sm font-normal p-2">Bảng</span>
+          <span className="text-sm font-normal p-2">{t('board')}</span>
         </div>
         <InviteMember
           selectedBoard={selectedBoard}
           selectedWorkspace={params?.workspace}
         />
         <div className=" p-3">
-          <h3 className="text-sm mb-2">Được tạo bởi</h3>
+          <h3 className="text-sm mb-2">{t('createdBy')}</h3>
           <div className="flex">
             {userCreatedWorkspace?.photoURL ? (
               <img
@@ -78,18 +81,18 @@ function Sidebar({
         </div>
       </div>
       <div>
-        <h2 className="text-sm font-semibold p-3">Các dạng xem của bạn</h2>
+        <h2 className="text-sm font-semibold p-3">{t('view')}</h2>
         <div className="hover:bg-slate-800 p-3 italic transition">
           <FontAwesomeIcon className="w-4 h-4 " icon={faClipboard} />
-          <span className="text-sm font-normal p-2">Bảng</span>
+          <span className="text-sm font-normal p-2">{t('board')}</span>
         </div>
         <div className="hover:bg-slate-800 p-3 py-2 italic transition">
           <FontAwesomeIcon className="w-4 h-4" icon={faCalendar} />
-          <span className="text-sm font-normal p-2">Lịch</span>
+          <span className="text-sm font-normal p-2">{t('calendar')}</span>
         </div>
       </div>
       <div>
-        <h2 className="text-sm font-semibold p-3">Các bảng của bạn</h2>
+        <h2 className="text-sm font-semibold p-3">{t('yourBoard')}</h2>
         <div>
           {boards
             ?.filter(
@@ -98,7 +101,7 @@ function Sidebar({
             .map((item) => (
               <Link
                 key={item.id}
-                href={`/boards/${params.workspace}/${item.id}`}
+                href={`/${locale}/boards/${params.workspace}/${item.id}`}
                 className="hover:bg-[#64676a] transition cursor-pointer flex items-center p-3 text-sm font-medium"
               >
                 <div

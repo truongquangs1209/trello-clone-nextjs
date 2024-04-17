@@ -16,6 +16,7 @@ import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { BoardsContext } from "@/context/BoardsProvider";
+import { useTranslations } from "next-intl";
 
 function DeleteWorkspace({ selectWorkspace }) {
   const [inputValue, setInputValue] = useState<string>("");
@@ -26,7 +27,7 @@ function DeleteWorkspace({ selectWorkspace }) {
     setOpenModalDeleteWorkspace,
   } = useContext(WorkSpaceContext);
   const router = useRouter();
-
+const t = useTranslations('deleteWorkspace')
   const handleDeleteWorkspace = async (itemId: string) => {
     try {
       if (inputValue === selectWorkspace?.title) {
@@ -81,7 +82,7 @@ function DeleteWorkspace({ selectWorkspace }) {
       }
     >
       <div className="text-[#Fadbc] flex cursor-pointer items-center justify-between py-4 px-3">
-        <span className="text-sm font-semibold">Xóa không gian làm việc?</span>
+        <span className="text-sm font-semibold">{t('note6')}</span>
         <FontAwesomeIcon
           onClick={() => setOpenModalDeleteWorkspace(false)}
           className="w-4 h-4 p-1"
@@ -90,26 +91,26 @@ function DeleteWorkspace({ selectWorkspace }) {
       </div>
       <div>
         <p className="font-semibold mb-2 text-base">
-          Nhập tên {selectWorkspace?.title} để xóa
+        {t('span1')}{selectWorkspace?.title} {t('span2')}
         </p>
         <ul className="text-xs ml-5 list-disc font-normal">
-          Những điều cần biết:
+        {t('noteTitle')}
           <li className="text-sm text-[#B6c2cf] mt-2">
-            Điều này là vĩnh viễn và không thể hoàn tác
+          {t('note1')}
           </li>
           <li className="text-sm text-[#B6c2cf] mt-2">
-            Tất cả các bảng trong không gian làm việc sẽ bị xóa
+          {t('note2')}
           </li>
           <li className="text-sm text-[#B6c2cf] mt-2">
-            Các quản trị viên bảng có thể mở lại các bảng
+          {t('note3')}
           </li>
           <li className="text-sm text-[#B6c2cf] mt-2">
-            Các thành viên bảng sẽ không thể tương tác với các bảng đã đóng
+          {t('note4')}
           </li>
         </ul>
         <div>
           <span className="text-xs mb-1 font-semibold ">
-            Nhập tên không gian làm việc để xóa
+          {t('note5')}
           </span>
           <input
             value={inputValue}
@@ -129,7 +130,7 @@ function DeleteWorkspace({ selectWorkspace }) {
             onClick={() => handleDeleteWorkspace(selectWorkspace.id)}
             className="w-full  my-2 text-sm font-semibold bg-[#22272b] h-8 rounded py-2 px-3"
           >
-            Xóa không gian làm việc
+           {t('note6')}
           </button>
         </div>
       </div>

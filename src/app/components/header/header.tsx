@@ -53,7 +53,7 @@ function Header() {
   return (
     <div className="text-black bg-[#1a1b23] fixed z-10 top-0 w-full flex p-2 items-center justify-between">
       <div className="flex items-center">
-        <Link href={`${localActive}/boards`}>
+        <Link href={`/${localActive}/boards`}>
           <Image
             priority
             src="https://trello-clone-ruby.vercel.app/assets/trello-logo-blue.svg"
@@ -269,7 +269,7 @@ function Header() {
             {t("logout")}
           </button>
           <select
-            className="h-full text-xs outline-none mx-1 my-[5px] border-solid border bg-transparent"
+            className="text-[12px] p-1 ml-[6px] border border-solid border-[#ccc] bg-transparent"
             id="languageSelect"
             defaultValue={localActive}
             onChange={handleSelectLanguageChange}

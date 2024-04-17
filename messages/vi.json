@@ -1,67 +1,109 @@
 {
-    "IndexPage": {
-      "login": "Đăng nhập",
-      "GetTrello": "Nhận Trello miễn phí",
-      "description1": "Trello tập hợp tất cả nhiệm vụ, đồng đội và công cụ của bạn lại với nhau",
-      "description2": "Giữ mọi thứ ở cùng một nơi—ngay cả khi nhóm của bạn không như vậy.",
-      "signupButton": "Đăng kí - Nó miễn phí!"
-    },
-    "LoginPage": {
-      "title": "Đăng nhập để tiếp tục",
-      "emailplaceholder": "Nhập email của bạn",
-      "passwordplaceholder": "Nhập mật khẩu của bạn",
-      "button": "Tiếp Tục",
-      "or": "Hoặc tiếp tục với",
-      "can'tlogin": "Bạn chưa có tài khoản?",
-      "register": "Đăng kí"
-    },
-    "RegisterPage": {
-      "title": "Đăng kí tài khoản của bạn",
-      "emailplaceholder": "Nhập email của bạn",
-      "passwordplaceholder": "Nhập mật khẩu của bạn",
-      "button": "Đăng kí",
-      "or": "Hoặc tiếp tục với",
-      "can'tlogin": "Bạn đã có tài khoản?",
-      "login": "Đăng nhập"
-    },
-    "header": {
-      "workspace": "Không gian làm việc",
-      "more":"Thêm",
-      "workspaceTippy": "Các không gian làm việc của bạn",
-      "recentboards": "Gần đây",
-      "recentboardsTippy": "Các bảng gần đây",
-      "starredboards": "Đánh dấu sao",
-      "starredboardsTippy": "Bảng đã đánh dấu sao",
-      "templates": "Mẫu",
-      "templatesTippy": "Không có mẫu nào",
-      "createbtn":"Tạo mới",
-      "createBoards":"Tạo bảng",
-      "createBoardsDesc":"Một bảng được tạo thành từ các thẻ được sắp xếp trong danh sách. Sử dụng bảng để quản lý các dự án, theo dõi thông tin, hoặc tổ chức bất cứ việc gì.",
-      "createWorkspace":"Tạo không gian làm việc",
-      "createWorkspaceDesc":"Một Không gian làm việc là tập hợp các bảng và mọi người. Sử dụng Không gian làm việc để tổ chức công ty của bạn, hỗ trợ người bận rộn, gia đình hoặc bạn bè.",
-      "logout":"Đăng xuất"
-    },
-    "searchPage":{
-      "searchPlaceholder":"Tìm kiếm",
-      "searchTitle":"Tìm kiếm",
-      "recentboards":"Các bảng gần đây",
-      "searchResult":"Kết quả tìm kiếm"
-    },
-    "boardPage":{
-      "board":"Bảng",
-      "view":"Dạng xem",
-      "image":"Hình ảnh",
-      "highlights":"Điểm nổi bật",
-      "home":"Trang chủ",
-      "templates": "Mẫu",
-      "member":"Thành viên",
-      "setting":"Cài đặt",
-      "update":"Nâng cấp",
-      "starredboards": "Bảng đã đánh dấu sao",
-      "recentboards":"Các bảng gần đây",
-      "workspace": "CÁC KHÔNG GIAN LÀM VIỆC CỦA BẠN",
-      "creatBoard":"Tạo bảng mới"
-    }
-
+  "IndexPage": {
+    "login": "Đăng nhập",
+    "GetTrello": "Nhận Trello miễn phí",
+    "description1": "Trello tập hợp tất cả nhiệm vụ, đồng đội và công cụ của bạn lại với nhau",
+    "description2": "Giữ mọi thứ ở cùng một nơi—ngay cả khi nhóm của bạn không như vậy.",
+    "signupButton": "Đăng kí - Nó miễn phí!"
+  },
+  "LoginPage": {
+    "title": "Đăng nhập để tiếp tục",
+    "emailplaceholder": "Nhập email của bạn",
+    "passwordplaceholder": "Nhập mật khẩu của bạn",
+    "button": "Tiếp Tục",
+    "or": "Hoặc tiếp tục với",
+    "can'tlogin": "Bạn chưa có tài khoản?",
+    "register": "Đăng kí"
+  },
+  "RegisterPage": {
+    "title": "Đăng kí tài khoản của bạn",
+    "emailplaceholder": "Nhập email của bạn",
+    "passwordplaceholder": "Nhập mật khẩu của bạn",
+    "button": "Đăng kí",
+    "or": "Hoặc tiếp tục với",
+    "can'tlogin": "Bạn đã có tài khoản?",
+    "login": "Đăng nhập"
+  },
+  "header": {
+    "workspace": "Không gian làm việc",
+    "more": "Thêm",
+    "workspaceTippy": "Các không gian làm việc của bạn",
+    "recentboards": "Gần đây",
+    "recentboardsTippy": "Các bảng gần đây",
+    "starredboards": "Đánh dấu sao",
+    "starredboardsTippy": "Bảng đã đánh dấu sao",
+    "templates": "Mẫu",
+    "templatesTippy": "Không có mẫu nào",
+    "createbtn": "Tạo mới",
+    "createBoards": "Tạo bảng",
+    "createBoardsDesc": "Một bảng được tạo thành từ các thẻ được sắp xếp trong danh sách. Sử dụng bảng để quản lý các dự án, theo dõi thông tin, hoặc tổ chức bất cứ việc gì.",
+    "createWorkspace": "Tạo không gian làm việc",
+    "createWorkspaceDesc": "Một Không gian làm việc là tập hợp các bảng và mọi người. Sử dụng Không gian làm việc để tổ chức công ty của bạn, hỗ trợ người bận rộn, gia đình hoặc bạn bè.",
+    "logout": "Đăng xuất"
+  },
+  "searchPage": {
+    "searchPlaceholder": "Tìm kiếm",
+    "searchTitle": "Tìm kiếm",
+    "recentboards": "Các bảng gần đây",
+    "searchResult": "Kết quả tìm kiếm"
+  },
+  "boardPage": {
+    "board": "Bảng",
+    "view": "Dạng xem",
+    "image": "Hình ảnh",
+    "highlights": "Điểm nổi bật",
+    "home": "Trang chủ",
+    "templates": "Mẫu",
+    "member": "Thành viên",
+    "setting": "Cài đặt",
+    "update": "Nâng cấp",
+    "starredboards": "Bảng đã đánh dấu sao",
+    "recentboards": "Các bảng gần đây",
+    "workspace": "CÁC KHÔNG GIAN LÀM VIỆC CỦA BẠN",
+    "creatBoard": "Tạo bảng mới"
+  },
+  "boardItem": {
+    "addTag": "Thêm thẻ",
+    "deleteTag": "Xóa thẻ",
+    "addList": "Thêm danh sách",
+    "operation": "Thao tác",
+    "inputPlaceholder": "Nhập tiêu đề danh sách..."
+  },
+  "sidebar": {
+    "board": "Bảng",
+    "member": "Thành viên",
+    "createdBy": "Được tạo bởi",
+    "view": "Các dạng xem của bạn",
+    "calendar": "Lịch",
+    "yourBoard": "Các bảng của bạn",
+    "addMember": "Mời thêm thành viên",
+    "inputMember": "Nhập tên thành viên"
+  },
+  "navbar": {
+    "board": "Bảng",
+    "share": "CHia sẻ",
+    "addOns": "Tiện ích bổ sung",
+    "automation": "Tự động hóa",
+    "add": "Thêm"
+  },
+  "setting": {
+    "settingWorkspace": "Các cài đặt không gian làm việc",
+    "deleteWorkspace": "Xóa không gian làm việc này?",
+    "p1": "Không gian làm việc Trello miễn phí sẽ giới hạn trong 10 người cộng tác kể từ 8 tháng 4 năm 2024.",
+    "p2": "Không gian làm việc miễn phí sẽ sớm giới hạn trong 10 thành viên, khách và thư mời đang chờ xử lý.",
+    "p3": "Vào ngày 8 tháng 4 năm 2024, bạn sẽ không thể mời người cộng tác mới vào Không gian làm việc miễn phí đạt đến hoặc vượt quá giới hạn.",
+    "p4": "Vào ngày 20 tháng 5 năm 2024, các bảng thông tin trong Không gian làm việc miễn phí vượt quá giới hạn sẽ chuyển sang chế độ chỉ xem.",
+    "p5": "Để quản lý người cộng tác, hãy kiểm tra trang thành viên Không gian làm việc."
+  },
+  "deleteWorkspace": {
+    "span1": "Nhập tên",
+    "span2": "Để xóa",
+    "noteTitle": "Những điều cần biết:",
+    "note1": " Điều này là vĩnh viễn và không thể hoàn tác",
+    "note2": " Tất cả các bảng trong không gian làm việc sẽ bị xóa",
+    "note3": " Các quản trị viên bảng có thể mở lại các bảng",
+    "note4": " Các thành viên bảng sẽ không thể tương tác với các bảng đã đóng",
+    "note5": " Nhập tên không gian làm việc để xóa",
+    "note6": " Xóa không gian làm việc?"
   }
-  
+}

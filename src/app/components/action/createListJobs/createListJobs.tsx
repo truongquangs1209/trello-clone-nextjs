@@ -5,6 +5,7 @@ import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { addDoc, collection } from "firebase/firestore";
 import React, { useContext, useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface IProps {
   boardsId: string;
@@ -21,6 +22,8 @@ function CreateListJobs({ boardsId, selectedBoards }: IProps) {
     openInputAddListJobs,
     setOpenInputAddListJobs,
   } = useContext(ListJobsContext);
+  const t = useTranslations("boardItem");
+
   const { user } = useContext(AuthContext);
   const email = user ? user.email : "";
 
@@ -58,7 +61,7 @@ function CreateListJobs({ boardsId, selectedBoards }: IProps) {
       <div
         style={{
           display:
-            listJobs.filter((list) => list.boards === selectedBoards.id)
+            listJobs.filter((list) => list?.boards === selectedBoards?.id)
               .length >= 5
               ? "none"
               : "flex",
@@ -76,7 +79,7 @@ function CreateListJobs({ boardsId, selectedBoards }: IProps) {
             className="text-[#B6C2CF] mb-2 w-full my-1 py-[8px] px-3 rounded bg-[#22272b]"
             type="text"
             value={titleList}
-            placeholder="Nhập tiêu đề danh sách..."
+            placeholder={t('inputPlaceholder')}
           />
           <div className="flex items-center justify-between">
             <button
@@ -87,7 +90,7 @@ function CreateListJobs({ boardsId, selectedBoards }: IProps) {
               }}
               className="bg-[#579dff] font-semibold text-[#1D2125] hover:bg-[#85b8ff] py-[6px] px-3 rounded"
             >
-              Thêm danh sách
+              {t("addList")}
             </button>
 
             <FontAwesomeIcon
@@ -106,7 +109,7 @@ function CreateListJobs({ boardsId, selectedBoards }: IProps) {
             }
           >
             <FontAwesomeIcon className="pr-2" icon={faPlus} />
-            <h2>Thêm danh sách</h2>
+            <h2>{t("addList")}</h2>
           </div>
         }
       </div>

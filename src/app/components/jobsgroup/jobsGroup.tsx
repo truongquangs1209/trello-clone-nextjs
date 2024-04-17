@@ -9,6 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react";
 import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { toast } from "react-toastify";
@@ -25,6 +26,7 @@ function JobsGroup({ listId, title, items, listJobs, setListJobs }: Props) {
   const [openAddJob, setOpenAddJob] = useState<boolean>(false);
   const [titleList, setTitleList] = useState<string>("");
   const [, setDataJobItem] = useState(items);
+  const t = useTranslations("boardItem");
 
   const handleAddJobs: () => void = async () => {
     try {
@@ -93,23 +95,22 @@ function JobsGroup({ listId, title, items, listJobs, setListJobs }: Props) {
             <h2 className="py-2 pl-1 text-[14px]">{title}</h2>
             <Tippy
               interactive
-             
               theme="light"
               content={
                 <div className="text-[#9FADBC] min-w-[200px] flex flex-col p-0">
-                  <span className="text-center font-medium py-2">Thao Tác</span>
+                  <span className="text-center font-medium py-2">{t('operation')}</span>
                   <div className="font-normal">
                     <button
                       className="hover:bg-[#3c464f] text-start transition p-1 w-full"
                       onClick={() => handleDeleteJobs(listId)}
                     >
-                      Xóa thẻ
+                      {t("deleteTag")}
                     </button>
                     <button
                       className="hover:bg-[#3c464f] text-start transition p-1 w-full"
                       onClick={() => setOpenAddJob(true)}
                     >
-                      Thêm thẻ
+                      {t("addTag")}
                     </button>
                   </div>
                 </div>
@@ -155,7 +156,7 @@ function JobsGroup({ listId, title, items, listJobs, setListJobs }: Props) {
                 }}
                 className="bg-[#579dff] font-semibold text-[#1D2125] hover:bg-[#85b8ff] py-[6px] px-3 rounded"
               >
-                Thêm thẻ
+                {t("addTag")}
               </button>
 
               <FontAwesomeIcon
@@ -172,7 +173,7 @@ function JobsGroup({ listId, title, items, listJobs, setListJobs }: Props) {
             style={openAddJob ? { display: "none" } : { display: "flex" }}
           >
             <FontAwesomeIcon className="pr-2" icon={faPlus} />
-            <h2>Thêm thẻ</h2>
+            <h2>{t("addTag")}</h2>
           </div>
         </div>
       )}
